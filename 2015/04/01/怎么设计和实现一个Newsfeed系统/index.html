@@ -1,0 +1,731 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。" />
+
+
+
+  <meta name="keywords" content="Newsfeed,celery,djcelery,redis,stream framework," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么设计和实现一个Newsfeed系统">
+<meta property="og:url" content="http://sergiochan.github.io/2015/04/01/怎么设计和实现一个Newsfeed系统/index.html">
+<meta property="og:site_name" content="一世烟雨江南">
+<meta property="og:description" content="也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不">
+<meta property="og:updated_time" content="2015-12-19T01:19:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="怎么设计和实现一个Newsfeed系统">
+<meta name="twitter:description" content="也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+  <title> 怎么设计和实现一个Newsfeed系统 | 一世烟雨江南 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" style="background-color:#555" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i style="background-color:wheat"></i></span>
+      <span class="site-title" style="color:wheat">一世烟雨江南</span>
+      <span class="logo-line-after"><i style="background-color:wheat"></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">有情怀的程序员，热爱设计的工程师。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bio">
+          <a href="/bio" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            自传
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                怎么设计和实现一个Newsfeed系统
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-01T09:14:52+08:00" content="2015-04-01">
+              2015-04-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Python学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/01/怎么设计和实现一个Newsfeed系统/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/01/怎么设计和实现一个Newsfeed系统/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。<br>首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不可，只是当一个系统的容量到一定级别之后，简单的技术就会变得难以满足系统的需求了。特别是在实际需求中，feed所在的表可能会经历超大并发的读写，而且由于feed的特殊性——例如Facebook，twitter，这些feed其实都只是一个简单的动态信息，而并非一个完整的对象信息，因此关系型数据库对于Newsfeed系统来说并不是最首选的方案。Feed的实际需求还有：</p>
+<blockquote>
+<ul>
+<li>1.用户需要频繁查询自己和自己好友产生的动态集合。</li>
+<li>2.用户需要频繁的查询自己或其他用户产生的动态的子集。</li>
+</ul>
+<p>第一条需求远大于第二条，即刷朋友圈的次数远大于查看用户相册的次数。  </p>
+</blockquote>
+<p>如果采用关系型数据库，那么第一个需求的实现应该是先从好友表中获取该用户的好友ID，然后通过好友ID在这个表中查询所有的数据，并通过时间排序分页返回之类，这实际上在数据库操作中遍历了大量其他无用的信息，而且当表的容量增大，如果不采用高效的分表或索引，这个操作的代价将会更大。而第二个需求，也是存在同样的问题，当1000个用户分别查看1个用户的timeline时，其中有999次数据库操作是浪费的，因此在Newsfeed的系统中采用Nosql的数据库是更加明智的方案。<br>在开始，选择redis还是cassandra着实让我犹豫了一阵，这篇文章彻底打开了我的思路：</p>
+<p><a href="http://www.csdn.net/article/2013-11-07/2817430-design-decisions-for-scaling-your-high-traffic-feeds" target="_blank" rel="external">http://www.csdn.net/article/2013-11-07/2817430-design-decisions-for-scaling-your-high-traffic-feeds</a></p>
+<p>这是一个国外时尚网站和instagram的发展经验。</p>
+<p>Fashiolista和Instagram都经历了从Redis开始，然后转战Cassandra的过程。笔者之所以会推荐从Redis开始是因为Redis更容易启动和维持。<br>然而Redis存在一定的限制，所有的数据需要被存储在RAM中，成本很高。另外，Redis不支持分片，这意味着你必须在结点间分片（Twemproxy 是一个不错的选择），这种分片很容易，但是添加和删除节点时的数据处理很复杂。当然你可以将Redis作为缓存，然后重新访问数据库，来克服这个限制。但 是随着访问数据库的成本越来越高，笔者建议还是用Cassandra代替Redis。<br>Redis是一种部署比较容易的Nosql数据库，它基于Key-value存储，数据全部存在内存中，访问速度和并发量着实很让人吃惊。对于各种软件中的Notification系统和这种没到Facebook,Twitter那种量级的Newsfeed系统，redis应该是性价比最高的一种数据库解决办法了：它的集群配置比较方便，配置文件比较简单（即使这样还是费了很大的劲，配置文件的详解还是有的，所以配置起来还算方便：<a href="http://blog.csdn.net/neubuffer/article/details/17003909" target="_blank" rel="external">http://blog.csdn.net/neubuffer/article/details/17003909</a><br>），并发量不用怎么处理就可以轻松过10w+（<a href="http://my.oschina.net/pblack/blog/102394" target="_blank" rel="external">http://my.oschina.net/pblack/blog/102394</a>）</p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">$ numactl -C <span class="number">6</span> ./redis-benchmark -q -n <span class="number">100000</span> -d <span class="number">256</span> </span><br><span class="line">PING (inline): <span class="number">145137.88</span> requests per <span class="keyword">second</span> </span><br><span class="line">PING: <span class="number">144717.80</span> requests per <span class="keyword">second</span> MSET (<span class="number">10</span> <span class="built_in">keys</span>): <span class="number">65487.89</span> requests per <span class="keyword">second</span> </span><br><span class="line">SET: <span class="number">142653.36</span> requests per <span class="keyword">second</span> </span><br><span class="line">GET: <span class="number">142450.14</span> requests per <span class="keyword">second</span> </span><br><span class="line">INCR: <span class="number">143061.52</span> requests per <span class="keyword">second</span> </span><br><span class="line">LPUSH: <span class="number">144092.22</span> requests per <span class="keyword">second</span> </span><br><span class="line">LPOP: <span class="number">142247.52</span> requests per <span class="keyword">second</span> </span><br><span class="line">SADD: <span class="number">144717.80</span> requests per <span class="keyword">second</span> </span><br><span class="line">SPOP: <span class="number">143678.17</span> requests per <span class="keyword">second</span> </span><br><span class="line">LPUSH (again, <span class="operator">in</span> order <span class="built_in">to</span> bench LRANGE): <span class="number">143061.52</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">100</span> elements): <span class="number">29577.05</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">300</span> elements): <span class="number">10431.88</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">450</span> elements): <span class="number">7010.66</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">600</span> elements): <span class="number">5296.61</span> requests per <span class="keyword">second</span></span><br></pre></td></tr></table></figure>
+<p>存储的问题解决了，接下来就是主体的服务了。目前最主流的开源feed系统应该就是上面引用的文章所说的feedly，也就是现在改名为stream framework的一个开源项目，其源代码在github上面可以被搜到。目前开源的版本只有python的，其他语言的如果要实现必须去官网购买付费的服务。</p>
+<ul>
+<li>非开源的：<a href="http://getstream.io/get_started/" target="_blank" rel="external">http://getstream.io/get_started/</a></li>
+<li>开源的wiki地址：<a href="https://stream-framework.readthedocs.org/en/latest/installation.html" target="_blank" rel="external">https://stream-framework.readthedocs.org/en/latest/installation.html</a></li>
+</ul>
+<p>直接用pip安装方式就可以安装好对python的支持。</p>
+<p>根据框架要求安装好几个python的库的支持之后，就可以参照提供的这个示例来设计整个系统了<br><a href="https://github.com/tbarbugli/stream_framework_example" target="_blank" rel="external">https://github.com/tbarbugli/stream_framework_example</a><br>这个框架的原理是使用框架本身提供的Activity类和它的结构，用户根据需求自定义verb，即动态的动作（不知道这么翻译行不行），然后根据使用的数据库形式派生自定义的feed类，确定自定义feed的格式和单个feed的数据上限。这个框架的核心在于Manager类，用户需要继承出一个子类，来实现基本的feed操作。例如添加，删除，分发。（修改feed貌似还不支持）<br>每个feed在数据库中的存在形式即一个key，对应的数据格式是sorted set，这是一个有序集合，每一个元素都有一个排序用的score，而这个score在这就是时间戳。我在自己设计实现相册的时候，也使用了这种设计思想。每一个有序集合里，只存着该feed所拥有的动态的activityId，而动态的基本信息会经过哈希后存在全局的10个hashes中。<br>根据上面提出的两个需求，每个用户就需要有两个feed，一个是每个用户自己的feed，也称为每个用户的timeline，一个是每个用户关注的用户的动态集合，即每个用户的feed，这个feed的维护是通过每次该用户关注的用户发布动态时的分发来进行的。当然，后来加上的相册不在这个框架提供的范围内，我给每个用户又添加了一个存储所有image的key，也是存储每个image唯一的id，再将具体的image信息存储在全局的hashes中。<br>按照以上设计实现出来的系统中，当一个用户想要查看自己的feed，他就只需要直接查询自己的feed的这个key中的信息，当一个用户想要查看自己或某人的timeline的时候，他也只需要查询这个timeline中的信息即可，这些操作都是简单地GET，而不会像关系型数据库需要广大的遍历。当然，这个设计的关键之处就在于如何维护这些key中的内容。<br>Redis的官网有详细的博客和操作介绍：<a href="http://redis.io" target="_blank" rel="external">http://redis.io</a></p>
+<p>说完了存储，就是最关键的分发。Stream framework的关键就在于利用celery异步队列处理机制实现了动态的分发。它默认必须安装django-celery来支持异步处理分发。<br>Django-celery是celery在django的一个支持版本。它是独立于django的一个异步队列处理框架，简单地说就是他有一个队列，有N个worker（由用户自定义）等待执行队列中的task和一个或多个django app，也就是task的发送方贯穿而成。因为是django的版本，所以它的task实际上都是在django中预先编译好的。在stream framework中，用来实现分发的task就包括了几个具体的task，如果要自己写一些定向分发动态或notification，djcelery是必须要熟悉和掌握的。<br>我们可能想要实现类似微信朋友圈推广那种下沉式feed，就要通过定向分发将这个动态分发到指定用户的feed中去，而这个分发的工作量是极其大的，如果要给前端的管理平台等提供一个发布的接口，我们必须要用djcelery在后台运行的一个worker来不断的执行这个task，然后先将http请求返回给用户，而这个task的执行结果可以通过设置celery的backend存储目标来输出。<br>具体的celery设置可以参考：<br><a href="http://docs.celeryproject.org/en/latest/django/" target="_blank" rel="external">http://docs.celeryproject.org/en/latest/django/</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Newsfeed/" rel="tag">#Newsfeed</a>
+          
+            <a href="/tags/celery/" rel="tag">#celery</a>
+          
+            <a href="/tags/djcelery/" rel="tag">#djcelery</a>
+          
+            <a href="/tags/redis/" rel="tag">#redis</a>
+          
+            <a href="/tags/stream-framework/" rel="tag">#stream framework</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/02/UIColor-colorWithRed-green-blue-alpha-的正确用法/" rel="next" title="[UIColor colorWithRed: green: blue: alpha:] 的正确用法">
+                <i class="fa fa-chevron-left"></i> [UIColor colorWithRed: green: blue: alpha:] 的正确用法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/19/Python利用深度优先搜索解数独程序的实现/" rel="prev" title="Python利用深度优先搜索解数独程序的实现">
+                Python利用深度优先搜索解数独程序的实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/04/01/怎么设计和实现一个Newsfeed系统/"
+                   data-title="怎么设计和实现一个Newsfeed系统" data-url="http://sergiochan.github.io/2015/04/01/怎么设计和实现一个Newsfeed系统/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" style="border-radius:50%" src="https://avatars2.githubusercontent.com/u/10103766?v=3&s=460" alt="Sergio Chan" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Sergio Chan</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/SergioChan" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" target="_blank">
+                  <i class="fa fa-linkedin"></i> linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3089081773/profile?topnav=1&wvr=6" target="_blank">
+                  <i class="fa fa-weibo"></i> weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="yuheng9211@qq.com" target="_blank">
+                  <i class="fa fa-email"></i> email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sergio Chan</span>
+</div>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sergiochan"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

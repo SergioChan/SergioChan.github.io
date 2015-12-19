@@ -1,0 +1,719 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。" />
+
+
+
+  <meta name="keywords" content="Hackathon," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="Hackathon 是什么我们先要理解Hackathon这个词的起源。它起源于1999年，词语本身来自于Hack和Marathon的组合，意思就是一群程序员或者软件工程师相聚在一起，像马拉松一样不停的从起点跑到终点进行比赛。由于大部分Hackathon都是现场命题制，这就意味着所有程序员在一开始都是站在同一起跑线上的，所以Hackathon成为了每一个热爱挑战的程序员能够挑战自身各方面能力的机会。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈我对Hackathon的理解">
+<meta property="og:url" content="http://sergiochan.github.io/2015/12/19/谈谈我对Hackathon的理解/index.html">
+<meta property="og:site_name" content="一世烟雨江南">
+<meta property="og:description" content="Hackathon 是什么我们先要理解Hackathon这个词的起源。它起源于1999年，词语本身来自于Hack和Marathon的组合，意思就是一群程序员或者软件工程师相聚在一起，像马拉松一样不停的从起点跑到终点进行比赛。由于大部分Hackathon都是现场命题制，这就意味着所有程序员在一开始都是站在同一起跑线上的，所以Hackathon成为了每一个热爱挑战的程序员能够挑战自身各方面能力的机会。">
+<meta property="og:updated_time" content="2015-12-19T01:08:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈我对Hackathon的理解">
+<meta name="twitter:description" content="Hackathon 是什么我们先要理解Hackathon这个词的起源。它起源于1999年，词语本身来自于Hack和Marathon的组合，意思就是一群程序员或者软件工程师相聚在一起，像马拉松一样不停的从起点跑到终点进行比赛。由于大部分Hackathon都是现场命题制，这就意味着所有程序员在一开始都是站在同一起跑线上的，所以Hackathon成为了每一个热爱挑战的程序员能够挑战自身各方面能力的机会。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+  <title> 谈谈我对Hackathon的理解 | 一世烟雨江南 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" style="background-color:#555" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i style="background-color:wheat"></i></span>
+      <span class="site-title" style="color:wheat">一世烟雨江南</span>
+      <span class="logo-line-after"><i style="background-color:wheat"></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">有情怀的程序员，热爱设计的工程师。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bio">
+          <a href="/bio" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            自传
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section" style="color:wheat">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                谈谈我对Hackathon的理解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-19T09:06:02+08:00" content="2015-12-19">
+              2015-12-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hacker/" itemprop="url" rel="index">
+                    <span itemprop="name">Hacker</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/19/谈谈我对Hackathon的理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/19/谈谈我对Hackathon的理解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="Hackathon__u662F_u4EC0_u4E48"><a href="#Hackathon__u662F_u4EC0_u4E48" class="headerlink" title="Hackathon 是什么"></a>Hackathon 是什么</h1><p>我们先要理解Hackathon这个词的起源。它起源于1999年，词语本身来自于Hack和Marathon的组合，意思就是一群程序员或者软件工程师相聚在一起，像马拉松一样不停的从起点跑到终点进行比赛。由于大部分Hackathon都是现场命题制，这就意味着所有程序员在一开始都是站在同一起跑线上的，所以Hackathon成为了每一个热爱挑战的程序员能够挑战自身各方面能力的机会。</p>
+<p>没错。我说的是，挑战。就如覃超大哥在SegmentFault的Hackathon开始的时候说的那样，hack精神就是Facebook最为推崇的理念，它的很多产品创新和突破都是来自于内部的Hackathon上迸发的灵感。所以应该不难理解，Hackathon的精神在于挑战自我和固有的事物、想法，从而去创造新的事物和新的想法。</p>
+<h1 id="u6211_u7684Hackathon_u7ECF_u5386"><a href="#u6211_u7684Hackathon_u7ECF_u5386" class="headerlink" title="我的Hackathon经历"></a>我的Hackathon经历</h1><p>先说说我的Hackathon经历吧。在接触Hackathon之前，我接触过很多创业团队，见过很多新的想法，但大部分都因为时间问题或者进度问题一拖再拖，亦或是这些想法并没有特别的打破人们固有的一些想法和思维模式。而我就已经乐衷于开拓自己的思维模式和范围，去接触更大的互联网世界。</p>
+<p>从创业和各种项目一路走来，我对软件工程的热爱逐渐在团队合作中被我自己培养了起来。对我来说，做一件事情，最重要的当然是这件事情是否有趣，是否值得我去热爱，其次就是能够和小伙伴一起去做这件事情，还记得两年前我刚开始走上这条道路的时候，我写到，“携两三靠谱好基友，凭一腔热血，青春年少，有什么做不到的。年轻就该气盛，才不负年华”。</p>
+<p>于是，当我第一次和小伙伴一起接触到Hackathon的时候，我就陷入了无比的狂热中。那是Dorahacks在北航举办的一次Hackathon，由于没有经验，我们也没有熬夜，只是晚上在QQ上相约一起写了一部分，第二天早上早早到地方开始调bug。一开始我们也通过头脑风暴想出了很多奇怪的创意，但是都被否定了，最后思宇在散步的时候想出了网页弹幕这个鬼点子。于是那也开启了我们每次Hackathon都一定会有的弹幕模式……其实写一个网页弹幕的Chrome插件花不了多少时间，加上leancloud即时通信和存储的集成，我们总共也没花几个小时，就将一个差不多通过了测试的版本放上台展示了。</p>
+<p>展示的时候，我扯了一大堆弹幕的起源和95后新兴人类的社交模式，扯了我从创业以来了解的各种互联网现状，然后啪的一展示，小伙伴们啪啪啪打了一堆弹幕上去，正好浏览的网页又特别想让人吐槽，所以大家都笑了，我们顺理成章拿了第一。</p>
+<p>后来我就总结出这么个道理，Hackathon，展示也是相当关键的一环，你要么让观众大笑，要么让观众大惊，如果观众一点反应都没有，那你就基本没有希望了。所以Hackathon，一定意义上并不是完全的在挑战一个人的思维能力，代码能力，团队合作能力之类的东西，更是在挑战和检验一个人的表达能力，简单地说，一个人的气场。对于一般的程序员来说，可能根本没有意识到在平时所谓气场和表达能力有什么重要性，但是，这也就意味着一个程序员将会永远在这种局限性之下成长。</p>
+<p>以上总结同样适用于我们接下来参加的一次大众中国的Hackathon。虽然这就是我将要说的商业大赛，但是最后拿了第一的团队，对于展示的把握相当的成熟，让我也学到了很多。我们什么奖也没有获得，但是我们脑洞大开的想让车与车之间通过弹幕的方式在公路上连接在一起。不知道为什么，也许我们和其他MBA或者博士们参加Hackathon的动机不一样吧，所以我们受到了相当的关注，这也让我感觉特别不自在和恼火。这本来就是大人们的一个游戏，他们只是对我们感到好奇罢了。</p>
+<p>挂羊头卖狗肉，是我对于很多这样的所谓Hackathon的商业创新大赛和外包大赛的总结。也许是各种企业主和策划方都觉得通过传统的比赛模式没有办法吸引到新时代的人才了，所以总是各种效仿，挂上Hackathon的名号。有一些比赛评委根本不看技术而看商业模式和商业分析，来自企业的一些Marketing的评委关注点是在如何让他们的企业赚更多的钱上，对于技术的创新性和效果并没有那么接受；而有一些比赛的评委对于自己出的题目已经有了相当明确的答案，却只是希望参加比赛的hacker能够按照他的期望把一个东西的原型做出来。</p>
+<p>是的，如果你想用广义的Hackathon定义来理解，你也许可以将他们也包含到Hackathon中，但是不可否认的是，这些比赛形式的本质是传统的，是抑制技术创新的。真正的Hackathon，应该是基于技术的创新和理念的创新，去解决一个实际的问题，从而让世界变得更美好。</p>
+<p>上周末的TC Hackathon，我想说我们最后退出了。在讨论了很久之后，对于某个企业提出的冰柜的题目，我们虽然觉得有很多能创新的点，但是当评委介绍完整个任务之后，我其实已经觉得没有多大希望了——评委对于项目有着明确的要求，甚至可以说他们应该已经花费了一些人力在这个项目上。整个题目是这个企业之前就已经提出的一个创业点，他们不希望自己投入研发成本去做这件事，而希望创业团队来帮他们实现。当没有什么好的创业团队来做这件事的时候，他们就把这件事情扔到一个Hackathon上，可以说，那些可怜的奖金如果换做外包的形式的话，数额只够一个人的所得。用廉价的奖金换来一个优质的外包方案，我相信对于每个企业都是一种好的选择。我也认识一些传统行业的人，他们告诉我，通过将项目外包给学校或者在学校内组织比赛的形式帮助他们完成一个项目的开发是他们很经常采用的手段。这个道理我想很多人都明白，但是我不希望外包比赛非得套上Hackathon的头套，玷污我心里对于技术创新的向往和渴望。</p>
+<p>最好的一次Hackathon是两周前的SegmentFault Hackathon。由于它本身是个开发者社区，而且这个Hackathon已经相当成熟，由他们自己举办，因此来自外界的干扰和污染特别小，评委也是来自于一线的新兴创业团队，并且都是一些注重技术和技术分享的公司。在这个比赛中，除了少量出现的偷偷用成品参加比赛的行为，包括零食，饮料的供应，都比TC的那次丰富和完善许多。而且采用的是现场公布题目的形式，题目的点也相当容易发散，不会提各种需求，这才让我感觉真真正正能出一些好东西。说实话，如果在Hackathon上还提一点两点三点好几点需求，那我就真的觉得和我平时做咨询，帮团队分析产品，做基础技术架构设计没有区别了。</p>
+<p>也许只有SegmentFault的Hackathon才配得上年轻开发者的节日1024吧。</p>
+<h1 id="Hackathon_u9700_u8981_u7684_u6280_u80FD"><a href="#Hackathon_u9700_u8981_u7684_u6280_u80FD" class="headerlink" title="Hackathon需要的技能"></a>Hackathon需要的技能</h1><p>对于我来说，我最害怕的就是止步不前，更害怕的是自己甘愿和其他90%的人一样陷于固有的事物和思维模式。我相信每一个接受过良好本科教育的大学毕业生在许多所谓的基础方式上都有着良好的基础，我们在校园里已经接受了足够的通识教育和专业基础教育，真正让每个人能够变得不同或者更好的，是在这个基础之上的思维模式。而Hackathon，既是对你的思维模式的磨炼，也是一种考验。</p>
+<p>参加Hackathon，你需要首先对这个比赛有足够的判断能力，他到底是个商业大赛，还是外包大赛，还是真的Hackathon？对于不同类型的“Hackathon”，你需要做不同的准备，虽然当你发现是前两者之后你可能已经对它失去兴趣了。下面是你需要的一些技能。</p>
+<h2 id="u4F60_u9700_u8981_u51DD_u805A_u4E00_u4E2A_u56E2_u961F_u3002"><a href="#u4F60_u9700_u8981_u51DD_u805A_u4E00_u4E2A_u56E2_u961F_u3002" class="headerlink" title="你需要凝聚一个团队。"></a>你需要凝聚一个团队。</h2><p>对于团队的凝聚力更大程度应该是通过事情，而不仅仅是所谓的个人魅力。事情有趣，事情酷炫，事情实实在在的解决问题，我想每一个有激情的人都会很主动的投入进来。所以你需要想清楚要做的事情应该是什么样的，是实际的，还是超出自己想象的，对做的事情需要有一个方向的把控，这才能够凝聚起一个团队。我始终坚信，共同的热爱才是团队一致向前的最好动力。</p>
+<h2 id="u4F60_u9700_u8981_u6311_u9009_u4F60_u7684_u56E2_u961F_u3002"><a href="#u4F60_u9700_u8981_u6311_u9009_u4F60_u7684_u56E2_u961F_u3002" class="headerlink" title="你需要挑选你的团队。"></a>你需要挑选你的团队。</h2><p>Hackathon不是刷上机题，你不是一个人在战斗。所以团队是最重要的部分。首先你需要保证你自己的技术栈足够宽，这里我说的不是什么web全栈框架，我说的技术栈是从前端，客户端，后端，数据库，服务器到建模，动画，设计，客户端的游戏开发，甚至还有视频制作这种技术如果最好都需要覆盖到。当然，对于一个人来说做到这些太困难了，所以这也就是你需要团队的原因。如果是偏商业大赛，即有比较明确的商业赞助和商业评委的参与，那么你还需要一到两个Marketing的小伙伴加入；如果是偏外包大赛，甚至纯技术的团队都可以胜任，但是有一个产品/交互会好很多；如果是纯Hackathon，组一个纯产品的小伙伴就没有特别大的意义了，那个时候，人人都可以是产品经理！</p>
+<p>团队人数方面，大部分Hackathon都限制在3~5人得范围内，最佳组合应该是能满足上述要求的4人组合。竞争力足够和5人团队匹敌，而5人团队也容易出现分歧，从而拖延本来就赶的进度。每一个决策都要尽量让每个队员都特别接受，并且有激情去做，因为Hackathon是在短时间内对每个人的精力和毅力的极大挑战，如果没有激情，那么你就会因为队员的疲惫而失去原本属于他的那份时间。</p>
+<h2 id="u4F60_u9700_u8981_u5B66_u4F1A_u4E0D_u4E00_u6837_u7684_u5934_u8111_u98CE_u66B4_u3002"><a href="#u4F60_u9700_u8981_u5B66_u4F1A_u4E0D_u4E00_u6837_u7684_u5934_u8111_u98CE_u66B4_u3002" class="headerlink" title="你需要学会不一样的头脑风暴。"></a>你需要学会不一样的头脑风暴。</h2><p>这里的意思是如果你用正常的头脑风暴方式去思考，那么别人会和你做着同样的事情，到达同一个点，并且开始做同一个想法。这直接就宣告你的努力白费了。所以，你需要学会不一样的头脑风暴方式，不是从题目里的字眼发散，而是尝试着跳出来，从各处散乱的灵感里找到几个和题目接近的主题，再从那些主题中发散。记住，你能想到的东西，90%以上别人都会想到，所以我们要做的是去想别人想不到的那些想法。</p>
+<h2 id="u70ED_u7231_u3002"><a href="#u70ED_u7231_u3002" class="headerlink" title="热爱。"></a>热爱。</h2><p>没有什么好说坚持和毅力什么的。那些都没有办法让你做到最好。只有热爱，像乔布斯说的那样，只有热爱能够让你真正把一件事情做好。所以在Hackathon的时候也一样，记住，一定要找到你热爱的东西，然后去完成它。如果找不到，就继续找，当然如果实在找不到，你可以选择随便找一个刚刚想出来的点子去实现。我相信4个人的思维火花碰撞，如果Hackathon足够纯净，你不可能找不到热爱的东西的。在Hackathon中，最切忌切忌的，就是凑合，为了做项目而去做项目。</p>
+<h2 id="u5C55_u793A_u7684_u65F6_u5019_uFF0C_u8C26_u865A_uFF0C_u4F46_u662F_u8BA9_u522B_u4EBA_u611F_u53D7_u3002"><a href="#u5C55_u793A_u7684_u65F6_u5019_uFF0C_u8C26_u865A_uFF0C_u4F46_u662F_u8BA9_u522B_u4EBA_u611F_u53D7_u3002" class="headerlink" title="展示的时候，谦虚，但是让别人感受。"></a>展示的时候，谦虚，但是让别人感受。</h2><p>展示也是相当重要的一部分，如我上文所提。当你在最后的展示的时候，你需要让所有人都能感受到你的热爱，感受到你们的想法和你们所实现的东西的激情，这时候就需要你的表达能力和感染力了。在台上不要害怕，保持谦虚是一种很好的驱赶恐慌感的方式。简单明了的让大家了解你的想法，并且通过demo的演示让大家感受到你的热爱。好的东西，才更需要一种好的途径进入每一个观众的内心。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hackathon/" rel="tag">#Hackathon</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/22/runloop初窥/" rel="next" title="runloop初窥">
+                <i class="fa fa-chevron-left"></i> runloop初窥
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/12/19/谈谈我对Hackathon的理解/"
+                   data-title="谈谈我对Hackathon的理解" data-url="http://sergiochan.github.io/2015/12/19/谈谈我对Hackathon的理解/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" style="border-radius:50%" src="https://avatars2.githubusercontent.com/u/10103766?v=3&s=460" alt="Sergio Chan" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Sergio Chan</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/SergioChan" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" target="_blank">
+                  <i class="fa fa-linkedin"></i> linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3089081773/profile?topnav=1&wvr=6" target="_blank">
+                  <i class="fa fa-weibo"></i> weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="yuheng9211@qq.com" target="_blank">
+                  <i class="fa fa-email"></i> email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hackathon__u662F_u4EC0_u4E48"><span class="nav-number">1.</span> <span class="nav-text">Hackathon 是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u6211_u7684Hackathon_u7ECF_u5386"><span class="nav-number">2.</span> <span class="nav-text">我的Hackathon经历</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hackathon_u9700_u8981_u7684_u6280_u80FD"><span class="nav-number">3.</span> <span class="nav-text">Hackathon需要的技能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u4F60_u9700_u8981_u51DD_u805A_u4E00_u4E2A_u56E2_u961F_u3002"><span class="nav-number">3.1.</span> <span class="nav-text">你需要凝聚一个团队。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u4F60_u9700_u8981_u6311_u9009_u4F60_u7684_u56E2_u961F_u3002"><span class="nav-number">3.2.</span> <span class="nav-text">你需要挑选你的团队。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u4F60_u9700_u8981_u5B66_u4F1A_u4E0D_u4E00_u6837_u7684_u5934_u8111_u98CE_u66B4_u3002"><span class="nav-number">3.3.</span> <span class="nav-text">你需要学会不一样的头脑风暴。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u70ED_u7231_u3002"><span class="nav-number">3.4.</span> <span class="nav-text">热爱。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5C55_u793A_u7684_u65F6_u5019_uFF0C_u8C26_u865A_uFF0C_u4F46_u662F_u8BA9_u522B_u4EBA_u611F_u53D7_u3002"><span class="nav-number">3.5.</span> <span class="nav-text">展示的时候，谦虚，但是让别人感受。</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sergio Chan</span>
+</div>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sergiochan"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
