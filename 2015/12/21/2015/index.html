@@ -36,7 +36,7 @@
 
 
 
-  <meta name="keywords" content="Newsfeed,celery,djcelery,redis,stream framework," />
+  <meta name="keywords" content="Input something.." />
 
 
 
@@ -45,16 +45,19 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不">
+<meta name="description" content="看看去年底给自己定下的目标还是觉得自己的2015年过的蛮有意义的。回头看了看去年底写的对2015年的展望，发现去年对自己的展望基本在今年8月份左右就已经实现完了，反而是在九月之后经历了又一次巨大的跌宕起伏，有了很多意外的收货。一年过得实在是太充实……
+不得不说我的实习和工作经历首先，我是在tata度过了从大四到毕业后的十个月，这里面的感情真的没法言说，这是我第一家稳定下来的公司，也是找到了归属感的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="怎么设计和实现一个Newsfeed系统">
-<meta property="og:url" content="http://sergiochan.github.io/2015/04/01/怎么设计和实现一个Newsfeed系统/index.html">
+<meta property="og:title" content="2015">
+<meta property="og:url" content="http://sergiochan.github.io/2015/12/21/2015/index.html">
 <meta property="og:site_name" content="一世烟雨江南">
-<meta property="og:description" content="也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不">
-<meta property="og:updated_time" content="2015-12-19T01:19:28.000Z">
+<meta property="og:description" content="看看去年底给自己定下的目标还是觉得自己的2015年过的蛮有意义的。回头看了看去年底写的对2015年的展望，发现去年对自己的展望基本在今年8月份左右就已经实现完了，反而是在九月之后经历了又一次巨大的跌宕起伏，有了很多意外的收货。一年过得实在是太充实……
+不得不说我的实习和工作经历首先，我是在tata度过了从大四到毕业后的十个月，这里面的感情真的没法言说，这是我第一家稳定下来的公司，也是找到了归属感的">
+<meta property="og:updated_time" content="2015-12-29T13:52:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="怎么设计和实现一个Newsfeed系统">
-<meta name="twitter:description" content="也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不">
+<meta name="twitter:title" content="2015">
+<meta name="twitter:description" content="看看去年底给自己定下的目标还是觉得自己的2015年过的蛮有意义的。回头看了看去年底写的对2015年的展望，发现去年对自己的展望基本在今年8月份左右就已经实现完了，反而是在九月之后经历了又一次巨大的跌宕起伏，有了很多意外的收货。一年过得实在是太充实……
+不得不说我的实习和工作经历首先，我是在tata度过了从大四到毕业后的十个月，这里面的感情真的没法言说，这是我第一家稳定下来的公司，也是找到了归属感的">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +69,7 @@
 
 
 
-  <title> 怎么设计和实现一个Newsfeed系统 | 一世烟雨江南 </title>
+  <title> 2015 | 一世烟雨江南 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -201,7 +204,7 @@
             
             
               
-                怎么设计和实现一个Newsfeed系统
+                2015
               
             
           </h1>
@@ -210,34 +213,19 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-01T09:14:52+08:00" content="2015-04-01">
-              2015-04-01
+            <time itemprop="dateCreated" datetime="2015-12-21T20:13:17+08:00" content="2015-12-21">
+              2015-12-21
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Python学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Python学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/04/01/怎么设计和实现一个Newsfeed系统/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/01/怎么设计和实现一个Newsfeed系统/" itemprop="commentsCount"></span>
+                <a href="/2015/12/21/2015/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/21/2015/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -256,63 +244,35 @@
       
 
       
-        <span itemprop="articleBody"><p>也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。<br>首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不可，只是当一个系统的容量到一定级别之后，简单的技术就会变得难以满足系统的需求了。特别是在实际需求中，feed所在的表可能会经历超大并发的读写，而且由于feed的特殊性——例如Facebook，twitter，这些feed其实都只是一个简单的动态信息，而并非一个完整的对象信息，因此关系型数据库对于Newsfeed系统来说并不是最首选的方案。Feed的实际需求还有：</p>
+        <span itemprop="articleBody"><h1 id="u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807"><a href="#u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807" class="headerlink" title="看看去年底给自己定下的目标"></a>看看去年底给自己定下的目标</h1><p>还是觉得自己的2015年过的蛮有意义的。回头看了看去年底写的对2015年的展望，发现去年对自己的展望基本在今年8月份左右就已经实现完了，反而是在九月之后经历了又一次巨大的跌宕起伏，有了很多意外的收货。一年过得实在是太充实……</p>
+<h1 id="u4E0D_u5F97_u4E0D_u8BF4_u6211_u7684_u5B9E_u4E60_u548C_u5DE5_u4F5C_u7ECF_u5386"><a href="#u4E0D_u5F97_u4E0D_u8BF4_u6211_u7684_u5B9E_u4E60_u548C_u5DE5_u4F5C_u7ECF_u5386" class="headerlink" title="不得不说我的实习和工作经历"></a>不得不说我的实习和工作经历</h1><p>首先，我是在tata度过了从大四到毕业后的十个月，这里面的感情真的没法言说，这是我第一家稳定下来的公司，也是找到了归属感的团队。在公司里认识了一大帮子朋友，学了python，搭了一套newsfeed系统，尝试着做了一套TCP服务器间内部调用的框架。习惯了Linux服务器，习惯了shell，习惯了vim，在后端技能方面长进了太多。掌握了Redis和Mongo，学会了NoSQL的设计思想，当然部署和操作什么的都是简单的部分了。准备有空读Redis源码，大致看了一下感觉还好……同时也有了一定处理并发和较大规模系统的能力，在信息流系统并发较大的时候有了一定处理经验，这是我还在学校的时候最宝贵的经验，也是我去年底给自己定下的目标里写到的。对于一个还在大四的学生，有过处理百万级用户量的数据库和相当高的并发量的后端系统的经验真的是十分宝贵的。并且从陈健那儿学到了很多架构经验，很宝贵，这些架构思想极大的提高了我的系统设计能力。<br>遇到了老曹，很耐心的CTO，对我也十分的器重。谈不上人生导师，但对我的职业生涯，和对自己的定位都起了很大的影响，我开始明白自己应该怎么成长了，也懂得对自己做更好的职业生涯规划。同时整个全栈的知识体系和技能体系也变得丰富起来。<br>九月由于一些团队的原因，想要找个更高的平台提升自己，所以当时先是傻逼的在拉钩上投了微博小米和百度。可能在那个时候，还不是特别有信心直接就找内推，而且那个时候正好赶上秋招，机会还算蛮多的，于是打算自己先试试。第一个去的是微博。我在微博坐了半个小时没有人理我，做了一个小时的题也没有人给我倒杯水，二面的面试官也是急匆匆的就问完走了，并且在面试的过程中对我表示了极其明显的鄙视和轻蔑。虽然我在后来拉钩的评价上给了一颗星的差评，但是这段经历对我下半年最后几个月的转变是非常重要的。我开始明白我并不能要求所有人都对我满意，但是我至少还是得被一部分人认可，这样才不会说明我的所谓能力其实纯属扯淡。当我受到这样的对待的时候，虽然很大一部分是因为我是拉钩来的社招，并且他们甚至没有重视我刚毕业这个事实，而是认为我是刚跳槽的社会人员，但是我还是认为很大一部分原因出在自己的身上。回去之后，我开始更注重在工作中对自己能力的积累，我自己研究了runtime和runloop这些运行机制之后，发现天天写业务逻辑，和不懂技术瞎扯淡的产品经理配合简直就是对自己职业生涯的浪费和埋没，我被所谓需求所蒙蔽，根本难以接触到技术的真谛，我明白我需要做出一些改变了。所以才有了后来的波澜壮阔的历程。<br>第二个去的是百度。说实话这是我对百度印象最好的一次。然而最后的结局十分的无奈和可惜，百度砸在了O2O上，全面停止了社招，于是我阴差阳错的被自己误过了发出offer的时间点，错过了去百度的机会。但是百度的那次面试，前两面的面试官，以及最后三面电话里的负责人，都给了我非常好的印象，感觉真的可能是一个适合我的团队。并且二面的小哥，是我遇见的第一个会在面试的过程中打开我的博客和Github主页逐个问我并和我聊天的面试官。<br>不过还是那句话，上帝在给你关上一扇门的时候，总会给你打开另一扇窗户。所以当百度确认无法争取到offer之后，我当时满脑子只有一个想法，10月份的segmentfault Hackathon一定要好好玩，好好地和小萌配合一次，认真地，尽力的努力一次，去追求自己热爱和快乐的事情。  </p>
 <blockquote>
-<ul>
-<li>1.用户需要频繁查询自己和自己好友产生的动态集合。</li>
-<li>2.用户需要频繁的查询自己或其他用户产生的动态的子集。</li>
-</ul>
-<p>第一条需求远大于第二条，即刷朋友圈的次数远大于查看用户相册的次数。  </p>
+<p>写下这些文字的时候，我正在踏上再次去寻找小萌的旅途。圣诞节将在杭州的西湖边度过。这一次，我想，既然我们已经找到了自己真正喜欢的事情，就一定要努力地奋斗下去。再不留遗憾。</p>
 </blockquote>
-<p>如果采用关系型数据库，那么第一个需求的实现应该是先从好友表中获取该用户的好友ID，然后通过好友ID在这个表中查询所有的数据，并通过时间排序分页返回之类，这实际上在数据库操作中遍历了大量其他无用的信息，而且当表的容量增大，如果不采用高效的分表或索引，这个操作的代价将会更大。而第二个需求，也是存在同样的问题，当1000个用户分别查看1个用户的timeline时，其中有999次数据库操作是浪费的，因此在Newsfeed的系统中采用Nosql的数据库是更加明智的方案。<br>在开始，选择redis还是cassandra着实让我犹豫了一阵，这篇文章彻底打开了我的思路：</p>
-<p><a href="http://www.csdn.net/article/2013-11-07/2817430-design-decisions-for-scaling-your-high-traffic-feeds" target="_blank" rel="external">http://www.csdn.net/article/2013-11-07/2817430-design-decisions-for-scaling-your-high-traffic-feeds</a></p>
-<p>这是一个国外时尚网站和instagram的发展经验。</p>
-<p>Fashiolista和Instagram都经历了从Redis开始，然后转战Cassandra的过程。笔者之所以会推荐从Redis开始是因为Redis更容易启动和维持。<br>然而Redis存在一定的限制，所有的数据需要被存储在RAM中，成本很高。另外，Redis不支持分片，这意味着你必须在结点间分片（Twemproxy 是一个不错的选择），这种分片很容易，但是添加和删除节点时的数据处理很复杂。当然你可以将Redis作为缓存，然后重新访问数据库，来克服这个限制。但 是随着访问数据库的成本越来越高，笔者建议还是用Cassandra代替Redis。<br>Redis是一种部署比较容易的Nosql数据库，它基于Key-value存储，数据全部存在内存中，访问速度和并发量着实很让人吃惊。对于各种软件中的Notification系统和这种没到Facebook,Twitter那种量级的Newsfeed系统，redis应该是性价比最高的一种数据库解决办法了：它的集群配置比较方便，配置文件比较简单（即使这样还是费了很大的劲，配置文件的详解还是有的，所以配置起来还算方便：<a href="http://blog.csdn.net/neubuffer/article/details/17003909" target="_blank" rel="external">http://blog.csdn.net/neubuffer/article/details/17003909</a><br>），并发量不用怎么处理就可以轻松过10w+（<a href="http://my.oschina.net/pblack/blog/102394" target="_blank" rel="external">http://my.oschina.net/pblack/blog/102394</a>）</p>
-<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">$ numactl -C <span class="number">6</span> ./redis-benchmark -q -n <span class="number">100000</span> -d <span class="number">256</span> </span><br><span class="line">PING (inline): <span class="number">145137.88</span> requests per <span class="keyword">second</span> </span><br><span class="line">PING: <span class="number">144717.80</span> requests per <span class="keyword">second</span> MSET (<span class="number">10</span> <span class="built_in">keys</span>): <span class="number">65487.89</span> requests per <span class="keyword">second</span> </span><br><span class="line">SET: <span class="number">142653.36</span> requests per <span class="keyword">second</span> </span><br><span class="line">GET: <span class="number">142450.14</span> requests per <span class="keyword">second</span> </span><br><span class="line">INCR: <span class="number">143061.52</span> requests per <span class="keyword">second</span> </span><br><span class="line">LPUSH: <span class="number">144092.22</span> requests per <span class="keyword">second</span> </span><br><span class="line">LPOP: <span class="number">142247.52</span> requests per <span class="keyword">second</span> </span><br><span class="line">SADD: <span class="number">144717.80</span> requests per <span class="keyword">second</span> </span><br><span class="line">SPOP: <span class="number">143678.17</span> requests per <span class="keyword">second</span> </span><br><span class="line">LPUSH (again, <span class="operator">in</span> order <span class="built_in">to</span> bench LRANGE): <span class="number">143061.52</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">100</span> elements): <span class="number">29577.05</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">300</span> elements): <span class="number">10431.88</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">450</span> elements): <span class="number">7010.66</span> requests per <span class="keyword">second</span> </span><br><span class="line">LRANGE (<span class="keyword">first</span> <span class="number">600</span> elements): <span class="number">5296.61</span> requests per <span class="keyword">second</span></span><br></pre></td></tr></table></figure>
-<p>存储的问题解决了，接下来就是主体的服务了。目前最主流的开源feed系统应该就是上面引用的文章所说的feedly，也就是现在改名为stream framework的一个开源项目，其源代码在github上面可以被搜到。目前开源的版本只有python的，其他语言的如果要实现必须去官网购买付费的服务。</p>
-<ul>
-<li>非开源的：<a href="http://getstream.io/get_started/" target="_blank" rel="external">http://getstream.io/get_started/</a></li>
-<li>开源的wiki地址：<a href="https://stream-framework.readthedocs.org/en/latest/installation.html" target="_blank" rel="external">https://stream-framework.readthedocs.org/en/latest/installation.html</a></li>
-</ul>
-<p>直接用pip安装方式就可以安装好对python的支持。</p>
-<p>根据框架要求安装好几个python的库的支持之后，就可以参照提供的这个示例来设计整个系统了<br><a href="https://github.com/tbarbugli/stream_framework_example" target="_blank" rel="external">https://github.com/tbarbugli/stream_framework_example</a><br>这个框架的原理是使用框架本身提供的Activity类和它的结构，用户根据需求自定义verb，即动态的动作（不知道这么翻译行不行），然后根据使用的数据库形式派生自定义的feed类，确定自定义feed的格式和单个feed的数据上限。这个框架的核心在于Manager类，用户需要继承出一个子类，来实现基本的feed操作。例如添加，删除，分发。（修改feed貌似还不支持）<br>每个feed在数据库中的存在形式即一个key，对应的数据格式是sorted set，这是一个有序集合，每一个元素都有一个排序用的score，而这个score在这就是时间戳。我在自己设计实现相册的时候，也使用了这种设计思想。每一个有序集合里，只存着该feed所拥有的动态的activityId，而动态的基本信息会经过哈希后存在全局的10个hashes中。<br>根据上面提出的两个需求，每个用户就需要有两个feed，一个是每个用户自己的feed，也称为每个用户的timeline，一个是每个用户关注的用户的动态集合，即每个用户的feed，这个feed的维护是通过每次该用户关注的用户发布动态时的分发来进行的。当然，后来加上的相册不在这个框架提供的范围内，我给每个用户又添加了一个存储所有image的key，也是存储每个image唯一的id，再将具体的image信息存储在全局的hashes中。<br>按照以上设计实现出来的系统中，当一个用户想要查看自己的feed，他就只需要直接查询自己的feed的这个key中的信息，当一个用户想要查看自己或某人的timeline的时候，他也只需要查询这个timeline中的信息即可，这些操作都是简单地GET，而不会像关系型数据库需要广大的遍历。当然，这个设计的关键之处就在于如何维护这些key中的内容。<br>Redis的官网有详细的博客和操作介绍：<a href="http://redis.io" target="_blank" rel="external">http://redis.io</a></p>
-<p>说完了存储，就是最关键的分发。Stream framework的关键就在于利用celery异步队列处理机制实现了动态的分发。它默认必须安装django-celery来支持异步处理分发。<br>Django-celery是celery在django的一个支持版本。它是独立于django的一个异步队列处理框架，简单地说就是他有一个队列，有N个worker（由用户自定义）等待执行队列中的task和一个或多个django app，也就是task的发送方贯穿而成。因为是django的版本，所以它的task实际上都是在django中预先编译好的。在stream framework中，用来实现分发的task就包括了几个具体的task，如果要自己写一些定向分发动态或notification，djcelery是必须要熟悉和掌握的。<br>我们可能想要实现类似微信朋友圈推广那种下沉式feed，就要通过定向分发将这个动态分发到指定用户的feed中去，而这个分发的工作量是极其大的，如果要给前端的管理平台等提供一个发布的接口，我们必须要用djcelery在后台运行的一个worker来不断的执行这个task，然后先将http请求返回给用户，而这个task的执行结果可以通过设置celery的backend存储目标来输出。<br>具体的celery设置可以参考：<br><a href="http://docs.celeryproject.org/en/latest/django/" target="_blank" rel="external">http://docs.celeryproject.org/en/latest/django/</a></p>
+<h1 id="Hackathoner"><a href="#Hackathoner" class="headerlink" title="Hackathoner"></a>Hackathoner</h1><p>2015年另一个意外就是接触到了Hackathon，并且与之陷入爱河。<br>第一次参加的是北航的Dorahacks Hackathon，忘记那次的报名信息是从哪儿看的了，好像是朋友圈谁转发的，于是就报名了，并且拉上了杨大神和邓晗。虽然在那次参赛之前我根本对Hackathon没有什么了解，但是也幸运的拿了第一，这次经历使我逐渐成为了一个狂热爱好Hackathon的Geek。后来参加了大众中国的Hackathon，和一堆MBA博士们一起比赛，被虐的体无完肤，才慢慢明白Hackathon不是自己想象中的那么单纯。第三次是十月份的SegmentFault Hackathon，将我从错过百度的阴影中拯救出来，接触到了非常纯粹的Hackathon。</p>
+<h1 id="iOS_u5F00_u53D1"><a href="#iOS_u5F00_u53D1" class="headerlink" title="iOS开发"></a>iOS开发</h1><p>今年九月就是正式入坑iOS一周年，五月份把给公司产品写的第一个控件开源，来到了Github这个全球最大的男性社区，开始搞基。七月份开始写几个独立应用，除了密码管理的上架了，其他都夭折了，感觉写独立应用不是在开源社区里的成长方式，并且写独立应用对于自己的综合能力，包括设计,审美和创意之类的也都有一定要求，也许现在的我去写才会有一些感觉吧。后来总结出来的是，在开源社区的成长，要么写一个很好用的轮子，要么模仿一个很好看的应用，我肯定不想做后者……在公司里写业务写的就够累了，还花时间去模仿人家的客户端干嘛。所以也是纠结了好一段时间没东西写，一直到了九月份，还在写一些无关紧要的项目。第一个比较完整的项目就是开源了公司产品里头基于protobuf的模仿微信的网络请求框架。同时写了一个python的解数独的程序和基于TCP连接的服务器内部调用的框架。直到10月底才开始慢慢找到方向，从第一个试水的TableViewCell开始，逐渐写了一些或者好看的或者好用的或者有创意的轮子，一直到现在，也总共收获了一千多的star了，期间认识了无数开源社区里的基友，感慨时间匆匆，自己没有早点入坑。接下去还是会尽力把这些之前项目所积累的经验和开源的经验结合起来，创造更多更好用的交互模块。<br>一开始写一些开源的时候，DQ让我发到微博去获得一些关注，同时可以找到更多的人交流，于是我就尝试着进入了微博。没想到写的一些动效实现挺受欢迎的，于是就有了更多做下去和热爱的动力。我也在这个过程中认识了Martin老湿和XerLee大神，和一些比较有名的交互设计师有了更多的交流，实现了一些这些设计师做的设计，而且又有小萌和翻译组的一些小伙伴支持，于是就有了发起组织的想法。再加上马老湿又比较勤奋好学的开始写Swift并且尝试自己实现自己做的动效设计，所以就很快的搞在了一起，交流代码经验什么的。所以就慢慢步入了开源的正轨，成立了开源组，不过开头做了一点东西之后到年底了，小萌期末考，我们都忙着工作，所以有半个月对于开源组的贡献很少，毕竟每次从设计，到实现，最后产出一个完整的框架或者控件，然后还要整理出一篇通俗易懂，讲解合理生动的分享博文都是一件特别花时间和精力的事情，所以开源的工作实际上比想象中要复杂得多。</p>
+<h1 id="SwiftGG"><a href="#SwiftGG" class="headerlink" title="SwiftGG"></a>SwiftGG</h1><p>正式加入swiftGG翻译组，从翻译swift官方指南，到成立翻译组，开始翻译。加入SwiftGG这个逗比组是2015年最正确的选择之一。在组里接触了Swift，业余时间开始一点点的自学，虽然基本还是没有怎么使用。最主要的还是接触了一大帮翻译组的成员，以及接触了Swift中文大会，遇见和认识了来自全国各地天南海北的基友们，忽然有了好多基友可以交流技术问题，交流代码，交流开源，这种感觉真的是超级幸福。<br>明年1月10日的大会，感觉可以和天南海北的开发者们好好面基了😂</p>
+<h1 id="u535A_u5BA2"><a href="#u535A_u5BA2" class="headerlink" title="博客"></a>博客</h1><p>开始稳定写博客，大概一个月一篇，速度有点慢，但是工作也忙。<br>比较注重博客质量，因为只有原创的好博客才能吸引一些读者吧，虽然最后确实有一些人关注我的博客 :-P<br>博客的历程比较曲折，一开始是在香港的虚拟主机里搭的Wordpress，用了半年多，自从七八月份开始莫名其妙被俄罗斯和乌克兰的黑客攻击，我的流量就没下来过 -。- 所以开始着手换到了Github上，迁移过程中丢弃了一些文章，所以现在的博客文章看起来并不多。后来刚迁移到Github之后，发生了惨无人道的水淹事件，我不小心把一杯水倒在了刚买的电脑上，导致尚未更新的Github的博客源文件丢失，后来过了两周才换了新电脑，这个过程中我的博客就处于了停滞的状态。直到最近才终于又稳定下来，继续维护和优化属于自己的个人站点和技术博客。<br>而且原域名已经被我弃用了，换成了现在的sergiochan.xyz。</p>
+<h1 id="u5BF9_u81EA_u5DF1_u660E_u5E74_u7684_u671F_u671B"><a href="#u5BF9_u81EA_u5DF1_u660E_u5E74_u7684_u671F_u671B" class="headerlink" title="对自己明年的期望"></a>对自己明年的期望</h1><p>我明白自己的职业生涯到了最关键的冲刺期，在这个阶段里，我的经验，能力，眼界和社交圈都会飞速的膨胀，这一年从大学中脱离出来的经历已经让我明白了我之前在大学里浪费的两年多时光是多么的遗憾，但是幸运的是从2015年开始我走上了一条我到现在还觉得是正确的道路。<br>明年首先的愿望，或者是奢望，就是能够通过更多的Hackathon和开源，认识更多和我志同道合的朋友们，继续和小萌一起结对编程下去。希望能够运气好点再捞几个奖牌回来，前几天在2015年的收官之作中，又拿了一个第一，为我和小萌2015年的成长划上了一个完美的句号。<br>第二个愿望，就是好好把一起动画开源组给做起来。最近年末这段时间，由于自己刚搬家，比赛，大会什么的事情，马老师那里又有很多要忙的，小萌要考试，所以开源组一直没有产出新的好东西。但是等到新的一年开始之后，这些事情都要走到正轨上来了。我也希望这次面基大会认识的这一大帮国内走在前列的开发者，以后能够踊跃的交流，一起来把开源做好。<br>第三个期望，还是好好过日子吧。好好过着现在这样的稳定的小日子，这大概是一切以上所述事情的根基了吧。当感情开始漂泊，生活开始流浪的时候，事业就没有了稳定的基础。所以，珍惜眼前的一切，才是最重要的。</p>
+<p>当然，我明白，这些期望，最后，肯定远不及明年的收获。对于我来说，只要这样疯狂的向前冲，从中体会到乐趣和自己所热爱的事情，我想，我能走多远，只有最后才会明白吧。  </p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Newsfeed/" rel="tag">#Newsfeed</a>
-          
-            <a href="/tags/celery/" rel="tag">#celery</a>
-          
-            <a href="/tags/djcelery/" rel="tag">#djcelery</a>
-          
-            <a href="/tags/redis/" rel="tag">#redis</a>
-          
-            <a href="/tags/stream-framework/" rel="tag">#stream framework</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/02/02/UIColor-colorWithRed-green-blue-alpha-的正确用法/" rel="next" title="[UIColor colorWithRed: green: blue: alpha:] 的正确用法">
-                <i class="fa fa-chevron-left"></i> [UIColor colorWithRed: green: blue: alpha:] 的正确用法
+              <a href="/2015/12/21/语/" rel="next" title="语">
+                <i class="fa fa-chevron-left"></i> 语
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/05/19/Python利用深度优先搜索解数独程序的实现/" rel="prev" title="Python利用深度优先搜索解数独程序的实现">
-                Python利用深度优先搜索解数独程序的实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -337,8 +297,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/04/01/怎么设计和实现一个Newsfeed系统/"
-                   data-title="怎么设计和实现一个Newsfeed系统" data-url="http://sergiochan.github.io/2015/04/01/怎么设计和实现一个Newsfeed系统/">
+              <div class="ds-thread" data-thread-key="2015/12/21/2015/"
+                   data-title="2015" data-url="http://sergiochan.github.io/2015/12/21/2015/">
               </div>
             
           </div>
@@ -449,7 +409,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807"><span class="nav-number">1.</span> <span class="nav-text">看看去年底给自己定下的目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u4E0D_u5F97_u4E0D_u8BF4_u6211_u7684_u5B9E_u4E60_u548C_u5DE5_u4F5C_u7ECF_u5386"><span class="nav-number">2.</span> <span class="nav-text">不得不说我的实习和工作经历</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hackathoner"><span class="nav-number">3.</span> <span class="nav-text">Hackathoner</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS_u5F00_u53D1"><span class="nav-number">4.</span> <span class="nav-text">iOS开发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SwiftGG"><span class="nav-number">5.</span> <span class="nav-text">SwiftGG</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u535A_u5BA2"><span class="nav-number">6.</span> <span class="nav-text">博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u5BF9_u81EA_u5DF1_u660E_u5E74_u7684_u671F_u671B"><span class="nav-number">7.</span> <span class="nav-text">对自己明年的期望</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -202,6 +202,116 @@
             
             
               
+                <a class="post-title-link" href="/2014/12/12/Ubuntu下重置MySQL的root密码/" itemprop="url">
+                  Ubuntu下重置MySQL的root密码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-12-12T10:10:45+08:00" content="2014-12-12">
+              2014-12-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux服务器笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux服务器笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/12/Ubuntu下重置MySQL的root密码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/12/Ubuntu下重置MySQL的root密码/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            sudo vi /etc/mysql/my.cnf，在[mysqld]段中加入一行“skip-grant-tables”具体环境中可能my.cnf已经存在且在其他目录，记得要找到有效的my.cnf配置文件路径
+sudo service mysql restart，重启mySQL服务具体参考实际的重启MySQL的命令
+sudo mysql -u root -p mysql，用空密码进入mysql管理命令行
+(进入mysql,或者用use mysql指令)
+update user set password=PASSWORD(“123”) where user=’root’;，把密码重置为123
+(注意，如果是表中没有的用户名，使用insert)
+quit，退出数据库管理
+sudo vim /etc/mysql/my.cnf，把刚才加入的那一行“skip-grant-tables”注释或删除
+s
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/12/12/Ubuntu下重置MySQL的root密码/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2014/12/10/iOS-静态库封装和使用方法/" itemprop="url">
                   iOS 静态库封装和使用方法
                 </a>
@@ -335,7 +445,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
