@@ -4,7 +4,7 @@
   <subtitle><![CDATA[有情怀的程序员，热爱设计的工程师。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-01-20T09:17:22.000Z</updated>
+  <updated>2016-01-27T13:42:02.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[三件小事]]></title>
+    <link href="http://sergiochan.github.io/2016/01/27/%E4%B8%89%E4%BB%B6%E5%B0%8F%E4%BA%8B/"/>
+    <id>http://sergiochan.github.io/2016/01/27/三件小事/</id>
+    <published>2016-01-27T13:36:18.000Z</published>
+    <updated>2016-01-27T13:42:02.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="u4E09_u4EF6_u5C0F_u4E8B"><a href="#u4E09_u4EF6_u5C0F_u4E8B" class="headerlink" title="三件小事"></a>三件小事</h1><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。<br>一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来觉得大概是看的那些博客本身就讲的含糊不清吧。所以我就用我最直白的语言和解释来说明一下我对于id和NSObject的一些小见解。一开始直接就是跟着代码写的，所以非常的直接。<br>第二个是weak和assign的小事，为什么delegate需要声明weak而不是assign。<br>第三个是关于这个<code>NS_DESIGNATED_INITIALIZER</code>宏的解释。</p>
+<blockquote>
+<p>还是少看CocoaChina的论坛吧。</p>
+</blockquote>
+<h2 id="id_2C_NSObject__u90A3_u4E9B_u4E8B"><a href="#id_2C_NSObject__u90A3_u4E9B_u4E8B" class="headerlink" title="id, NSObject 那些事"></a>id, NSObject 那些事</h2><p>这里讲的关于id和NSObject的内容，最好打开你的Xcode，打开demo工程，然后就能看到一系列编译的警告。跟着警告往下看你就会对于id和NSObject的区别更加的理解了。</p>
+<p>这里你可以看到，test是一个指向UIImage对象的id指针，你可以向他发送length消息。<br>然而如果他不是一个对象指针，而是一个对象，那么你向他发送length消息的话，在编译的时候编译器会无法编译，原因在下面有提到。</p>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">id test = <span class="comment">[<span class="comment">[UIImage alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[test length]</span>;</span><br><span class="line"></span><br><span class="line">NSObject *test1 = <span class="comment">[<span class="comment">[UIImage alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test1 length]</span>;</span><br></pre></td></tr></table></figure>
+<p>这里你可以看到，如果引入了TestObject的头文件，对于任意id类型的对象指针，你就可以向他发送TestObject能够响应的消息了。<br>无论这个id类型指针指向的对象是不是TestObject类型，编译器并不关心这个，也无法知道。<br>然而对于NSObject，他仍然不能响应这个fuck方法，因为向一个对象发送消息的时候，编译器会在对象声明类型的方法表中去判断这个对象是否能够响应这个消息，而不是根据实际分配的对象类型。</p>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">id test3 = <span class="comment">[<span class="comment">[UIImage alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test3 fuck]</span>;</span><br><span class="line"></span><br><span class="line">NSObject *test2 = <span class="comment">[<span class="comment">[TestObject alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test2 fuck]</span>;</span><br></pre></td></tr></table></figure>
+<p>所以其实NSObject很少手动声明，如果要声明具体的对象，则最好声明具体的类型，或者id动态类型。<br>id之所以为动态类型，在于它所指向的对象类型是在运行时才确定的，因此使用起来更加的方便。<br>NSObject 只能响应自己的一些简单的方法，例如 copy，hash之类。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">test</span>2 <span class="built_in">hash</span>];</span><br></pre></td></tr></table></figure>
+<p>下面解释了为什么delegate要用id声明而不是用NSObject</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="keyword">id</span>&lt;TestDelegate&gt; delegate;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">NSObject</span>&lt;TestDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure>
+<p>大部分delegate在实现的时候都需要像下面这个来调用，根据上文所说，因为delegate的方法表其实是运行时才能知道的，在编译时编译器是无法识别的，所以这种调用方式也就不能成立，因此delegate要用第一种id的声明方式来声明：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">NSObject *<span class="built_in">test</span>4 = [[TestObject alloc]init];</span><br><span class="line"><span class="keyword">if</span>([<span class="built_in">test</span>4 respondsToSelector:@selector(fuck)])</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="built_in">test</span>4 fuck];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">id <span class="built_in">test</span>5 = [[TestObject alloc]init];</span><br><span class="line"><span class="keyword">if</span>([<span class="built_in">test</span>5 respondsToSelector:@selector(fuck)])</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="built_in">test</span>5 fuck];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然如果id所指向的对象在运行时无法响应fuck方法，运行时就会报错。<br>可以这么说吧： <strong>NSObject声明的对象类型在编译时确定，id声明的对象类型在运行时确定</strong>，因此在消息发送上会有一些区别。</p>
+<h2 id="weak_2C_assign__u90A3_u4E9B_u4E8B"><a href="#weak_2C_assign__u90A3_u4E9B_u4E8B" class="headerlink" title="weak, assign 那些事"></a>weak, assign 那些事</h2><p>这个问题起源于这两种声明delegate的方式：</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span>  &lt;fuckDelegate&gt; delegate; </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">id</span>  &lt;fuckDelegate&gt; delegate;</span><br></pre></td></tr></table></figure>
+<p>首先第一种声明方式在我们的日常使用中十分的常见，可能都已经成为一种习惯了。但是例如已经被废弃的 <code>@property(nonatomic, assign) id&lt; UISearchDisplayDelegate &gt; delegate</code>，虽然在iOS8之后被废弃，然而它说明delegate也可以用第二种声明方式。</p>
+<p>区别就在于weak和assign声明的属性虽然都是不会引起引用计数的增加，但是还是有很大不同。<a href="http://www.cocoachina.com/ios/20150605/11990.html" target="_blank" rel="external">weak的实现</a>决定了在属性的主人释放的时候，weak指针所对应的对象也会一起被释放，然而assign不会，因此这里有产生一个野delegate指针的风险。除非是在MRC的环境下，手动对delegate置为nil。这会需要额外的操作，因此后来系统的实现渐渐的也转向weak了。</p>
+<p>参考<a href="http://stackoverflow.com/questions/9428500/whats-the-difference-between-weak-and-assign-in-delegate-property-declaratio" target="_blank" rel="external">这里</a>。</p>
+<h2 id="NS_DESIGNATED_INITIALIZER"><a href="#NS_DESIGNATED_INITIALIZER" class="headerlink" title="NS_DESIGNATED_INITIALIZER"></a>NS_DESIGNATED_INITIALIZER</h2><p>第一次看到这个的时候，心里想的是 “WTF 这是什么鬼”。</p>
+<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="pp">-<span class="params">(instancetype)</span>initWithName:<span class="params">(<span class="variable">NSString</span> *)</span>name NS_DESIGNATED_INITIALIZER;</span><br><span class="line">-<span class="params">(instancetype)</span>init;</span></span><br></pre></td></tr></table></figure>
+<p>这时候看看Swift就明白了 =。= 这是objc为了配合Swift的特性而诞生的一个附加宏。Swift中有designated和convenience两种初始化方法，它要求我们初始化出来的实例对象尽量是属性完整的，即使使用了convenience的初始化方法，也会要求在这个初始化方法中调用同类的designated的初始化方法完成完整的初始化。</p>
+<p>像这样：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">- (instancetype)<span class="keyword">init</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">self</span> initWithName:@<span class="string">"fuck"</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithName:(<span class="type">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> <span class="keyword">init</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以这只是一个Swift的特性的objc版本，也是为了更好的和Swift配合开发而加上的。</p>
+<p>参考<a href="http://stackoverflow.com/questions/26185239/ios-designated-initializers-using-ns-designated-initializer" target="_blank" rel="external">这里</a>。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="u4E09_u4EF6_u5C0F_u4E8B"><a href="#u4E09_u4EF6_u5C0F_u4E8B" class="headerlink" title="三件小事"></a>三件小事</h1><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近]]>
+    </summary>
+    
+      <category term="NSObject" scheme="http://sergiochan.github.io/tags/NSObject/"/>
+    
+      <category term="NS_DESIGNATED_INITIALIZER" scheme="http://sergiochan.github.io/tags/NS-DESIGNATED-INITIALIZER/"/>
+    
+      <category term="assign" scheme="http://sergiochan.github.io/tags/assign/"/>
+    
+      <category term="id" scheme="http://sergiochan.github.io/tags/id/"/>
+    
+      <category term="weak" scheme="http://sergiochan.github.io/tags/weak/"/>
+    
+      <category term="iOS菜鸟心得" scheme="http://sergiochan.github.io/categories/iOS%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[无题-20160120]]></title>
