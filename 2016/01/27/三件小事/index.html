@@ -51,7 +51,7 @@
 <meta property="og:url" content="http://sergiochan.github.io/2016/01/27/三件小事/index.html">
 <meta property="og:site_name" content="一世烟雨江南">
 <meta property="og:description" content="三件小事事情是这样的。江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来觉得大概是看的那些博客本身就讲的含糊不清吧。所以我就用我最直白的语言和解释来说明一下我对于id和NSObject的一些小见解。一开始直接就是跟着代码写的，所以非常的直接。第二个是weak和assign的小事，为什么delegate需要">
-<meta property="og:updated_time" content="2016-01-27T13:42:02.000Z">
+<meta property="og:updated_time" content="2016-01-28T03:12:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="三件小事">
 <meta name="twitter:description" content="三件小事事情是这样的。江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来觉得大概是看的那些博客本身就讲的含糊不清吧。所以我就用我最直白的语言和解释来说明一下我对于id和NSObject的一些小见解。一开始直接就是跟着代码写的，所以非常的直接。第二个是weak和assign的小事，为什么delegate需要">
@@ -258,7 +258,7 @@
       
         <span itemprop="articleBody"><h1 id="u4E09_u4EF6_u5C0F_u4E8B"><a href="#u4E09_u4EF6_u5C0F_u4E8B" class="headerlink" title="三件小事"></a>三件小事</h1><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。<br>一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来觉得大概是看的那些博客本身就讲的含糊不清吧。所以我就用我最直白的语言和解释来说明一下我对于id和NSObject的一些小见解。一开始直接就是跟着代码写的，所以非常的直接。<br>第二个是weak和assign的小事，为什么delegate需要声明weak而不是assign。<br>第三个是关于这个<code>NS_DESIGNATED_INITIALIZER</code>宏的解释。</p>
 <blockquote>
-<p>还是少看CocoaChina的论坛吧。</p>
+<p>示例工程在<a href="https://github.com/SergioChan/id-NSObjectDemo" target="_blank" rel="external">这里</a>。</p>
 </blockquote>
 <h2 id="id_2C_NSObject__u90A3_u4E9B_u4E8B"><a href="#id_2C_NSObject__u90A3_u4E9B_u4E8B" class="headerlink" title="id, NSObject 那些事"></a>id, NSObject 那些事</h2><p>这里讲的关于id和NSObject的内容，最好打开你的Xcode，打开demo工程，然后就能看到一系列编译的警告。跟着警告往下看你就会对于id和NSObject的区别更加的理解了。</p>
 <p>这里你可以看到，test是一个指向UIImage对象的id指针，你可以向他发送length消息。<br>然而如果他不是一个对象指针，而是一个对象，那么你向他发送length消息的话，在编译的时候编译器会无法编译，原因在下面有提到。</p>
