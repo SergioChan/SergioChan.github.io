@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #37cd2d;
+  background: #4d3cff;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1238,7 +1238,7 @@ body {
   position: relative;
   color: #555;
   border-bottom: none;
-  line-height: 1.2;
+  line-height: 1.8;
   vertical-align: top;
 }
 .posts-expand .post-title-link::before {
