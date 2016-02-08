@@ -961,7 +961,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #34edc8;
+  background: #37cd2d;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1177,7 +1177,7 @@ body {
   display: block;
   width: 22px;
   height: 2px;
-  background: #555;
+  background: #f5deb3;
   border-radius: 1px;
 }
 .btn-bar+.btn-bar {
