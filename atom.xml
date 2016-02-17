@@ -4,7 +4,7 @@
   <subtitle><![CDATA[有情怀的程序员，热爱设计的工程师。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-02-16T08:48:29.000Z</updated>
+  <updated>2016-02-17T04:06:20.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -19,22 +19,35 @@
     <link href="http://sergiochan.github.io/2016/02/16/%E4%B8%8D%E8%A6%81%E6%83%B3%E5%BD%93%E7%84%B6%E7%9A%84%E5%B0%B1%E4%BD%BF%E7%94%A8UITableView/"/>
     <id>http://sergiochan.github.io/2016/02/16/不要想当然的就使用UITableView/</id>
     <published>2016-02-16T08:41:50.000Z</published>
-    <updated>2016-02-16T08:48:29.000Z</updated>
+    <updated>2016-02-17T04:06:20.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u524D_u8A00"><a href="#u524D_u8A00" class="headerlink" title="前言"></a>前言</h2><p>一直想写一篇UITableView使用经验的干货，因为TableView实在是太万能了，它帮你维护了ContentSize，数据源加载，一些事件的回调还有最重要的是视图的重用，以至于有些项目（什么电商，什么O2O这类的应用）满地都是TableView，所以在一般项目中很容易出现对于TableView的滥用或者是误用。然而由于这种事情仁者见仁，智者见智，因此在一个项目组里，一些错误的风气很容易被持续甚至发扬下去。</p>
-<p>我不打算在性能优化方面深入介绍，因为已经有很多关于TableView性能优化的博客了，我可能会稍微提到一些。这篇博客主要是关于整体结构，使用经验这方面的整理。</p>
-<h2 id="u4E0D_u8981_u8BD5_u56FE_u5230_u5904_u590D_u7528_u4E00_u4E2ATableViewController"><a href="#u4E0D_u8981_u8BD5_u56FE_u5230_u5904_u590D_u7528_u4E00_u4E2ATableViewController" class="headerlink" title="不要试图到处复用一个TableViewController"></a>不要试图到处复用一个TableViewController</h2><p>想想在使用TableViewController或者包含了TableView的Controller的时候，如果遇到了如下的这类场景，我们一般会怎么做？</p>
+<p>我不打算在性能优化方面深入介绍，因为已经有很多关于TableView性能优化的博客了，我可能会稍微提到一些。这篇博客主要是关于整体结构，使用经验这方面的整理，让更多还没踩坑或者正在踩坑的同学们及时醒悟。</p>
+<h2 id="u4E0D_u8981_u8BD5_u56FE_u8FC7_u5206_u7684_u53BB_u590D_u7528_u4E00_u4E2ATableViewController"><a href="#u4E0D_u8981_u8BD5_u56FE_u8FC7_u5206_u7684_u53BB_u590D_u7528_u4E00_u4E2ATableViewController" class="headerlink" title="不要试图过分的去复用一个TableViewController"></a>不要试图过分的去复用一个TableViewController</h2><p>想想在使用TableViewController或者包含了TableView的Controller的时候，如果遇到了如下的这类场景，我们一般会怎么做？</p>
 <ol>
 <li>联系人列表，有两个场景要使用，一个是好友列表，一个是手机联系人列表，甚至还有更多类型的联系人列表。好友列表中需要展示用户信息，例如头像，用户名，性别，等级之类，点击头像可以进入好友的个人主页，点击Cell可以进入聊天页面；而手机联系人列表中需要展示手机号，联系人姓名，头像等信息，需要标识是否可以发送邀请，点击Cell不会响应，点击头像进入发送邀请页面。</li>
-<li>个人主页，样式基本一致，有三个场景要使用，分为好友个人主页，非好友个人主页和自己的个人主页。展示的基本信息都一样，例如用户名，姓名，性别，生日，等级这些信息，但是非好友和好友加载的数据源和显示的数据有略微不同，例如好友显示的是姓名，而非好友显示的是用户名。而自己的个人主页展示的数据更多，一些其他用户不可见的信息对自己全部都是可见的。同时好友个人主页可以编辑备注名或者分组，自己的个人主页能修改全部信息和上传头像，且修改要在当前页面直接修改，非好友个人主页可以发送好友请求，或者花费一些金币获取更详细的个人信息。</li>
+<li>个人主页，样式基本一致，但是有三个场景要使用，分为好友个人主页，非好友个人主页和自己的个人主页。展示的基本信息都一样，例如用户名，姓名，性别，生日，等级这些信息，但是非好友和好友加载的数据源和显示的数据有略微不同，例如好友显示的是姓名，而非好友显示的是用户名。而自己的个人主页展示的数据更多，一些其他用户不可见的信息对自己全部都是可见的。同时好友个人主页可以编辑备注名或者分组，自己的个人主页能修改全部信息和上传头像，且修改要在当前页面直接修改，非好友个人主页可以发送好友请求，或者花费一些金币获取更详细的个人信息。</li>
 </ol>
-<p>以上这两个实例场景在基本的带一定社交功能的应用中都会普遍出现。大部分开发者对第一个场景的解决办法都是写在同一个控制器中，当然，这里也和一些产品经理对于需求顺序和需求提前预测的忽视有关。一些情况里都是先实现了好友列表然后才要加入手机联系人列表，这样，在基本结构类似的情况下，为了节约迭代工作成本，在同一个控制器中修改代码无可厚非。我们可以简单的对TableView的数据源进行区分，对TableView的delegate回调进行判断，从而将两套TableView的逻辑写在一个控制器中，实现高聚合。然而，在第一个场景里并不明显的弊端，会在我描述的这个第二个场景里丑恶毕露。在考虑复用TableView的时候，<strong>你需要考虑高聚合的性价比</strong>，如果到了一定规模或者复杂度的时候，高聚合反而会给结构带来破坏，这时候高聚合的性价比十分的低，在实际项目中对于产品结构的稳定性和将来的迭代性就会开始不断的产生负面的影响。</p>
+<p>以上这两个实例场景在基本的带一定社交功能的应用中都会普遍出现。大部分开发者对第一个场景的解决办法都是写在同一个控制器中，当然，这里也和一些产品经理对于需求顺序和需求提前预测的忽视有关。一些情况里都是先实现了好友列表然后才要加入手机联系人列表，这样，在基本结构类似的情况下，为了节约迭代工作成本，在同一个控制器中修改代码无可厚非。我们可以简单的对TableView的数据源进行区分，对TableView的delegate回调进行判断，从而将两套TableView的逻辑写在一个控制器中，实现高聚合。然而，在第一个场景里并不明显的弊端，会在我描述的这个第二个场景里丑恶毕露。在考虑复用TableView的时候，<strong>你需要考虑高聚合的性价比</strong>，如果到了一定规模或者复杂度的时候，高聚合反而会给结构带来破坏，这时候高聚合的性价比非常低，在实际项目中对于产品结构的稳定性和将来的迭代性就会开始不断的产生负面的影响。</p>
 <p>在第二个场景下，我见过这些用法：用枚举来标识当前TableView的类型，在所有数据源和Delegate回调的地方加上判断；给TableView加Tag；在Cell中加判断来区分不同的显示和不同的操作响应；甚至用进入个人主页的时候传入的userID来作为不同入口的判断。这些用法听起来虽然是低效一些，但是好像没什么大的问题，因为实际上每次TableView的加载和事件回调都可以被正常响应。然而我想总结的是这么一种习惯问题：当一个控制器被你不断的以这种形式往上加代码，几套逻辑被强制塞到同一个控制器中，这就像那个靠泥土和石头垒了七层楼的哥们一样，当你再视图往上添加一些重要的，新的东西的时候，他可能就全盘崩溃了，甚至让你不知道从何下手。</p>
 <p>在实际项目中，你永远想象不到随着需求的增加，这些东西可能被怎么样的复用，而每一次复用，即使是很微小的不同，也是在破坏着代码的拓展性。你看看下面这个TableView是怎么被复用的就会知道了。</p>
 <figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">typedef <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    <span class="constant">DataSourceTypeAllContacts</span> = <span class="number">0</span>,          </span><br><span class="line">    <span class="constant">DataSourceTypeAllGroup</span>,                 </span><br><span class="line">    <span class="constant">DataSourceTypeFriendContacts</span>,           </span><br><span class="line">    <span class="constant">DataSourceTypeAddGroupContacts</span>,         </span><br><span class="line">    <span class="constant">DataSourceTypeAllContactsSearch</span>,        </span><br><span class="line">    <span class="constant">DataSourceTypeAllGroupSearch</span>,           </span><br><span class="line">    <span class="constant">DataSourceTypeFriendContactsSearch</span>,     </span><br><span class="line">    <span class="constant">DataSourceTypeAddGroupContactsSearch</span>,   </span><br><span class="line">&#125;<span class="constant">DataSourceType</span>;</span><br></pre></td></tr></table></figure>
 <p>这只是一个简单的联系人列表，但是在实际项目中，他被以这种简单低效的形式复用了8次，这就使你的代码变得越来越难以维护，每一次加载都加入了大量的判断，对于团队的其他成员，接手或者在你的代码基础上添加功能都会变得极其蛋疼。</p>
 <p>在实际项目开发中，你需要将你的代码<strong>可读性，可维护性，可拓展性</strong>放在首位，而不是想着如何用最少代码去实现一个功能。当然，如果在保证了这三件事情的基础上还能够用最少的代码，那大概就是真大神了。但是对于更大多数的开发者来说，你需要将这三件事情放在第一位。</p>
 <p>对于上面的这个复用了8次的TableView来说，还是有可能的优化空间的。例如，当数据源的类型一致，只是获取的方法不同，例如获取群组成员列表和好友列表，TableView的数据源数组中的数据类型是一样的，那么这个时候只要在加载数据的时候做个区分，而不用再TableView加载数据源的时候做区分。这里的意思是，在Cell的结构可以复用的情况下，Cell也可以复用，将TableView的一些复用逻辑转移到Cell中去。当然，如果Cell结构差异很大，或者你需要用xib来定义Cell的布局，那对于Cell的复用就要更加的小心。</p>
-<p>当然，说了这么多，还是标题的一句话，<strong>不要试图到处复用一个TableViewController</strong>，这是一个好习惯，也会让你的队友们觉得你写的结构很容易看懂。在遇到较为复杂，或在可预见时间范围内有可能出现新的附加需求的功能模块的时候，尽量分开文件写，可以把多个控制器需要共用的部件封装出来，减少重复的代码量，但是一些必须的部分还是需要重复的。</p>
+<p>当然，说了这么多，还是标题的一句话，<strong>不要试图过分的去复用一个TableViewController</strong>，这是一个好习惯，也会让你的队友们觉得你写的结构很容易看懂。在遇到较为复杂，或在可预见时间范围内有可能出现新的附加需求的功能模块的时候，尽量分开文件写，可以把多个控制器需要共用的部件封装出来，减少重复的代码量。</p>
+<h2 id="u5982_u679C_u6211_u8981_u5728_u540C_u4E00_u4E2A_u63A7_u5236_u5668_u4E2D_u590D_u7528TableView_u5462_uFF1F"><a href="#u5982_u679C_u6211_u8981_u5728_u540C_u4E00_u4E2A_u63A7_u5236_u5668_u4E2D_u590D_u7528TableView_u5462_uFF1F" class="headerlink" title="如果我要在同一个控制器中复用TableView呢？"></a>如果我要在同一个控制器中复用TableView呢？</h2><p>如果有这么一个需求：</p>
+<ul>
+<li>在我的个人中心页面中，要根据我的不同用户状态显示几乎完全不同的tableview。有这几种状态，例如注册未填写信息，填写信息未提交审核，正在审核，审核通过，修改信息正在审核，这些状态甚至有可能更多，这时候该怎么办？</li>
+</ul>
+<p>在上一小节中的第二个场景中，我们已经将几种逻辑上有区分的个人中心拆分开来了。但是如果遇到同一个控制器中的tableView仍然会出现多种情况的时候，我们无法在上层继续拆分了，否则就会做很多多余的工作。这时候我们可以有以下这么几种解决办法：</p>
+<ol>
+<li>根据用户状态的枚举来在tableView的delegate和datasource加上大量的switch来实现入口的区分，这时候我们其实是使用了同一个tableView，并且将多路复用的选择放到了tableView去loadData的时候。这个方法就是最简单也是最笨重的，很多开发者在不考虑持续性的时候很容易走上这条不归路。</li>
+<li>采用一个通用的cellModel，在数据源加载的时候就对多路复用进行了选择，cellModel的属性里有样式的枚举类型，cell的高度，数据对象等等，而且扩展性也还行。但是弊端就在于，虽然这种方法掩盖了第一种方法笨重的外表，但是在cellForRow这些加载过程中，仍然需要对cellModel的属性进行判断。虽然这些操作也是可以被封装出来的，但是仍然很臃肿，特别是同一个控制器的复用场景不断增加的情况下，cellForRow这个方法的可读性仍然很差。</li>
+<li>根据数据源，也就是用户状态来返回不同的tableView，由tableView自己来维护自己的delegate和datasource，这样把所有的加载逻辑写在tableView中，根据情况而定是否要返回一个新的tableView。这样多路复用的选择其实就发生在了返回tableView的操作里，可以避免在控制器中出现臃肿的代码。</li>
+</ol>
+<blockquote>
+<p>我不确定第三种方法是否是最佳实践。希望能有一些探讨~</p>
+</blockquote>
 <h2 id="u4E0D_u8981_u8BD5_u56FE_u6EE5_u7528Cell_u7684_u91CD_u7528_u673A_u5236"><a href="#u4E0D_u8981_u8BD5_u56FE_u6EE5_u7528Cell_u7684_u91CD_u7528_u673A_u5236" class="headerlink" title="不要试图滥用Cell的重用机制"></a>不要试图滥用Cell的重用机制</h2><p>我知道TableView的重用机制让我们对于性能省了很多心思。然而有时候用的不正确其实会让程序消耗更多的性能。设想这么两个场景，一个是朋友圈的多图Cell，一个是Cell下方的点赞和评论视图，由于你将Cell从重用池中取出的时候，它所已经初始化好的ImageView数量和点赞评论视图和现在将要显示的这个数据源不一致，因此这时候你需要：</p>
 <ol>
 <li>还需要多少个ImageView就初始化多少个ImageView，不需要的就释放掉</li>
@@ -49,6 +62,8 @@
 <li>属于Cell的逻辑最好写在Cell中，避免TableView所在的控制器臃肿冗长而复杂从而降低可维护性，适度聚合，适度耦合应该是最好的。例如Cell中的delegate就放在Cell中去处理，点击Cell中的图片需要跳转也放在Cell中去做，一些ImagePicker之类的控件也由Cell自己处理。控制器只负责数据的加载和外围事件的处理。这样可以控制每一个组件的规模，避免过分臃肿。</li>
 <li>Cell的layout全部放在Cell中，在CellForRow中只做重用以及将数据传入Cell，让Cell自身去根据数据来layout，这样可以控制CellForRow这个方法的规模。一些新手很容易将大量的layout代码写在CellForRow中，导致一个方法就要滚好几屏，可读性极差。</li>
 <li>不要到处写reloadData，你的队友们会把你炸了的。可以局部刷新的请用局部刷新。</li>
+<li>复杂结构的Cell尽量不要用autolayout，由于autolayout会有一个视图依赖链，在Cell中更新一个约束会导致一系列视图的更新，当视图结构很复杂的时候，视图更新对性能的消耗就很大了。</li>
+<li>在Cell中对CALayer的一些操作和效果，都会对性能有很大的影响。特别指出的是过多的圆角和阴影。</li>
 </ol>
 <h2 id="u66F4_u591A_3F"><a href="#u66F4_u591A_3F" class="headerlink" title="更多?"></a>更多?</h2><p>我暂时没有想到更多，如果读者有什么要批评吐槽我的就赶紧让我一起涨姿势吧！&gt; 3 &lt;</p>
 ]]></content>
