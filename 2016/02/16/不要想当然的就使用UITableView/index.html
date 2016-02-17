@@ -47,13 +47,13 @@
 
 <meta name="description" content="前言一直想写一篇UITableView使用经验的干货，因为TableView实在是太万能了，它帮你维护了ContentSize，数据源加载，一些事件的回调还有最重要的是视图的重用，以至于有些项目（什么电商，什么O2O这类的应用）满地都是TableView，所以在一般项目中很容易出现对于TableView的滥用或者是误用。然而由于这种事情仁者见仁，智者见智，因此在一个项目组里，一些错误的风气很容易被">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不要想当然的就使用UITableView">
+<meta property="og:title" content="不要想当然的使用UITableView">
 <meta property="og:url" content="http://sergiochan.github.io/2016/02/16/不要想当然的就使用UITableView/index.html">
 <meta property="og:site_name" content="一世烟雨江南">
 <meta property="og:description" content="前言一直想写一篇UITableView使用经验的干货，因为TableView实在是太万能了，它帮你维护了ContentSize，数据源加载，一些事件的回调还有最重要的是视图的重用，以至于有些项目（什么电商，什么O2O这类的应用）满地都是TableView，所以在一般项目中很容易出现对于TableView的滥用或者是误用。然而由于这种事情仁者见仁，智者见智，因此在一个项目组里，一些错误的风气很容易被">
-<meta property="og:updated_time" content="2016-02-17T04:06:20.000Z">
+<meta property="og:updated_time" content="2016-02-17T06:07:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不要想当然的就使用UITableView">
+<meta name="twitter:title" content="不要想当然的使用UITableView">
 <meta name="twitter:description" content="前言一直想写一篇UITableView使用经验的干货，因为TableView实在是太万能了，它帮你维护了ContentSize，数据源加载，一些事件的回调还有最重要的是视图的重用，以至于有些项目（什么电商，什么O2O这类的应用）满地都是TableView，所以在一般项目中很容易出现对于TableView的滥用或者是误用。然而由于这种事情仁者见仁，智者见智，因此在一个项目组里，一些错误的风气很容易被">
 
 
@@ -66,7 +66,7 @@
 
 
 
-  <title> 不要想当然的就使用UITableView | 一世烟雨江南 </title>
+  <title> 不要想当然的使用UITableView | 一世烟雨江南 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -211,7 +211,7 @@
             
             
               
-                不要想当然的就使用UITableView
+                不要想当然的使用UITableView
               
             
           </h1>
@@ -310,6 +310,7 @@
 <li>不要到处写reloadData，你的队友们会把你炸了的。可以局部刷新的请用局部刷新。</li>
 <li>复杂结构的Cell尽量不要用autolayout，由于autolayout会有一个视图依赖链，在Cell中更新一个约束会导致一系列视图的更新，当视图结构很复杂的时候，视图更新对性能的消耗就很大了。</li>
 <li>在Cell中对CALayer的一些操作和效果，都会对性能有很大的影响。特别指出的是过多的圆角和阴影。</li>
+<li>更多的可以参考objcio的<a href="https://www.objc.io/issues/1-view-controllers/table-views/" target="_blank" rel="external">这篇文章</a>。</li>
 </ol>
 <h2 id="u66F4_u591A_3F"><a href="#u66F4_u591A_3F" class="headerlink" title="更多?"></a>更多?</h2><p>我暂时没有想到更多，如果读者有什么要批评吐槽我的就赶紧让我一起涨姿势吧！&gt; 3 &lt;</p>
 </span>
@@ -361,7 +362,7 @@
           <div class="comments" id="comments">
             
               <div class="ds-thread" data-thread-key="2016/02/16/不要想当然的就使用UITableView/"
-                   data-title="不要想当然的就使用UITableView" data-url="http://sergiochan.github.io/2016/02/16/不要想当然的就使用UITableView/">
+                   data-title="不要想当然的使用UITableView" data-url="http://sergiochan.github.io/2016/02/16/不要想当然的就使用UITableView/">
               </div>
             
           </div>
