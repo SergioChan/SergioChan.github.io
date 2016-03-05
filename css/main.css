@@ -185,7 +185,7 @@ th {
 }
 body {
   position: relative;
-  font-family: Lato, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Kaiti SC", Lato, "Kaiti SC", "Microsoft YaHei", sans-serif;
   font-size: 14px;
   line-height: 2;
   color: #555;
@@ -216,7 +216,7 @@ h6 {
   padding: 0;
   font-weight: bold;
   line-height: 1;
-  font-family: Lato, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Kaiti SC", Lato, "Kaiti SC", "Microsoft YaHei", sans-serif;
 }
 h1 {
   font-size: 24px;
@@ -555,7 +555,7 @@ pre code {
 .gist .gist-file .gist-meta {
   background: #f7f7f7;
   color: #8e908c;
-  font: 13px Lato, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 13px "Kaiti SC", Lato, "Kaiti SC", "Microsoft YaHei", sans-serif;
   text-shadow: 0 0;
   padding: 0;
   margin-top: 1em;
@@ -690,7 +690,7 @@ body {
 }
 .site-meta {
   margin: 0;
-  text-align: left;
+  text-align: center;
 }
 @media (max-width: 767px) {
   .site-meta {
@@ -704,7 +704,7 @@ body {
   color: #222;
   background: #222;
   border-bottom: none;
-  font-family: Lato, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Kaiti SC", Lato, "Kaiti SC", "Microsoft YaHei", sans-serif;
 }
 .brand:hover {
   color: #222;
@@ -760,7 +760,6 @@ body {
     margin: 0 -10px;
     padding: 0 10px;
     clear: both;
-    border-top: 1px solid #ddd;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -961,7 +960,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffb009;
+  background: #ffebcb;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1177,7 +1176,7 @@ body {
   display: block;
   width: 22px;
   height: 2px;
-  background: #f5deb3;
+  background: #555;
   border-radius: 1px;
 }
 .btn-bar+.btn-bar {
@@ -1442,7 +1441,7 @@ body {
   margin-left: 60px;
   font-size: 16px;
   font-weight: normal;
-  font-family: Lato, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Kaiti SC", Lato, "Kaiti SC", "Microsoft YaHei", sans-serif;
   line-height: inherit;
 }
 .posts-collapse .post-title::after {
@@ -1920,7 +1919,7 @@ ul li {
 }
 .header-inner {
   margin-bottom: 80px;
-  padding: 40px 0;
+  padding: 10px 0;
 }
 .header-inner:before,
 .header-inner:after {
@@ -1937,12 +1936,11 @@ ul li {
   }
 }
 .site-meta {
-  float: left;
-  margin-left: -20px;
+  margin-left: 0px;
 }
 @media (max-width: 767px) {
   .site-meta {
-    margin-left: 10px;
+    margin-left: 0px;
   }
 }
 .site-meta .brand {
@@ -1958,8 +1956,8 @@ ul li {
   display: none;
 }
 .site-meta .site-title {
-  font-size: 22px;
-  font-weight: bolder;
+  font-size: 25px;
+  font-weight: lighter;
 }
 @media (max-width: 767px) {
   .site-meta .site-title {
@@ -2006,7 +2004,6 @@ ul li {
   float: right;
 }
 .menu {
-  float: right;
   margin: 8px 0 0 20px;
   padding: 0 20px;
 }
@@ -2035,7 +2032,7 @@ ul li {
 }
 @media (max-width: 767px) {
   .menu .menu-item a {
-    text-align: left;
+    text-align: center;
   }
 }
 .menu .menu-item a:hover {
@@ -2070,7 +2067,7 @@ ul li {
 }
 .posts-expand .post-title,
 .posts-expand .post-meta {
-  text-align: left;
+  text-align: center;
 }
 @media (max-width: 767px) {
   .posts-expand .post-title,
