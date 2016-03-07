@@ -1169,7 +1169,7 @@ body {
 }
 .btn:hover {
   border-color: #222;
-  color: #222;
+  color: #000;
   background: #fff;
 }
 .btn-bar {
@@ -2132,14 +2132,11 @@ ul li {
 .posts-expand .post-nav {
   margin-top: 40px;
 }
-.post-more-link {
-  margin-top: 20px;
-  text-align: left;
-}
+
 .post-more-link a {
   padding: 0;
   font-size: 14px;
-  color: #000;
+  color: #555;
   background: none;
   border: none;
   transition-property: border;
