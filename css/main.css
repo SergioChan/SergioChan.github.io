@@ -960,7 +960,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffebcb;
+  background: #69ffbe;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1169,7 +1169,7 @@ body {
 }
 .btn:hover {
   border-color: #222;
-  color: #000;
+  color: #222;
   background: #fff;
 }
 .btn-bar {
@@ -1348,12 +1348,9 @@ body {
   background: #ccc;
   text-align: center;
 }
-
 .post-more-link {
-  margin-top: 20px;
-  text-align: center;
+  margin-top: 50px;
 }
-
 .posts-expand .fancybox img {
   margin: 0 auto;
 }
@@ -2105,12 +2102,6 @@ ul li {
     font-size: 26px;
   }
 }
-
-@media (max-width: 767px) {
-  .posts-expand .post-title:before {
-    display: none;
-  }
-}
 .posts-expand .post-title:hover:before {
   background: #222;
 }
@@ -2131,11 +2122,15 @@ ul li {
 .posts-expand .post-nav {
   margin-top: 40px;
 }
-
+.post-more-link {
+  margin-top: 20px;
+  text-align: center;
+}
 .post-more-link a {
   padding: 0;
   font-size: 14px;
-  color: #555;
+  font-weight: lighter;
+  color: #000;
   background: none;
   border: none;
   transition-property: border;
@@ -2147,7 +2142,7 @@ mobie()
   }
 }
 .post-more-link a:hover {
-  border-bottom-color: #222;
+  font-weight: bolder;
 }
 .btn {
   padding: 0 10px;
@@ -2210,7 +2205,7 @@ mobie()
 }
 .footer-inner {
   margin: 0 auto;
-  text-align: left;
+  text-align: center;
 }
 @media (max-width: 767px) {
   .footer-inner {
