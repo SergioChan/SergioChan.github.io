@@ -2103,19 +2103,7 @@ ul li {
     font-size: 26px;
   }
 }
-.posts-expand .post-title:before {
-  content: " ";
-  position: absolute;
-  left: -10px;
-  top: 25%;
-  width: 3px;
-  height: 50%;
-  background: #999;
-  transition-property: background-color;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in-out;
-  transition-delay: 0s;
-}
+
 @media (max-width: 767px) {
   .posts-expand .post-title:before {
     display: none;
