@@ -1348,9 +1348,12 @@ body {
   background: #ccc;
   text-align: center;
 }
+
 .post-more-link {
-  margin-top: 50px;
+  margin-top: 20px;
+  text-align: center;
 }
+
 .posts-expand .fancybox img {
   margin: 0 auto;
 }
@@ -2136,10 +2139,9 @@ ul li {
 .post-more-link a {
   padding: 0;
   font-size: 14px;
-  color: #666;
+  color: #000;
   background: none;
   border: none;
-  border-bottom: 2px solid #666;
   transition-property: border;
 mobie()
 }
