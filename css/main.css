@@ -1464,7 +1464,6 @@ body {
 .pagination {
   margin: 120px 0 40px;
   text-align: center;
-  border-top: 1px solid #eee;
 }
 .page-number-basic,
 .pagination .prev,
@@ -1514,8 +1513,8 @@ body {
 }
 .pagination .page-number.current {
   color: #fff;
-  background: #ccc;
-  border-top-color: #ccc;
+  background: #000;
+  border-top-color: #000;
 }
 @media (max-width: 767px) {
   .pagination {
@@ -2195,7 +2194,7 @@ mobie()
 }
 .pagination {
   margin: 120px 0 0;
-  text-align: left;
+  text-align: center;
 }
 @media (max-width: 767px) {
   .pagination {
