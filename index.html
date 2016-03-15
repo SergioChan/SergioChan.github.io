@@ -224,6 +224,111 @@ var _hmt = _hmt || [];
             
             
               
+                <a class="post-title-link" href="/2016/03/15/2016-03-15/" itemprop="url">
+                  2016.03.15
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-15T17:59:28+08:00" content="2016-03-15">
+              2016-03-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/闲言碎语/" itemprop="url" rel="index">
+                    <span itemprop="name">闲言碎语</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/15/2016-03-15/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/15/2016-03-15/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            宠辱不惊。努力去尝试吧，既然你能够有机会去改变世界了！
+一步步脚踏实地走下去。种下汗水。
+
+            
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/15/2016-03-15/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+	    <div style="box-sizing: content-box;border: none;background-size: 100%;background-repeat: no-repeat;margin-top: 20px;height: 2px;width: 70%;margin-left: 15%;background-image:url('/image/LineImg.png')"/>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/" itemprop="url">
                   知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法
                 </a>
@@ -1159,115 +1264,6 @@ self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@
 
 
     
-      
-
-  
-  
-
-  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/10/22/objective-c-runtime是什么/" itemprop="url">
-                  objective-c_runtime是什么
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-10-22T19:03:54+08:00" content="2015-10-22">
-              2015-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS菜鸟心得/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS菜鸟心得</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/10/22/objective-c-runtime是什么/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/22/objective-c-runtime是什么/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            当你调用一个方法的时候，发生了什么在Objective-C里，当你调用一个方法的时候，例如
-[foo method];
-的时候，实际上编译器会将它转化为这样
-objc_msgSend(foo,selector)
-selector就是你能够经常用到的那个addTarget中使用到的，它在runtime机制中相当于一个函数的名牌，而IMP则是函数的实现。消息机制的关键是编译器是如何处理每一个类和对象的。一般来说，一个类会被编译成这样的结构，一个指向父类的指针，一个类的分派表。这个列表里存的是所有的selector和他们对应的方法的地址。没错，每个方法都有一个地址，通过地址来调用方法。而这个地址，就是由函数指针IMP来得到的。
-
-如果你学过编译原理，并且用其他语言自己写过一个编译器的话，你应该了解写一个基础语言调用方法的时候都会有一个全局的方法表，然后调用的过程实际上是去这个方法表中查找对应方法
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/22/objective-c-runtime是什么/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-	    <div style="box-sizing: content-box;border: none;background-size: 100%;background-repeat: no-repeat;margin-top: 20px;height: 2px;width: 70%;margin-left: 15%;background-image:url('/image/LineImg.png')"/>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1310,7 +1306,7 @@ selector就是你能够经常用到的那个addTarget中使用到的，它在run
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
