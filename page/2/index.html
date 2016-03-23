@@ -224,6 +224,112 @@ var _hmt = _hmt || [];
             
             
               
+                <a class="post-title-link" href="/2015/10/22/runloop初窥/" itemprop="url">
+                  runloop初窥
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-22T19:36:23+08:00" content="2015-10-22">
+              2015-10-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS菜鸟心得/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS菜鸟心得</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/22/runloop初窥/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/22/runloop初窥/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            先来说一个很简单的实例在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明
+self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeUpdate:) userInfo:nil repeats:YES];
+那么当你滑动或者保持你的手指在scrollView上的时候，timer是不会被响应的，这不是因为刷新视图的操作被占用，而是因为当你没有显式声明的时候，你所定义的timer默认都是加在主线程上，并且，当你在对scrollView进行操作的时候，你的timer的事件根本不会被响应到，这就得说到runloop了。而runloop也是底层原理中相当重要的一部分。我们先从它说起。
+什么是runloopRunloop，顾名思义就是运行的循环。简单理
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/22/runloop初窥/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+	    <div style="box-sizing: content-box;border: none;background-size: 100%;background-repeat: no-repeat;margin-top: 20px;height: 2px;width: 70%;margin-left: 15%;background-image:url('/image/LineImg.png')"/>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2015/10/22/objective-c-runtime是什么/" itemprop="url">
                   objective-c_runtime是什么
                 </a>
@@ -1115,21 +1221,21 @@ s
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
