@@ -4,7 +4,7 @@
   <subtitle><![CDATA[有情怀的程序员，热爱设计的工程师。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-05-28T07:17:50.000Z</updated>
+  <updated>2016-07-14T11:08:08.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,83 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[我的 GayHub - 2016]]></title>
+    <link href="http://sergiochan.github.io/2016/07/14/%E6%88%91%E7%9A%84-GayHub-2016/"/>
+    <id>http://sergiochan.github.io/2016/07/14/我的-GayHub-2016/</id>
+    <published>2016-07-14T11:05:27.000Z</published>
+    <updated>2016-07-14T11:08:08.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>As the number of my repos keeps increasing, I have to create this new repo in order to create some kinds of <strong>index</strong> for all the repos that I have written.</p>
+</blockquote>
+<p><img src="/image/2016-gayhub.png" alt=""></p>
+<h1 id="Get_to_know_me"><a href="#Get_to_know_me" class="headerlink" title="Get to know me"></a>Get to know me</h1><p>Sergio Chan, Born Hacker, Currently works at <em>RavenTech. Inc</em> as a Researcher and Hacker</p>
+<p><a href="http://sergiochan.xyz" target="_blank" rel="external">My blog</a>  |  <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" target="_blank" rel="external">Linkedin</a> | <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" target="_blank" rel="external">Weibo</a> </p>
+<h1 id="Below__08is_the_list_of_most_of_my_repos"><a href="#Below__08is_the_list_of_most_of_my_repos" class="headerlink" title="Below is the list of most of my repos"></a>Below is the list of most of my repos</h1><blockquote>
+<p>下面是我大部分的个人仓库的分类列表</p>
+</blockquote>
+<h3 id="Algorithm_Test__u7B97_u6CD5_u6D4B_u8BD5_u5B9E_u73B0_u7C7B"><a href="#Algorithm_Test__u7B97_u6CD5_u6D4B_u8BD5_u5B9E_u73B0_u7C7B" class="headerlink" title="Algorithm Test 算法测试实现类"></a>Algorithm Test 算法测试实现类</h3><ul>
+<li><a href="https://github.com/SergioChan/Monty-Hall-Problem-Swift" target="_blank" rel="external">Monty-Hall-Problem</a> 三门问题的Swift验证演示Playground</li>
+<li><a href="https://github.com/SergioChan/LinkedListSwift" target="_blank" rel="external">LinkedListSwift</a> Swift写的链表实现和各种基本操作</li>
+<li><a href="https://github.com/SergioChan/SCPythonSudoku" target="_blank" rel="external">SCPythonSudoku</a> A Python Sudoku solved program. Python写的深度优先搜索解数独程序</li>
+</ul>
+<h3 id="Kit_or_Framework_for_iOS__u5B9E_u7528_u63A7_u4EF6_u7C7B"><a href="#Kit_or_Framework_for_iOS__u5B9E_u7528_u63A7_u4EF6_u7C7B" class="headerlink" title="Kit or Framework for iOS 实用控件类"></a>Kit or Framework for iOS 实用控件类</h3><ul>
+<li><a href="https://github.com/SergioChan/SCBlueToothKit" target="_blank" rel="external">SCBlueToothKit</a> Blue Tooth Kit based on Core BlueTooth brings you to fly dealing with Blue Tooth development</li>
+<li><a href="https://github.com/SergioChan/SCAwesomeNetworking" target="_blank" rel="external">SCAwesomeNetworking</a> An optimized networking framework based on AFNetworking and ProtoBuffer</li>
+<li><a href="https://github.com/SergioChan/ImagePicker" target="_blank" rel="external">SCImagePicker</a> A highly encapsulated and fully functional open-source image picker written in Objc based on Photokit. Including album list, asset list, selection preview, camera and short video taking</li>
+<li><a href="https://github.com/SergioChan/SCTableViewCell" target="_blank" rel="external">SCTableViewCell</a> Swipe-to-Delete Effects like iOS Native Mail App。一个模仿iOS8中的邮箱里面的cell删除动效以及滑动右侧菜单按钮效果的开源库</li>
+<li><a href="https://github.com/SergioChan/SCNavigationControlCenter" target="_blank" rel="external">SCNavigationControlCenter</a> This is an advanced navigation control center on iOS that can allow you to navigate to whichever view controller you want. iOS上的改进的导航栏控制中心。</li>
+<li><a href="https://github.com/SergioChan/SCActivityIndicatorView" target="_blank" rel="external">SCActivityIndicatorView</a> An indicator view providing you more freedom to control and customize it.一个魔性的菊花控件，助你摆脱系统菊花的各种烦恼</li>
+<li><a href="https://github.com/SergioChan/SCRealm2SQLORM" target="_blank" rel="external">SCRealm2SQLORM</a> A realm ORM kit transferring realm usage to traditional SQLite usage. Just for learning and practicing.这是一个简单的realm的类似sqlite的数据库接口库。可以给熟悉sql语法，新入门realm的新手参考</li>
+<li><a href="https://github.com/SergioChan/SCTagWriteView" target="_blank" rel="external">SCTagWriteView</a> An input custom view providing you ability to add and remove tags</li>
+<li><a href="https://github.com/SergioChan/TUCalender" target="_blank" rel="external">TUCalender</a> 根据业务需要基于JTCalendar改写的日历控件</li>
+<li><a href="https://github.com/SergioChan/UILabel-AttributedText" target="_blank" rel="external">UILabel-AttributedText</a> This is a solution category for UILabel to deal with the issue about special chracters.</li>
+</ul>
+<h3 id="Test_on_iOS_Basic_Frameworks_iOS_u57FA_u7840_u6846_u67B6_u7684_u6D4B_u8BD5_u5B9E_u73B0_u7C7B"><a href="#Test_on_iOS_Basic_Frameworks_iOS_u57FA_u7840_u6846_u67B6_u7684_u6D4B_u8BD5_u5B9E_u73B0_u7C7B" class="headerlink" title="Test on iOS Basic Frameworks iOS基础框架的测试实现类"></a>Test on iOS Basic Frameworks iOS基础框架的测试实现类</h3><ul>
+<li><a href="https://github.com/SergioChan/RunloopTest" target="_blank" rel="external">RunloopTest</a>  This is a demo project for one of my blogs</li>
+<li><a href="https://github.com/SergioChan/id-NSObjectDemo" target="_blank" rel="external">id-NSObjectDemo</a> This is a demo project for one of my blogs</li>
+</ul>
+<h3 id="Animations_on_iOS__u52A8_u753B_u7C7B"><a href="#Animations_on_iOS__u52A8_u753B_u7C7B" class="headerlink" title="Animations on iOS 动画类"></a>Animations on iOS 动画类</h3><ul>
+<li><a href="https://github.com/SergioChan/SCTrelloNavigation" target="_blank" rel="external">SCTrelloNavigation</a> An iOS native implementation of a Trello Animated Navagation. iOS上类似trello的导航动效控件实现。</li>
+<li><a href="https://github.com/SergioChan/SCCatWaitingHUD" target="_blank" rel="external">SCCatWaitingHUD</a> This is a cute and simple loading HUD on iOS :-P 这是一个可爱清新简单的加载HUD控件</li>
+<li><a href="https://github.com/SergioChan/SCCinemaAnimation" target="_blank" rel="external">SCCinemaAnimation</a>  An iOS native implementation of a Cinema Animation Application. iOS上电影购票的动效实现</li>
+</ul>
+<h3 id="Apps__u72EC_u7ACB_u5E94_u7528_u7C7B"><a href="#Apps__u72EC_u7ACB_u5E94_u7528_u7C7B" class="headerlink" title="Apps 独立应用类"></a>Apps 独立应用类</h3><ul>
+<li><a href="https://github.com/SergioChan/SCSelfAgile" target="_blank" rel="external">SCSelfAgile</a> A Project for my daily life and well…obviously for fun.<strong>(未上架)</strong></li>
+<li><a href="https://github.com/SergioChan/PasswordTerminator" target="_blank" rel="external">PasswordTerminator</a> Simple random password generator and manager. <strong>(已上架)</strong></li>
+<li><a href="https://github.com/SergioChan/MorningHorn" target="_blank" rel="external">MorningHorn</a>  This is a warm and simple Alarm App.<strong>(已上架)</strong></li>
+</ul>
+<h3 id="Others__u5176_u4ED6_u7C7B"><a href="#Others__u5176_u4ED6_u7C7B" class="headerlink" title="Others 其他类"></a>Others 其他类</h3><ul>
+<li><a href="https://github.com/SergioChan/SCTornadoTCP" target="_blank" rel="external">SCTornadoTCP</a> A TCP Server and Client based on tornado</li>
+</ul>
+<h1 id="Organizations"><a href="#Organizations" class="headerlink" title="Organizations"></a>Organizations</h1><blockquote>
+<p>参与和发起的一些组织和信息</p>
+</blockquote>
+<h3 id="hACKbUSTER"><a href="#hACKbUSTER" class="headerlink" title="hACKbUSTER"></a><a href="https://github.com/hACKbUSTER" target="_blank" rel="external">hACKbUSTER</a></h3><p>A hack team for hackathons, consists of the best hackers and designers. Top requirement, top idea, top tech level.</p>
+<ul>
+<li><a href="https://github.com/hACKbUSTER/FixPlusPlus" target="_blank" rel="external">FixPlusPlus</a>  First Prize For SegmentFault Hackathon Beijing. FIX++ (FixPlusPlus) is a professional display solution for future guidelines and instruction manuals. 更专业的拆解拼装展示方案，可应用于乐高玩具，宜家家具，苹果电脑等领域。</li>
+<li><a href="https://github.com/hACKbUSTER/Renaissance" target="_blank" rel="external">Renaissance</a> First Prize for Art Hackathon 2015 China, Data becomes music. 数据听觉化的尝试。</li>
+<li><a href="https://github.com/hACKbUSTER/UberGuide-iOS" target="_blank" rel="external">UberGuide</a> Third Prize for Uber Hackathon China 2016. Source code for iOS client of UberGuide Project. 用Uber API 让背包客通过Uber探索新的城市和文化。</li>
+<li><a href="https://github.com/hACKbUSTER/ProjectDaVinci" target="_blank" rel="external">ProjectDaVinci</a> First Prize of SegmentFault ✖️ AngelHack Shenzhen Hackathon 2016</li>
+<li><a href="https://github.com/hACKbUSTER/ProjectM-SafariExtension" target="_blank" rel="external">ProjectM</a> First Prize of SegmentFault ✖️ AngelHack Beijing Hackathon 2016</li>
+</ul>
+<h3 id="Animatious"><a href="#Animatious" class="headerlink" title="Animatious"></a><a href="https://github.com/Animatious" target="_blank" rel="external">Animatious</a></h3><ul>
+<li><a href="https://github.com/Animatious/awesome-animation" target="_blank" rel="external">awesome-animation</a> A great list of open sourced UI Motion Library produced by Animatious Group.</li>
+</ul>
+<h3 id="@Conf"><a href="#@Conf" class="headerlink" title="@Conf"></a><a href="https://github.com/atConf" target="_blank" rel="external">@Conf</a></h3><p>@Conf 团队，做开发者自己的技术大会</p>
+<ul>
+<li><a href="https://github.com/atConf/atswift-2016-resources" target="_blank" rel="external">atswift-2016</a> Resource files for atswift conference 2016, including keynote, pdf, source projects or playgrounds. 2016中国Swift开发者大会</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>As the number of my repos keeps increasing, I have to create this new repo in order to create some kinds of <strong>index</s]]>
+    </summary>
+    
+      <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[“人工智能”邪教]]></title>
@@ -797,35 +874,6 @@
       <category term="PHP图片处理，水印" scheme="http://sergiochan.github.io/tags/PHP%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E6%B0%B4%E5%8D%B0/"/>
     
       <category term="PHP大神养成" scheme="http://sergiochan.github.io/categories/PHP%E5%A4%A7%E7%A5%9E%E5%85%BB%E6%88%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Ubuntu下重置MySQL的root密码]]></title>
-    <link href="http://sergiochan.github.io/2014/12/12/Ubuntu%E4%B8%8B%E9%87%8D%E7%BD%AEMySQL%E7%9A%84root%E5%AF%86%E7%A0%81/"/>
-    <id>http://sergiochan.github.io/2014/12/12/Ubuntu下重置MySQL的root密码/</id>
-    <published>2014-12-12T02:10:45.000Z</published>
-    <updated>2015-12-18T13:13:14.000Z</updated>
-    <content type="html"><![CDATA[<p>sudo vi /etc/mysql/my.cnf，在[mysqld]段中加入一行“skip-grant-tables”<br>具体环境中可能my.cnf已经存在且在其他目录，记得要找到有效的my.cnf配置文件路径</p>
-<p>sudo service mysql restart，重启mySQL服务<br>具体参考实际的重启MySQL的命令</p>
-<p>sudo mysql -u root -p mysql，用空密码进入mysql管理命令行</p>
-<p>(进入mysql,或者用use mysql指令)</p>
-<p>update user set password=PASSWORD(“123”) where user=’root’;，把密码重置为123</p>
-<p>(注意，如果是表中没有的用户名，使用insert)</p>
-<p>quit，退出数据库管理</p>
-<p>sudo vim /etc/mysql/my.cnf，把刚才加入的那一行“skip-grant-tables”注释或删除</p>
-<p>sudo service mysql restart，OK，搞定！</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>sudo vi /etc/mysql/my.cnf，在[mysqld]段中加入一行“skip-grant-tables”<br>具体环境中可能my.cnf已经存在且在其他目录，记得要找到有效的my.cnf配置文件路径</p>
-<p>sudo service mysql re]]>
-    </summary>
-    
-      <category term="MySQL" scheme="http://sergiochan.github.io/tags/MySQL/"/>
-    
-      <category term="Ubuntu" scheme="http://sergiochan.github.io/tags/Ubuntu/"/>
-    
-      <category term="Linux服务器笔记" scheme="http://sergiochan.github.io/categories/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
