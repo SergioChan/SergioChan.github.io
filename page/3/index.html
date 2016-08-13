@@ -224,6 +224,113 @@ var _hmt = _hmt || [];
             
             
               
+                <a class="post-title-link" href="/2014/12/26/PHP图片处理-透明水印的处理和添加/" itemprop="url">
+                  PHP图片处理 透明水印的处理和添加
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-12-26T09:11:25+08:00" content="2014-12-26">
+              2014-12-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP大神养成/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP大神养成</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/26/PHP图片处理-透明水印的处理和添加/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/26/PHP图片处理-透明水印的处理和添加/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。
+首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
+$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);imagejpeg($thumb, $filename);
+在这段重绘的代码里，包含了几个很基本的东西：
+第一个是imagecreatetruecolor和imagecreate用imagecreatetruecolor(int x,int y)建立的是一幅大
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/12/26/PHP图片处理-透明水印的处理和添加/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+	    <div style="box-sizing: content-box;border: none;background-size: 100%;background-repeat: no-repeat;margin-top: 20px;height: 2px;width: 70%;margin-left: 15%;background-image:url('/image/LineImg.png')"/>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2014/12/12/Ubuntu下重置MySQL的root密码/" itemprop="url">
                   Ubuntu下重置MySQL的root密码
                 </a>
@@ -469,7 +576,7 @@ s
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -483,7 +590,7 @@ s
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

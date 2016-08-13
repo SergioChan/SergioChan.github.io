@@ -224,6 +224,137 @@ var _hmt = _hmt || [];
             
             
               
+                <a class="post-title-link" href="/2016/08/13/AVAudioPlayer的几个细节/" itemprop="url">
+                  AVAudioPlayer的几个细节
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-08-13T09:24:52+08:00" content="2016-08-13">
+              2016-08-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS菜鸟心得/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS菜鸟心得</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/13/AVAudioPlayer的几个细节/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/13/AVAudioPlayer的几个细节/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            昨天在做 iOS 上的声波传输的时候，倒是遇到了几个和  AVAudioPlayer 有关的有趣问题，这种问题一般情况下我们都注意不到，只要踩过了才知道。
+关于 PCM DataAVAudioPlayer 有一个初始化方法 initWithData:error:，这个方法的 API 说明是
+
+/ all data must be in the form of an audio file understood by CoreAudio /
+
+在苹果的文档里，我们看到 AVAudioPlayer并不能支持 Stream 播放，它支持的文件格式有下面这些：
+
+
+
+Format name
+Format filename extensions
+
+
+
+
+AIFF
+.aif, .aiff
+
+
+CAF
+.caf
+
+
+MPEG-1, layer 3
+.mp3
+
+
+MPEG-2 or MPEG-4 ADTS
+
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/13/AVAudioPlayer的几个细节/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+	    <div style="box-sizing: content-box;border: none;background-size: 100%;background-repeat: no-repeat;margin-top: 20px;height: 2px;width: 70%;margin-left: 15%;background-image:url('/image/LineImg.png')"/>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2016/07/14/我的-GayHub-2016/" itemprop="url">
                   我的 GayHub - 2016
                 </a>
@@ -1167,113 +1298,6 @@ id, NSObject 那些事这里讲的关于id和NSObject的内容，最好打开你
 
 
     
-      
-
-  
-  
-
-  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2016/01/20/无题-20160120/" itemprop="url">
-                  无题-20160120
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-20T17:05:04+08:00" content="2016-01-20">
-              2016-01-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/闲言碎语/" itemprop="url" rel="index">
-                    <span itemprop="name">闲言碎语</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/20/无题-20160120/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/20/无题-20160120/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            忽然发现拿再多第一，再多人认可你，这个世界还是那么大，还是总会有那么些人，无法满足他们那种居高临下，那种自以为占据所有主动地屌逼感，反而会让他们更加的想要刁难你和鄙视你。如果不是一路人的话，就不会是相互吸引，而只是相互排斥。
-最近各种遇见和感受到。But whatever, 你走你的路，有那么多人支持你，再说了，未来你想要的世界是依靠和你相似，相吸引的这群人一起来创造的，而且你也不断在证明这一点，那么那些所谓的其他人，是吧。
-最近准备重新开始读三国演义。觉得团队管理和自己未来的处世方式在里面都有很多可以借鉴的。
-例如 纵使你有十万大军，没有一个赵子龙，你一样被人家单骑救阿斗。
-很感谢，很感激，自己一路走来，凝聚在我周围或者对我特别在乎，特别认可的基友们。我和你们一起去创造了太多不可能的事情。确实，拿第一第二第三，又有毛用，即使把全国全世界的Hackathon第一都拿遍了，该鄙视我的人还是鄙
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/01/20/无题-20160120/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-	    <div style="box-sizing: content-box;border: none;background-size: 100%;background-repeat: no-repeat;margin-top: 20px;height: 2px;width: 70%;margin-left: 15%;background-image:url('/image/LineImg.png')"/>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1316,7 +1340,7 @@ id, NSObject 那些事这里讲的关于id和NSObject的内容，最好打开你
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1330,7 +1354,7 @@ id, NSObject 那些事这里讲的关于id和NSObject的内容，最好打开你
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

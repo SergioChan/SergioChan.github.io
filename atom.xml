@@ -4,7 +4,7 @@
   <subtitle><![CDATA[有情怀的程序员，热爱设计的工程师。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-07-14T11:08:08.000Z</updated>
+  <updated>2016-08-13T01:25:39.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[AVAudioPlayer的几个细节]]></title>
+    <link href="http://sergiochan.github.io/2016/08/13/AVAudioPlayer%E7%9A%84%E5%87%A0%E4%B8%AA%E7%BB%86%E8%8A%82/"/>
+    <id>http://sergiochan.github.io/2016/08/13/AVAudioPlayer的几个细节/</id>
+    <published>2016-08-13T01:24:52.000Z</published>
+    <updated>2016-08-13T01:25:39.000Z</updated>
+    <content type="html"><![CDATA[<p>昨天在做 iOS 上的声波传输的时候，倒是遇到了几个和  AVAudioPlayer 有关的有趣问题，这种问题一般情况下我们都注意不到，只要踩过了才知道。</p>
+<h3 id="u5173_u4E8E_PCM_Data"><a href="#u5173_u4E8E_PCM_Data" class="headerlink" title="关于 PCM Data"></a>关于 PCM Data</h3><p><code>AVAudioPlayer</code> 有一个初始化方法 <code>initWithData:error:</code>，这个方法的 API 说明是</p>
+<blockquote>
+<p>/<em> all data must be in the form of an audio file understood by CoreAudio </em>/</p>
+</blockquote>
+<p>在苹果的文档里，我们看到 AVAudioPlayer并不能支持 Stream 播放，它支持的文件格式有下面这些：</p>
+<table>
+<thead>
+<tr>
+<th>Format name</th>
+<th>Format filename extensions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AIFF</td>
+<td><code>.aif</code>, <code>.aiff</code></td>
+</tr>
+<tr>
+<td>CAF</td>
+<td><code>.caf</code></td>
+</tr>
+<tr>
+<td>MPEG-1, layer 3</td>
+<td><code>.mp3</code></td>
+</tr>
+<tr>
+<td>MPEG-2 or MPEG-4 ADTS</td>
+<td><code>.aac</code></td>
+</tr>
+<tr>
+<td>MPEG-4</td>
+<td><code>.m4a</code>, <code>.mp4</code></td>
+</tr>
+<tr>
+<td>WAV</td>
+<td><code>.wav</code></td>
+</tr>
+</tbody>
+</table>
+<p>Stream 类型的音乐流只能被 AudioQueue 或者 AudioUnit 支持。因此要用 <code>AVAudioPlayer</code> 来播放 PCM 数据的话，注意要为这个 PCM 包加上 WAV 的 HEADER，然后将完整的 NSData 传给它。</p>
+<h3 id="u5173_u4E8E_Play"><a href="#u5173_u4E8E_Play" class="headerlink" title="关于 Play"></a>关于 Play</h3><p><code>AVAudioPlayer</code> 还有个有趣的现象，我暂时没有找到官方文档的证据，那就是它的 <code>play</code> 不会对自身有一个引用来保持自己是活着的。<strong>只要它的父类之上有一个对象被释放了，那它也就被一起释放掉了</strong>。因此无论你是在第一层直接声明 self.audioPlayer play 还是 self.A.audioPlayer.play ，它的最上层父类必须有一个和 VC 相关或者全局相关的强引用，否则就会在 play 的时候就已经被释放掉了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>昨天在做 iOS 上的声波传输的时候，倒是遇到了几个和  AVAudioPlayer 有关的有趣问题，这种问题一般情况下我们都注意不到，只要踩过了才知道。</p>
+<h3 id="u5173_u4E8E_PCM_Data"><a href="#u5173_u4E8E_PCM]]>
+    </summary>
+    
+      <category term="AVAudioPlayer" scheme="http://sergiochan.github.io/tags/AVAudioPlayer/"/>
+    
+      <category term="AVFoundation" scheme="http://sergiochan.github.io/tags/AVFoundation/"/>
+    
+      <category term="iOS菜鸟心得" scheme="http://sergiochan.github.io/categories/iOS%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[我的 GayHub - 2016]]></title>
@@ -841,39 +903,6 @@
       <category term="UIColor" scheme="http://sergiochan.github.io/tags/UIColor/"/>
     
       <category term="iOS菜鸟心得" scheme="http://sergiochan.github.io/categories/iOS%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[PHP图片处理 透明水印的处理和添加]]></title>
-    <link href="http://sergiochan.github.io/2014/12/26/PHP%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86-%E9%80%8F%E6%98%8E%E6%B0%B4%E5%8D%B0%E7%9A%84%E5%A4%84%E7%90%86%E5%92%8C%E6%B7%BB%E5%8A%A0/"/>
-    <id>http://sergiochan.github.io/2014/12/26/PHP图片处理-透明水印的处理和添加/</id>
-    <published>2014-12-26T01:11:25.000Z</published>
-    <updated>2015-12-18T13:13:14.000Z</updated>
-    <content type="html"><![CDATA[<p>最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。</p>
-<p>首先我需要将图片resize到640*480的尺寸，重绘的代码如下：</p>
-<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="variable">$thumb</span> = imagecreatetruecolor(<span class="variable">$newwidth</span>, <span class="variable">$newheight</span>);</span><br><span class="line"><span class="variable">$source</span> = imagecreatefromjpeg(<span class="variable">$filename</span>);</span><br><span class="line">imagecopyresampled(<span class="variable">$thumb</span>, <span class="variable">$source</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="variable">$newwidth</span>, <span class="variable">$newheight</span>, <span class="variable">$width</span>, <span class="variable">$height</span>);</span><br><span class="line">imagejpeg(<span class="variable">$thumb</span>, <span class="variable">$filename</span>);</span><br></pre></td></tr></table></figure>
-<p>在这段重绘的代码里，包含了几个很基本的东西：</p>
-<p>第一个是imagecreatetruecolor和imagecreate<br>用imagecreatetruecolor(int x,int y)建立的是一幅大小为x和y的黑色图像(默认为黑色)，如想改变背景颜色则需要用填充颜色函数imagefill($img,0,0,$color)，imagecreate 新建一个空白图像资源，用imagecolorAllocate()添加背景色：</p>
-<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="variable">$img</span> = imagecreatetruecolor(<span class="number">100</span>,<span class="number">100</span>);</span><br><span class="line"><span class="variable">$color</span> = imagecolorAllocate(<span class="variable">$img</span>,<span class="number">200</span>,<span class="number">200</span>,<span class="number">200</span>);</span><br><span class="line">imagefill(<span class="variable">$img</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="variable">$color</span>);</span><br><span class="line">header(<span class="string">'content-type:image/jpeg'</span>);</span><br><span class="line">imagejpeg(<span class="variable">$img</span>);</span><br><span class="line"><span class="variable">$img</span> = imagecreate(<span class="number">100</span>,<span class="number">100</span>);</span><br><span class="line"><span class="variable">$color</span> = imagecolorallocate(<span class="variable">$img</span>,<span class="number">200</span>,<span class="number">200</span>,<span class="number">200</span>);</span><br><span class="line">header(<span class="string">'content-type:image/jpeg'</span>);</span><br><span class="line">imagejpeg(<span class="variable">$img</span>);</span><br></pre></td></tr></table></figure>
-<p>第二个是imagecreatefromjpeg，这个是从图片文件创建一个新图像。<br>支持下面这些格式的图片文件。</p>
-<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> imagecreatefrompng (<span class="variable">$filename</span>) &#123;&#125;</span><br><span class="line"><span class="keyword">function</span> imagecreatefromgif (<span class="variable">$filename</span>) &#123;&#125;</span><br><span class="line"><span class="keyword">function</span> imagecreatefromjpeg (<span class="variable">$filename</span>) &#123;&#125;</span><br><span class="line"><span class="keyword">function</span> imagecreatefromwbmp (<span class="variable">$filename</span>) &#123;&#125;</span><br><span class="line"><span class="keyword">function</span> imagecreatefromxbm (<span class="variable">$filename</span>) &#123;&#125;</span><br><span class="line"><span class="keyword">function</span> imagecreatefromxpm (<span class="variable">$filename</span>) &#123;&#125;</span><br><span class="line"><span class="keyword">function</span> imagecreatefromgd (<span class="variable">$filename</span>) &#123;&#125;</span><br><span class="line"><span class="keyword">function</span> imagecreatefromgd2 (<span class="variable">$filename</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>第三个是imagecopyresampled，这个函数在裁剪，缩放图像时都特别有用：</p>
-<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">* (PHP <span class="number">4</span> &amp;gt;= <span class="number">4.0</span>.<span class="number">6</span>, PHP <span class="number">5</span>)</span><br><span class="line">* Copy and resize part <span class="keyword">of</span> an image with resampling</span><br><span class="line">* @link http://php.net/manual/en/<span class="keyword">function</span>.imagecopyresampled.php</span><br><span class="line">* @param resource <span class="variable">$dst</span>_image</span><br><span class="line">* @param resource <span class="variable">$src</span>_image</span><br><span class="line">* @param int <span class="variable">$dst</span>_x</span><br><span class="line">* x-coordinate <span class="keyword">of</span> destination point.</span><br><span class="line">*</span><br><span class="line">* @param int <span class="variable">$dst</span>_y</span><br><span class="line">* y-coordinate <span class="keyword">of</span> destination point.</span><br><span class="line">*</span><br><span class="line">* @param int <span class="variable">$src</span>_x</span><br><span class="line">* x-coordinate <span class="keyword">of</span> source point.</span><br><span class="line">*</span><br><span class="line">* @param int <span class="variable">$src</span>_y</span><br><span class="line">* y-coordinate <span class="keyword">of</span> source point.</span><br><span class="line">*</span><br><span class="line">* @param int <span class="variable">$dst</span>_w</span><br><span class="line">* Destination width.</span><br><span class="line">*</span><br><span class="line">* @param int <span class="variable">$dst</span>_h</span><br><span class="line">* Destination height.</span><br><span class="line">*</span><br><span class="line">* @param int <span class="variable">$src</span>_w</span><br><span class="line">* Source width.</span><br><span class="line">*</span><br><span class="line">* @param int <span class="variable">$src</span>_h</span><br><span class="line">* Source height.</span><br><span class="line">*</span><br><span class="line">* @<span class="keyword">return</span> bool <span class="literal">true</span> on success or <span class="literal">false</span> on failure.</span><br><span class="line">*/</span><br><span class="line"><span class="keyword">function</span> imagecopyresampled (<span class="variable">$dst</span>_image, <span class="variable">$src</span>_image, <span class="variable">$dst</span>_x, <span class="variable">$dst</span>_y, <span class="variable">$src</span>_x, <span class="variable">$src</span>_y, <span class="variable">$dst</span>_w, <span class="variable">$dst</span>_h, <span class="variable">$src</span>_w, <span class="variable">$src</span>_h) &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>第四个是imagejpeg，这个函数如果不提供第二个filename的参数，会将图片文件直接输出出来，加上了这个参数就会按照方法名里的文件格式输出到文件中去。返回的是BOOL值。</p>
-<p>接下去就是加上水印的这个函数了，我添加了一个newwidth的参数，是希望在进入这个函数前计算出需要的水印大小，传入函数，这样生成的水印大小就会不一样了，可以根据不同的需要变化。</p>
-<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> mark_pic(<span class="variable">$background</span>, <span class="variable">$waterpic</span>, <span class="variable">$x</span>, <span class="variable">$y</span>, <span class="variable">$new</span>_width)</span><br><span class="line">&#123;</span><br><span class="line"><span class="variable">$back</span> = imagecreatefromjpeg(<span class="variable">$background</span>);</span><br><span class="line"><span class="variable">$water</span> = imagecreatefrompng(<span class="variable">$waterpic</span>);</span><br><span class="line"><span class="variable">$w</span>_w = imagesx(<span class="variable">$water</span>);</span><br><span class="line"><span class="variable">$w</span>_h = imagesy(<span class="variable">$water</span>);</span><br><span class="line">imagesavealpha(<span class="variable">$water</span>, true);</span><br><span class="line">if (<span class="variable">$new</span>_width != <span class="variable">$w</span>_w)</span><br><span class="line">&#123;</span><br><span class="line"><span class="variable">$new</span>_height = <span class="variable">$w</span>_h * (<span class="variable">$new</span>_width / <span class="variable">$w</span>_w);</span><br><span class="line"><span class="variable">$thumb</span> = imagecreatetruecolor(<span class="variable">$new</span>_width, <span class="variable">$new</span>_height);</span><br><span class="line"><span class="variable">$c</span> = imagecolorallocatealpha(<span class="variable">$thumb</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">127</span>);</span><br><span class="line">//拾取一个完全透明的颜色</span><br><span class="line">imagealphablending(<span class="variable">$thumb</span>, false);</span><br><span class="line">//关闭混合模式，以便透明颜色能覆盖原画布</span><br><span class="line">imagefill(<span class="variable">$thumb</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="variable">$c</span>); //填充</span><br><span class="line">imagesavealpha(<span class="variable">$thumb</span>, true); //设置保存PNG时保留透明通道信息</span><br><span class="line">imagecopyresampled(<span class="variable">$thumb</span>, <span class="variable">$water</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="variable">$new</span>_width, <span class="variable">$new</span>_height, <span class="variable">$w</span>_w, <span class="variable">$w</span>_h);</span><br><span class="line">imagepng(<span class="variable">$thumb</span>, <span class="variable">$waterpic</span>);</span><br><span class="line">imagedestroy(<span class="variable">$water</span>);</span><br><span class="line"><span class="variable">$water</span> = imagecreatefrompng(<span class="variable">$waterpic</span>);</span><br><span class="line"><span class="variable">$w</span>_w = imagesx(<span class="variable">$water</span>);</span><br><span class="line"><span class="variable">$w</span>_h = imagesy(<span class="variable">$water</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$b</span>_w = imagesx(<span class="variable">$back</span>);</span><br><span class="line"><span class="variable">$b</span>_h = imagesy(<span class="variable">$back</span>);</span><br><span class="line">imagecopy(<span class="variable">$back</span>, <span class="variable">$water</span>, <span class="variable">$x</span>, <span class="variable">$y</span> - <span class="variable">$w</span>_h , <span class="number">0</span>, <span class="number">0</span>, <span class="variable">$w</span>_w, <span class="variable">$w</span>_h);</span><br><span class="line">imagejpeg(<span class="variable">$back</span>, <span class="string">"./files/test.jpg"</span>);</span><br><span class="line">imagedestroy(<span class="variable">$back</span>);</span><br><span class="line">imagedestroy(<span class="variable">$water</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在这个函数里，最重要的一个事情其实在于重绘一个具有透明通道的图像。如果使用imagecreate，透明通道就会被消灭掉，因此我最后只能采用了以上的办法，通过imagecreatetruecolor，往上面覆盖一个完全透明的颜色，来保留图片的透明通道，这对于添加水印这个功能应该是至关重要的。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。</p>
-<p>首先我需要将图片resize到640*480的尺寸，重绘的代码如下：</p>
-<figure class="highlight xquery"><tabl]]>
-    </summary>
-    
-      <category term="PHP图片处理，水印" scheme="http://sergiochan.github.io/tags/PHP%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E6%B0%B4%E5%8D%B0/"/>
-    
-      <category term="PHP大神养成" scheme="http://sergiochan.github.io/categories/PHP%E5%A4%A7%E7%A5%9E%E5%85%BB%E6%88%90/"/>
     
   </entry>
   
