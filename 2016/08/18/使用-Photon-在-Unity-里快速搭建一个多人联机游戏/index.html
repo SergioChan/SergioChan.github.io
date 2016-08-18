@@ -1,0 +1,809 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?030a47db2df6601bda0225610cd6c323";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+    <meta name="description" content="Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。" />
+
+
+
+  <meta name="keywords" content="Photon,Unity," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 Photon，一个看起来不错最后证实也挺靠谱的游戏后端解决方案。
+一个游戏服务器，最主要的就是对不同参与者的事件同步和世界状态的同步，所以根本还是在于和服务器的长连接上，至于游戏中的用户体系，积分体系，货币体系这些，就是属于大后端的范畴">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Photon 在 Unity 里快速搭建一个多人联机游戏">
+<meta property="og:url" content="http://sergiochan.github.io/2016/08/18/使用-Photon-在-Unity-里快速搭建一个多人联机游戏/index.html">
+<meta property="og:site_name" content="一世烟雨江南">
+<meta property="og:description" content="如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 Photon，一个看起来不错最后证实也挺靠谱的游戏后端解决方案。
+一个游戏服务器，最主要的就是对不同参与者的事件同步和世界状态的同步，所以根本还是在于和服务器的长连接上，至于游戏中的用户体系，积分体系，货币体系这些，就是属于大后端的范畴">
+<meta property="og:image" content="http://sergiochan.github.io/image/photon_1.png">
+<meta property="og:updated_time" content="2016-08-18T09:25:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Photon 在 Unity 里快速搭建一个多人联机游戏">
+<meta name="twitter:description" content="如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 Photon，一个看起来不错最后证实也挺靠谱的游戏后端解决方案。
+一个游戏服务器，最主要的就是对不同参与者的事件同步和世界状态的同步，所以根本还是在于和服务器的长连接上，至于游戏中的用户体系，积分体系，货币体系这些，就是属于大后端的范畴">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+
+
+  <title> 使用 Photon 在 Unity 里快速搭建一个多人联机游戏 | 一世烟雨江南 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" style="background-color:white" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+    <div class="site-meta-headline">
+        <img class="custom-logo-image" style="display:inline-block" src="/image/NavLogo.png"
+             alt="一世烟雨江南"/>
+    </div>
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="site-title" style="color:black">一世烟雨江南</span>
+    </a>
+  </div>
+  <p class="site-subtitle">有情怀的程序员，热爱设计的工程师。</p>
+</div>
+
+<div style="margin-top: 10px;text-align: center;float:none" class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section" style="color:black">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bio">
+          <a href="/bio" rel="section" style="color:black">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            自传
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section" style="color:black">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section" style="color:black">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section" style="color:black">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-portfolio">
+          <a href="/portfolio" rel="section" style="color:black">
+            
+              <i class="menu-item-icon fa fa-question-circle"></i> <br />
+            
+            Portfolio
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+<img src="/image/LineImg.png" style="margin-top: 10px;height: 2px;align-content: center;width: 70%;margin-left: 15%;">
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用 Photon 在 Unity 里快速搭建一个多人联机游戏
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-08-18T16:17:02+08:00" content="2016-08-18">
+              2016-08-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/闲言碎语/" itemprop="url" rel="index">
+                    <span itemprop="name">闲言碎语</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/18/使用-Photon-在-Unity-里快速搭建一个多人联机游戏/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/使用-Photon-在-Unity-里快速搭建一个多人联机游戏/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 <a href="https://www.photonengine.com/en-US/Photon" target="_blank" rel="external">Photon</a>，一个看起来不错最后证实也挺靠谱的游戏后端解决方案。</p>
+<p>一个游戏服务器，最主要的就是对不同参与者的事件同步和世界状态的同步，所以根本还是在于和服务器的长连接上，至于游戏中的用户体系，积分体系，货币体系这些，就是属于大后端的范畴了，也是可以独立于游戏同步服务器存在的系统。</p>
+<h3 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h3><p>首先你需要集成 <strong>Photon SDK For Unity</strong>，下载地址在<a href="https://www.photonengine.com/en-US/Realtime/Download" target="_blank" rel="external">这里</a>。</p>
+<p><img src="/image/photon_1.png" alt="图1"> </p>
+<p>你需要将下载下来的 <code>PhotoAssets</code> 中的所有文件都拖到你的项目的 <code>Assets</code> 文件夹里面，注意在 <code>Plugins</code> 里面有两个 <code>Photon3Unity3D.dll</code>，需要将 <code>Metro</code> 文件夹删掉，保留一个，否则在 Unity 编译的时候会报错。</p>
+<p>拖进去之后只要 Unity 中 Compile 没有问题那第一步就大功告成了。</p>
+<h3 id="u811A_u672C_u521B_u5EFA"><a href="#u811A_u672C_u521B_u5EFA" class="headerlink" title="脚本创建"></a>脚本创建</h3><p>创建一个你用来维护游戏网络逻辑的脚本，例如命名为 <code>GameNetworkClient.cs</code>，然后你需要在头部加上这几个引用：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">using&#160;System.Collections;&#10;using&#160;ExitGames.Client.Photon;&#10;using&#160;ExitGames.Client.Photon.LoadBalancing;&#10;using&#160;System.Collections.Generic;&#10;using&#160;UnityEngine;&#10;using&#160;Hashtable&#160;=&#160;ExitGames.Client.Photon.Hashtable;</span><br></pre></td></tr></table></figure>
+<p>接着声明一个私有的 <code>LoadBalancingClient</code>对象，你的脚本中的所有网络逻辑都会通过这个 <code>client</code> 对象来发起和回调。我们这样在 Start 中初始化 <code>client</code> 对象：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">client = new LoadBalancingClient();&#10;client.AppId = &#34;&#123;&#20320;&#30340; App_id&#125;&#34;;  &#10;client.OnStateChangeAction += this.OnStateChanged;&#10;client.OnOpResponseAction += this.OnRespAction;&#10;client.OnEventAction += this.OnEvent;&#10;&#10;client.ConnectToRegionMaster(&#34;asia&#34;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>你的 App_id 可以在 Photon 官网注册完免费账户后在账户详情页获取，免费的账户拥有 <strong>20</strong> 个同时在线人数的限额，对于小范围好友间的游戏和测试足够了。</p>
+</blockquote>
+<p>其中，最后一行代码就是 <code>client</code> 去连接 MasterServer 的方法，这里面传入的参数要根据你的游戏所在地区来确定， Photon 在全球有很多分散的数据中心，因此支持很多区域的连接，具体支持的地区和代码如下：</p>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>Hosted in</th>
+<th>Token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asia</td>
+<td>Singapore</td>
+<td>asia</td>
+</tr>
+<tr>
+<td>Australia</td>
+<td>Melbourne</td>
+<td>au</td>
+</tr>
+<tr>
+<td>Canada, East</td>
+<td>Montreal</td>
+<td>cae</td>
+</tr>
+<tr>
+<td>Europe</td>
+<td>Amsterdam</td>
+<td>eu</td>
+</tr>
+<tr>
+<td>Japan</td>
+<td>Tokyo</td>
+<td>jp</td>
+</tr>
+<tr>
+<td>South America</td>
+<td>Sao Paulo</td>
+<td>sa</td>
+</tr>
+<tr>
+<td>USA, East</td>
+<td>Washington</td>
+<td>us</td>
+</tr>
+<tr>
+<td>USA, West</td>
+<td>San José</td>
+<td>usw</td>
+</tr>
+</tbody>
+</table>
+<p>所以在这里我改成了 <code>asia</code>，事实证明新加坡的服务器是比较稳定的。</p>
+<h3 id="u72B6_u6001_u7EF4_u62A4"><a href="#u72B6_u6001_u7EF4_u62A4" class="headerlink" title="状态维护"></a>状态维护</h3><p><code>client</code> 的状态主要就是根据上面初始化的时候给的三个 Action 来维护的，你需要在你的脚本里为这三个 Action 都加上你自己的 Handler。当然，如果你想按照他的 demo 里示范的那样去继承 <code>client</code> 并且 override 这三个 Action 的回调都是可以的。</p>
+<h4 id="OnStateChanged"><a href="#OnStateChanged" class="headerlink" title="OnStateChanged"></a>OnStateChanged</h4><p>返回的是一个 <code>ClientState</code> 枚举值，主要就是一些 client 状态的值，例如</p>
+<p> <code>connecting</code>，<code>connected</code>，<code>joining</code>之类的。</p>
+<h4 id="OnRespAction"><a href="#OnRespAction" class="headerlink" title="OnRespAction"></a>OnRespAction</h4><p>返回的是一个 <code>OperationResponse</code> 对象，它会在每次你用 <code>client</code> 对象调用一些方法并且获得 response 之后调用，分别有下面这些类型的 Operation:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">public class OperationCode &#123;&#10;        [Obsolete(&#34;Exchanging encrpytion keys is done internally in the lib now. Don&#39;t expect this operation-result.&#34;)]&#10;        public const byte ExchangeKeysForEncryption = 250;&#10;&#10;        /// &#60;summary&#62;(255) Code for OpJoin, to get into a room.&#60;/summary&#62;&#10;        public const byte Join = 255;&#10;&#10;        /// &#60;summary&#62;(230) Authenticates this peer and connects to a virtual application&#60;/summary&#62;&#10;        public const byte Authenticate = 230;&#10;&#10;        /// &#60;summary&#62;(229) Joins lobby (on master)&#60;/summary&#62;&#10;        public const byte JoinLobby = 229;&#10;&#10;        /// &#60;summary&#62;(228) Leaves lobby (on master)&#60;/summary&#62;&#10;        public const byte LeaveLobby = 228;&#10;&#10;        /// &#60;summary&#62;(227) Creates a game (or fails if name exists)&#60;/summary&#62;&#10;        public const byte CreateGame = 227;&#10;&#10;        /// &#60;summary&#62;(226) Join game (by name)&#60;/summary&#62;&#10;        public const byte JoinGame = 226;&#10;&#10;        /// &#60;summary&#62;(225) Joins random game (on master)&#60;/summary&#62;&#10;        public const byte JoinRandomGame = 225;&#10;&#10;        // public const byte CancelJoinRandom = 224; // obsolete, cause JoinRandom no longer is a &#34;process&#34;. now provides result immediately&#10;&#10;        /// &#60;summary&#62;(254) Code for OpLeave, to get out of a room.&#60;/summary&#62;&#10;        public const byte Leave = (byte)254;&#10;&#10;        /// &#60;summary&#62;(253) Raise event (in a room, for other actors/players)&#60;/summary&#62;&#10;        public const byte RaiseEvent = (byte)253;&#10;&#10;        /// &#60;summary&#62;(252) Set Properties (of room or actor/player)&#60;/summary&#62;&#10;        public const byte SetProperties = (byte)252;&#10;&#10;        /// &#60;summary&#62;(251) Get Properties&#60;/summary&#62;&#10;        public const byte GetProperties = (byte)251;&#10;&#10;        /// &#60;summary&#62;(248) Operation code to change interest groups in Rooms (Lite application and extending ones).&#60;/summary&#62;&#10;        public const byte ChangeGroups = (byte)248;&#10;&#10;        /// &#60;summary&#62;(222) Request the rooms and online status for a list of friends (by name, which should be unique).&#60;/summary&#62;&#10;        public const byte FindFriends = 222;&#10;&#10;        /// &#60;summary&#62;(221) Request statistics about a specific list of lobbies (their user and game count).&#60;/summary&#62;&#10;        public const byte GetLobbyStats = 221;&#10;&#10;        /// &#60;summary&#62;(220) Get list of regional servers from a NameServer.&#60;/summary&#62;&#10;        public const byte GetRegions = 220;&#10;&#10;        /// &#60;summary&#62;(219) WebRpc Operation.&#60;/summary&#62;&#10;        public const byte WebRpc = 219;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，例如 <code>rasieEvent</code>，<code>setProperties</code> 或者加入离开游戏这些请求都是会有服务器的 response 的，你可以根据返回对象的 <code>ReturnCode</code> 来判断请求是否成功并且是否执行一些错误后的处理，<code>ReturnCode</code> 为 0 成功，不为 0 则失败，如果需要也可以从 <code>DebugMessage</code> 中获取错误提示信息。</p>
+<h4 id="OnEventAction"><a href="#OnEventAction" class="headerlink" title="OnEventAction"></a><strong>OnEventAction</strong></h4><p>返回的是一个 <code>EventData</code> 对象，它会在每次 <code>client</code> 接收到新的 Event 的时候调用，具体的 Event 类型根据<code>EventData</code> 的 <code>EventCode</code> 来确定，分别有下面这些类型的 <code>EventCode</code>:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">public class EventCode &#123;&#10;        /// &#60;summary&#62;(230) Initial list of RoomInfos (in lobby on Master)&#60;/summary&#62;&#10;        public const byte GameList = 230;&#10;&#10;        /// &#60;summary&#62;(229) Update of RoomInfos to be merged into &#34;initial&#34; list (in lobby on Master)&#60;/summary&#62;&#10;        public const byte GameListUpdate = 229;&#10;&#10;        /// &#60;summary&#62;(228) Currently not used. State of queueing in case of server-full&#60;/summary&#62;&#10;        public const byte QueueState = 228;&#10;&#10;        /// &#60;summary&#62;(227) Currently not used. Event for matchmaking&#60;/summary&#62;&#10;        public const byte Match = 227;&#10;&#10;        /// &#60;summary&#62;(226) Event with stats about this application (players, rooms, etc)&#60;/summary&#62;&#10;        public const byte AppStats = 226;&#10;&#10;        /// &#60;summary&#62;(224) This event provides a list of lobbies with their player and game counts.&#60;/summary&#62;&#10;        public const byte LobbyStats = 224;&#10;&#10;        /// &#60;summary&#62;(210) Internally used in case of hosting by Azure&#60;/summary&#62;&#10;        [Obsolete(&#34;TCP routing was removed after becoming obsolete.&#34;)]&#10;        public const byte AzureNodeInfo = 210;&#10;&#10;        /// &#60;summary&#62;(255) Event Join: someone joined the game. The new actorNumber is provided as well as the properties of that actor (if set in OpJoin).&#60;/summary&#62;&#10;        public const byte Join = (byte)255;&#10;&#10;        /// &#60;summary&#62;(254) Event Leave: The player who left the game can be identified by the actorNumber.&#60;/summary&#62;&#10;        public const byte Leave = (byte)254;&#10;&#10;        /// &#60;summary&#62;(253) When you call OpSetProperties with the broadcast option &#34;on&#34;, this event is fired. It contains the properties being set.&#60;/summary&#62;&#10;        public const byte PropertiesChanged = (byte)253;&#10;&#10;        /// &#60;summary&#62;(253) When you call OpSetProperties with the broadcast option &#34;on&#34;, this event is fired. It contains the properties being set.&#60;/summary&#62;&#10;        [Obsolete(&#34;Use PropertiesChanged now.&#34;)]&#10;        public const byte SetProperties = (byte)253;&#10;&#10;        /// &#60;summary&#62;(252) When player left game unexpected and the room has a playerTtl &#62; 0, this event is fired to let everyone know about the timeout.&#60;/summary&#62;&#10;        /// Obsolete. Replaced by Leave. public const byte Disconnect = LiteEventCode.Disconnect;&#10;&#10;        /// &#60;summary&#62;(251) Sent by Photon Cloud when a plugin-call or webhook-call failed. Usually, the execution on the server continues, despite the issue. Contains: ParameterCode.Info.&#60;/summary&#62;&#10;        /// &#60;seealso cref=&#34;https://doc.photonengine.com/en/realtime/current/reference/webhooks&#34;/&#62;&#10;        public const byte ErrorInfo = 251;&#10;&#10;        /// &#60;summary&#62;(250) Sent by Photon whent he event cache slice was changed. Done by OpRaiseEvent.&#60;/summary&#62;&#10;        public const byte CacheSliceChanged = 250;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>EventCode</code> 你是可以自己定义的，这个 code 是个 <strong>byte 类型的整数</strong>，因此不能大于255，Photon 将从 0 开始的一大段值域都留给开发者用来自定义事件了。Photon 默认提供了 <code>GameList</code>，或者说 RoomList 的功能，你可以创建 <code>Room</code> 并且加入，<code>Room</code> 也有他自己的 Option，可以作为 Lobby，也就是所有人默认进入的 <code>Room</code>，当然也可以根据各种条件来查找 <code>Room</code>。</p>
+<p>这里的 <strong>253 PropertiesChanged</strong> 是一个非常重要的 Event，在上面我提到过，联机游戏的后端最重要的部分之一就是世界状态的同步，在这里也就是<strong>房间的状态 Room Properties</strong>，因此在 Photon SDK 中，当你调用 <code>client</code> 对当前加入的 <code>Room</code> 的某个属性做出了改变，这就会产生一个事件通知到整个 <code>Room</code> 里的所有玩家，这通常用来同步一些全局的属性，例如光线，地形，怪物的血量之类的。</p>
+<p>当然，你还可以自定义 Event，在我实现的 demo 中我就是用到了自定义 Event 来告知其他玩家我的状态。比如，整个地图 （可以看做就是一个 <code>Room</code>）中的玩家列表和位置是可以用全局状态来同步的，但是例如单个玩家的一些事件（使用物品，使用技能之类的）可能就需要由发起的用户向全 <code>Room</code> 的其他玩家发送一个同步事件。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">byte eventCode = 1; &#10;Hashtable evData = new Hashtable (); &#10;evData.Add (&#34;player_id&#34;, random_playerid);&#10;evData.Add (&#34;pos_x&#34;, position.x);&#10;evData.Add (&#34;pos_y&#34;, position.y);&#10;&#10;bool sendReliable = true; &#10;if (isConnected) &#123;&#10;&#9;client.OpRaiseEvent (eventCode, evData, sendReliable, RaiseEventOptions.Default);&#10;&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然后这个事件就会在除了发送者自己的其他玩家的客户端被回调。</p>
+</blockquote>
+<p><strong>这个时候收到的数据包怎么解出来呢？</strong></p>
+<p>最后再说说坑了我半天的 <code>EventData</code> 中的数据抽取，在 <code>EventData</code> 中的数据格式十分蛋疼，例如上面这段代码里发送的数据，当你在其他客户端收到的时候，它的数据其实是存在 <code>EventData</code> 的 <code>Parameters</code> 这个属性变量里面，这是一个 <code>Dictionary&lt;byte,object&gt;</code> 类型的对象，通过 <code>ParameterCode.Data</code> 这个 key 将 data 取出来之后，里面才是我们传入的 Hashtable ，然而现在已经变成了一个 <code>Dictionary&lt;object,object&gt;</code> 对象了。在没有仔细查看源码的情况下，它的官方 demo 和文档并没有提及如何解包 <code>EventData</code> ,因此我是通过 Debug 的方式才最终摸清了里面的数据格式。当然后来又看了下它的头文件，才看到 <code>ParameterCode.Data</code> 😂。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Photon/" rel="tag">#Photon</a>
+          
+            <a href="/tags/Unity/" rel="tag">#Unity</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/13/AVAudioPlayer的几个细节/" rel="next" title="AVAudioPlayer的几个细节">
+                <i class="fa fa-chevron-left"></i> AVAudioPlayer的几个细节
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/08/18/使用-Photon-在-Unity-里快速搭建一个多人联机游戏/"
+                   data-title="使用 Photon 在 Unity 里快速搭建一个多人联机游戏" data-url="http://sergiochan.github.io/2016/08/18/使用-Photon-在-Unity-里快速搭建一个多人联机游戏/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" style="border-radius:50%" src="https://avatars2.githubusercontent.com/u/10103766?v=3&s=460" alt="Sergio Chan" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Sergio Chan</p>
+        </div>
+        <p class="site-description motion-element" style="color: wheat" itemprop="description">Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/SergioChan" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" target="_blank">
+                  <i class="fa fa-linkedin"></i> linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3089081773/profile?topnav=1&wvr=6" target="_blank">
+                  <i class="fa fa-weibo"></i> weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="yuheng9211@qq.com" target="_blank">
+                  <i class="fa fa-email"></i> email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5B89_u88C5"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u811A_u672C_u521B_u5EFA"><span class="nav-number">2.</span> <span class="nav-text">脚本创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u72B6_u6001_u7EF4_u62A4"><span class="nav-number">3.</span> <span class="nav-text">状态维护</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OnStateChanged"><span class="nav-number">3.1.</span> <span class="nav-text">OnStateChanged</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OnRespAction"><span class="nav-number">3.2.</span> <span class="nav-text">OnRespAction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OnEventAction"><span class="nav-number">3.3.</span> <span class="nav-text">OnEventAction</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div style="text-align: center;" class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"> Lovely designed and created by Sergio Chan </span>
+</div>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sergiochan"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
