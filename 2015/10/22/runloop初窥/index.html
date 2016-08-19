@@ -285,7 +285,7 @@ self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@
       
 
       
-        <span itemprop="articleBody"><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B" class="headerlink" title="先来说一个很简单的实例"></a>先来说一个很简单的实例</h2><p>在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明</p>
+        <span itemprop="articleBody"><script src="/assets/js/APlayer.min.js"> </script><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B" class="headerlink" title="先来说一个很简单的实例"></a>先来说一个很简单的实例</h2><p>在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明</p>
 <figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">self.timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1.0</span>f <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(<span class="string">timeUpdate:</span>) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
 <p>那么当你滑动或者保持你的手指在scrollView上的时候，timer是不会被响应的，这不是因为刷新视图的操作被占用，而是因为当你没有显式声明的时候，你所定义的timer默认都是加在主线程上，并且，当你在对scrollView进行操作的时候，你的timer的事件根本不会被响应到，这就得说到runloop了。而runloop也是底层原理中相当重要的一部分。我们先从它说起。</p>
 <h2 id="u4EC0_u4E48_u662Frunloop"><a href="#u4EC0_u4E48_u662Frunloop" class="headerlink" title="什么是runloop"></a>什么是runloop</h2><p>Runloop，顾名思义就是运行的循环。简单理解就是多线程机制中的基础，它能够接收外部事件的输入，并且在有事件的时候保持运行，在没有事件的时候进入休眠。并且它对于线程的消息处理机制进行了很好的封装。</p>

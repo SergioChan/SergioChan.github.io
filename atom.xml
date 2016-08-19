@@ -20,7 +20,7 @@
     <id>http://sergiochan.github.io/2016/08/18/使用-Photon-在-Unity-里快速搭建一个多人联机游戏/</id>
     <published>2016-08-18T08:17:02.000Z</published>
     <updated>2016-08-18T09:25:36.000Z</updated>
-    <content type="html"><![CDATA[<p>如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 <a href="https://www.photonengine.com/en-US/Photon" target="_blank" rel="external">Photon</a>，一个看起来不错最后证实也挺靠谱的游戏后端解决方案。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 <a href="https://www.photonengine.com/en-US/Photon" target="_blank" rel="external">Photon</a>，一个看起来不错最后证实也挺靠谱的游戏后端解决方案。</p>
 <p>一个游戏服务器，最主要的就是对不同参与者的事件同步和世界状态的同步，所以根本还是在于和服务器的长连接上，至于游戏中的用户体系，积分体系，货币体系这些，就是属于大后端的范畴了，也是可以独立于游戏同步服务器存在的系统。</p>
 <h3 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h3><p>首先你需要集成 <strong>Photon SDK For Unity</strong>，下载地址在<a href="https://www.photonengine.com/en-US/Realtime/Download" target="_blank" rel="external">这里</a>。</p>
 <p><img src="/image/photon_1.png" alt="图1"> </p>
@@ -105,7 +105,7 @@
 <p>最后再说说坑了我半天的 <code>EventData</code> 中的数据抽取，在 <code>EventData</code> 中的数据格式十分蛋疼，例如上面这段代码里发送的数据，当你在其他客户端收到的时候，它的数据其实是存在 <code>EventData</code> 的 <code>Parameters</code> 这个属性变量里面，这是一个 <code>Dictionary&lt;byte,object&gt;</code> 类型的对象，通过 <code>ParameterCode.Data</code> 这个 key 将 data 取出来之后，里面才是我们传入的 Hashtable ，然而现在已经变成了一个 <code>Dictionary&lt;object,object&gt;</code> 对象了。在没有仔细查看源码的情况下，它的官方 demo 和文档并没有提及如何解包 <code>EventData</code> ,因此我是通过 Debug 的方式才最终摸清了里面的数据格式。当然后来又看了下它的头文件，才看到 <code>ParameterCode.Data</code> 😂。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 <a href="https://www.photonengine.com/en-US/Photon" tar]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 <a hr]]>
     </summary>
     
       <category term="Photon" scheme="http://sergiochan.github.io/tags/Photon/"/>
@@ -122,7 +122,7 @@
     <id>http://sergiochan.github.io/2016/08/13/AVAudioPlayer的几个细节/</id>
     <published>2016-08-13T01:24:52.000Z</published>
     <updated>2016-08-13T01:25:39.000Z</updated>
-    <content type="html"><![CDATA[<p>昨天在做 iOS 上的声波传输的时候，倒是遇到了几个和  AVAudioPlayer 有关的有趣问题，这种问题一般情况下我们都注意不到，只要踩过了才知道。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>昨天在做 iOS 上的声波传输的时候，倒是遇到了几个和  AVAudioPlayer 有关的有趣问题，这种问题一般情况下我们都注意不到，只要踩过了才知道。</p>
 <h3 id="u5173_u4E8E_PCM_Data"><a href="#u5173_u4E8E_PCM_Data" class="headerlink" title="关于 PCM Data"></a>关于 PCM Data</h3><p><code>AVAudioPlayer</code> 有一个初始化方法 <code>initWithData:error:</code>，这个方法的 API 说明是</p>
 <blockquote>
 <p>/<em> all data must be in the form of an audio file understood by CoreAudio </em>/</p>
@@ -166,8 +166,8 @@
 <h3 id="u5173_u4E8E_Play"><a href="#u5173_u4E8E_Play" class="headerlink" title="关于 Play"></a>关于 Play</h3><p><code>AVAudioPlayer</code> 还有个有趣的现象，我暂时没有找到官方文档的证据，那就是它的 <code>play</code> 不会对自身有一个引用来保持自己是活着的。<strong>只要它的父类之上有一个对象被释放了，那它也就被一起释放掉了</strong>。因此无论你是在第一层直接声明 self.audioPlayer play 还是 self.A.audioPlayer.play ，它的最上层父类必须有一个和 VC 相关或者全局相关的强引用，否则就会在 play 的时候就已经被释放掉了。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>昨天在做 iOS 上的声波传输的时候，倒是遇到了几个和  AVAudioPlayer 有关的有趣问题，这种问题一般情况下我们都注意不到，只要踩过了才知道。</p>
-<h3 id="u5173_u4E8E_PCM_Data"><a href="#u5173_u4E8E_PCM]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>昨天在做 iOS 上的声波传输的时候，倒是遇到了几个和  AVAudioPlayer 有关的有趣问题，这种问题一般情况下我们都注意不到，只要踩过了才知道。</p>
+<h3 i]]>
     </summary>
     
       <category term="AVAudioPlayer" scheme="http://sergiochan.github.io/tags/AVAudioPlayer/"/>
@@ -184,7 +184,7 @@
     <id>http://sergiochan.github.io/2016/07/14/我的-GayHub-2016/</id>
     <published>2016-07-14T11:05:27.000Z</published>
     <updated>2016-07-14T11:08:08.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
 <p>As the number of my repos keeps increasing, I have to create this new repo in order to create some kinds of <strong>index</strong> for all the repos that I have written.</p>
 </blockquote>
 <p><img src="/image/2016-gayhub.png" alt=""></p>
@@ -247,8 +247,8 @@
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<blockquote>
-<p>As the number of my repos keeps increasing, I have to create this new repo in order to create some kinds of <strong>index</s]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
+<p>As the number of my repos keeps increasing, I have to create this new repo]]>
     </summary>
     
       <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
@@ -261,7 +261,7 @@
     <id>http://sergiochan.github.io/2016/05/28/“人工智能”邪教/</id>
     <published>2016-05-28T07:06:50.000Z</published>
     <updated>2016-05-28T07:17:50.000Z</updated>
-    <content type="html"><![CDATA[<p>我觉得现在的不论是全社会还是整个互联网圈，都弥漫着一股对于人工智能的狂热崇拜，就像是一种人工智能邪教一样，深深地蛊惑着每一个圈外人或者是无知者的心智。大家都觉得，人工智能好牛逼啊，人工智能可以比人还聪明，人工智能可以做到一切。Excuse me？作为一个微小的人类你却妄想把自己幻想中的，注意是幻想中的造物主创造出来，Excuse me？这是一些算法能解决的吗？充其量，造出来的不过是深蓝，不过是Alpha Go这种在我看来<strong>只能定义为机器的所谓“智能”</strong>。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>我觉得现在的不论是全社会还是整个互联网圈，都弥漫着一股对于人工智能的狂热崇拜，就像是一种人工智能邪教一样，深深地蛊惑着每一个圈外人或者是无知者的心智。大家都觉得，人工智能好牛逼啊，人工智能可以比人还聪明，人工智能可以做到一切。Excuse me？作为一个微小的人类你却妄想把自己幻想中的，注意是幻想中的造物主创造出来，Excuse me？这是一些算法能解决的吗？充其量，造出来的不过是深蓝，不过是Alpha Go这种在我看来<strong>只能定义为机器的所谓“智能”</strong>。</p>
 <blockquote>
 <p>这里你可以移步<a href="http://baike.baidu.com/link?url=EP2EGmEI_HCXGn-iz4sLNr8dtbOsZ-eL_tSmQSk_4GCmdw5yiS-gkmJgSyJtJi5HEKSna62nvccqNG98RL-e1xE-PZBWqT9QAmH00609Ho_" target="_blank" rel="external">百度百科</a>来看看什么是智能：</p>
 <p>从感觉到记忆到思维这一过程，称为“智慧”，智慧的结果就产生了行为和语言，将行为和语言的表达过程称为“能力”，两者合称“智能”，将<strong>感觉、记忆、回忆、思维、语言、行为的整个过程称为智能过程</strong>，它是智力和能力的表现。它们分别又可以用“智商”和“能商”来描述其在个体中发挥智能的程度。“情商”可以调整智商和能商的正确发挥，或控制二者恰到好处地发挥它们的作用。</p>
@@ -284,7 +284,7 @@
 <p>最后声明：<strong>通篇扯淡，说的都是废话，不要相信，仅博一乐</strong>。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>我觉得现在的不论是全社会还是整个互联网圈，都弥漫着一股对于人工智能的狂热崇拜，就像是一种人工智能邪教一样，深深地蛊惑着每一个圈外人或者是无知者的心智。大家都觉得，人工智能好牛逼啊，人工智能可以比人还聪明，人工智能可以做到一切。Excuse me？作为一个微小的人类你却妄想把]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>我觉得现在的不论是全社会还是整个互联网圈，都弥漫着一股对于人工智能的狂热崇拜，就像是一种人工智能邪教一样，深深地蛊惑着每一个圈外人或者是无知者的心智。大家都觉得，人工智能好牛]]>
     </summary>
     
       <category term="哲学" scheme="http://sergiochan.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
@@ -300,14 +300,14 @@
     <link href="http://sergiochan.github.io/2016/04/11/2016-04-11-%E5%8E%BB%E6%88%98%E6%96%97/"/>
     <id>http://sergiochan.github.io/2016/04/11/2016-04-11-去战斗/</id>
     <published>2016-04-11T08:55:11.000Z</published>
-    <updated>2016-04-11T08:56:46.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
+    <updated>2016-08-19T06:35:03.000Z</updated>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
 <p>遇到的挑战越大，获得的快感也越强</p>
 <p>– 著名黑客凯文·米特尼克（Kevin Mitnick）</p>
 </blockquote>
 ]]></content>
     <summary type="html">
-    <![CDATA[<blockquote>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
 <p>遇到的挑战越大，获得的快感也越强</p>
 <p>– 著名黑客凯文·米特尼克（Kevin Mitnick）</p>
 </blockquote>
@@ -326,7 +326,7 @@
     <id>http://sergiochan.github.io/2016/03/23/我是怎么踩过在-OSX-上录屏的坑的/</id>
     <published>2016-03-23T15:55:44.000Z</published>
     <updated>2016-03-23T16:03:40.000Z</updated>
-    <content type="html"><![CDATA[<p>昨天开始在研究 OSX 上的屏幕录制并且实时获取视频流或图像帧的实现。遇到了非常大的阻力，各种问题，昨晚纠结了一整晚，终于在小萌的启发下慢慢找到了解决办法，把谷歌和 stackoverflow 都翻了个底朝天，最后的解决有点意外，中间还是有一些细节需要求证，然而除了 Apple Doc 已经没有任何参考文献了，而有些机制 Apple Doc 中都不会涉及。所以此刻迫不及待的想要写一篇博客，来纪念万里长征的第一步。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>昨天开始在研究 OSX 上的屏幕录制并且实时获取视频流或图像帧的实现。遇到了非常大的阻力，各种问题，昨晚纠结了一整晚，终于在小萌的启发下慢慢找到了解决办法，把谷歌和 stackoverflow 都翻了个底朝天，最后的解决有点意外，中间还是有一些细节需要求证，然而除了 Apple Doc 已经没有任何参考文献了，而有些机制 Apple Doc 中都不会涉及。所以此刻迫不及待的想要写一篇博客，来纪念万里长征的第一步。</p>
 <p>要实现录屏，有两种途径，一种是通过 <code>Core Graphic</code>， 一种是通过 <code>AVFoundation</code>。 <code>Core Graphic</code> 的话，你可以找到苹果官方的一份 <a href="https://developer.apple.com/library/mac/samplecode/SonOfGrab/Introduction/Intro.html" target="_blank" rel="external">SampleCode</a>，如果使用了 </p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">CGImageRef</span> screenShot = <span class="built_in">CGWindowListCreateImage</span>(<span class="built_in">CGRectMake</span>(<span class="number">0.0</span>f, <span class="number">0.0</span>f, [<span class="keyword">self</span> screenRect]<span class="variable">.size</span><span class="variable">.width</span>, [<span class="keyword">self</span> screenRect]<span class="variable">.size</span><span class="variable">.height</span>), k<span class="built_in">CGWindowListOptionOnScreenOnly</span>, k<span class="built_in">CGNullWindowID</span>, k<span class="built_in">CGWindowImageDefault</span> |k<span class="built_in">CGWindowImageNominalResolution</span>);</span><br></pre></td></tr></table></figure>
 <p>它的优点在于你可以根据 <code>WindowID</code> 来获取<strong>指定窗口</strong>的图像，并且可以通过 <code>ListOption</code> 来设定各种包括桌面图标，去除桌面图标，去除桌面，这些七七八八的设置，所以微信 Mac 端的截屏功能应该就是使用了上面这行代码。<strong>所以我们也可以设置一个 NSTimer， 来按照六十分之一秒一帧的速度来获取截图，并且形成一个流。</strong> 实践表明性能还不错，对于录屏这种事情烧一烧 CPU 是常有的事情，毕竟你需要按帧来计算像素，而且对于 Mac 而言，CPU 并不是什么特别大的问题 =。= 因此这种办法是<strong>可行的</strong>，然而我觉得不够优雅。</p>
@@ -363,7 +363,7 @@
 <p>最后，最重要的是！代码已经整理成开源库放在 <a href="https://github.com/RavenTech-GrowthHacker/RTScreenRecorder" target="_blank" rel="external">Github</a> 上了！</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>昨天开始在研究 OSX 上的屏幕录制并且实时获取视频流或图像帧的实现。遇到了非常大的阻力，各种问题，昨晚纠结了一整晚，终于在小萌的启发下慢慢找到了解决办法，把谷歌和 stackoverflow 都翻了个底朝天，最后的解决有点意外，中间还是有一些细节需要求证，然而除了 App]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>昨天开始在研究 OSX 上的屏幕录制并且实时获取视频流或图像帧的实现。遇到了非常大的阻力，各种问题，昨晚纠结了一整晚，终于在小萌的启发下慢慢找到了解决办法，把谷歌和 stac]]>
     </summary>
     
       <category term="AVFoundation" scheme="http://sergiochan.github.io/tags/AVFoundation/"/>
@@ -380,11 +380,11 @@
     <id>http://sergiochan.github.io/2016/03/15/2016-03-15/</id>
     <published>2016-03-15T09:59:28.000Z</published>
     <updated>2016-03-15T10:02:50.000Z</updated>
-    <content type="html"><![CDATA[<p>宠辱不惊。<br>努力去尝试吧，既然你能够有机会去改变世界了！</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>宠辱不惊。<br>努力去尝试吧，既然你能够有机会去改变世界了！</p>
 <p>一步步脚踏实地走下去。<br>种下汗水。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>宠辱不惊。<br>努力去尝试吧，既然你能够有机会去改变世界了！</p>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>宠辱不惊。<br>努力去尝试吧，既然你能够有机会去改变世界了！</p>
 <p>一步步脚踏实地走下去。<br>种下汗水。</p>
 ]]>
     </summary>
@@ -399,7 +399,7 @@
     <id>http://sergiochan.github.io/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/</id>
     <published>2016-03-08T03:02:40.000Z</published>
     <updated>2016-03-08T10:00:24.000Z</updated>
-    <content type="html"><![CDATA[<p>知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。<br>知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。<br>知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。</p>
 <p>然后<br>好久没参加 Hackathon 了😂<br>心里有点痒痒的</p>
 <h2 id="Idea_A"><a href="#Idea_A" class="headerlink" title="Idea A"></a>Idea A</h2><p>第一个想法是一个开源的开放的人类知识库计划。互联网时代，一个革新是信息可以存在互联网上随时供大众访问，而知乎所在努力打造和维护的一种氛围，也是以知识为硬通货的共享经济。知乎通过良好的运营和口碑，积累了大量忠实用户，也有很大一部分处于社会高级知识阶层的用户愿意在这个社区里共享自己的知识。但是随着整个社区的快速扩张和开放，越来越多的知识需求方或者说知识缺乏者涌入了社区。这对于社区本来应该是好事，但是由于之前并没有对这些用户进行良好的区分，不得不说现在知乎的娱乐性越来越强，质量也没有以前那么好了。<br>所以我们需要这样一个开源的开放的人类知识库计划。为什么说是开源？因为任何人都可以申请成为贡献者，当然，贡献者会需要一定要求，比方说教授以上，论文质量，或者什么学术机构的负责人之类的，这样才可以保证进入这个知识库的知识都是得到出厂认证的。这个知识库可以以社区的形式存在，同一领域的不同专家可以各自发表意见，甚至可以互喷，要知道，人类的文明进步，可离不开辩论和争执。为什么说是开放？因为任何人都可以访问，都可以获取，它的存在形式，你可以理解为十万个为什么的进化版。在思考什么百度百科，维基百科这些所谓的同类产品的时候，我突然意识到这根本不在同一个维度上，十万个为什么忽然跳进我的脑海，一切就豁然开朗：百科是在完成对于事物的定义，而十万个为什么和这个所谓的知识库，是在完成对于知识的定义。知识的范畴可大了，才不仅仅包括事物。这也是百度经验，百度知道想做的事情吧。但是这两者的竞争力基本就可以不用考虑了。就像，你不会觉得十万个为什么会是知乎的竞争对手一样😂<br>So，十万个为什么这么伟大的存在，这个几乎所有人的知识启蒙老师，为什么现在地位越来越淡，没错，因为我们长大了啊😂，他所面对的人群和包含的知识水平都是很初级的，但是他在整个文化普及运动中起到了不可估量的作用。我觉得有兴趣的朋友可以去考证一下？（我记得以前看过类似的说法😂）所以，为了提高整个社会的知识水平，为了提高甚至整个人类文明的知识水平，同时利用互联网的优势，我觉得有必要，哪怕不是一个Hackathon能完成的东西，也应该有一家企业去完成这个艰巨的任务，抱着像谷歌那样的贡献社会，贡献人类的宗旨去努力。况且，这个知识库将是人类文明重新走上发展轨道的一块很重要的垫脚石。</p>
 <blockquote>
@@ -409,8 +409,7 @@
 <p>这对于未来的教育，人类去了解世界的方式都是一个重大的变革。也就是说，通过人类文明几千年的积累和互联网技术的发展，将人类到目前为止所有的知识收集在一起，并且完成这样一个工具，让未来的人类能够更加直接的去获取知识，了解世界。我们之前所接受的教育，都是在教给我们几乎所有的基础理论知识，然后再去了解这个世界，到了大学，虽然好像是分开了专业，学习了不同的专业课，但是我们在选择专业的时候本身就是迷茫的，并且即使选择了专业，每个专业的细分领域还是非常的多，如果我们按照现有的模式去学习，那么可能我们要花4到10年的时间去循序渐进的获取知识，成为专业人才，更别说浪费在通识教育的十几年了。然而，如果有了这样一个工具，我们只需要教育未来的孩子们如何去使用这样的工具，这是几乎不用教的吧😂 然后他就可以用这个工具去学习，从最基础的数学定理到最接近用户的设计，以这种更具针对性的方式去学习，我想，就看重人的学习能力，而这样的人才，也会更早成长，更专业吧。<br>但是吧，我觉得这个工具最大的意义，还是在于完整了人类文明发展的一个循环。意识形态的知识通过实践转化为物质形态的产品，而产品可以被解析成知识，从而可以在意识形态上更好的创新。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。<br>知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。</p>
-<p>然后<b]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。<br>知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好]]>
     </summary>
     
       <category term="Hackathon" scheme="http://sergiochan.github.io/tags/Hackathon/"/>
@@ -425,7 +424,7 @@
     <id>http://sergiochan.github.io/2016/02/16/不要想当然的就使用UITableView/</id>
     <published>2016-02-16T08:41:50.000Z</published>
     <updated>2016-02-17T06:07:39.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="u524D_u8A00"><a href="#u524D_u8A00" class="headerlink" title="前言"></a>前言</h2><p>一直想写一篇UITableView使用经验的干货，因为TableView实在是太万能了，它帮你维护了ContentSize，数据源加载，一些事件的回调还有最重要的是视图的重用，以至于有些项目（什么电商，什么O2O这类的应用）满地都是TableView，所以在一般项目中很容易出现对于TableView的滥用或者是误用。然而由于这种事情仁者见仁，智者见智，因此在一个项目组里，一些错误的风气很容易被持续甚至发扬下去。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u524D_u8A00"><a href="#u524D_u8A00" class="headerlink" title="前言"></a>前言</h2><p>一直想写一篇UITableView使用经验的干货，因为TableView实在是太万能了，它帮你维护了ContentSize，数据源加载，一些事件的回调还有最重要的是视图的重用，以至于有些项目（什么电商，什么O2O这类的应用）满地都是TableView，所以在一般项目中很容易出现对于TableView的滥用或者是误用。然而由于这种事情仁者见仁，智者见智，因此在一个项目组里，一些错误的风气很容易被持续甚至发扬下去。</p>
 <p>我不打算在性能优化方面深入介绍，因为已经有很多关于TableView性能优化的博客了，我可能会稍微提到一些。这篇博客主要是关于整体结构，使用经验这方面的整理，让更多还没踩坑或者正在踩坑的同学们及时醒悟。</p>
 <h2 id="u4E0D_u8981_u8BD5_u56FE_u8FC7_u5206_u7684_u53BB_u590D_u7528_u4E00_u4E2ATableViewController"><a href="#u4E0D_u8981_u8BD5_u56FE_u8FC7_u5206_u7684_u53BB_u590D_u7528_u4E00_u4E2ATableViewController" class="headerlink" title="不要试图过分的去复用一个TableViewController"></a>不要试图过分的去复用一个TableViewController</h2><p>想想在使用TableViewController或者包含了TableView的Controller的时候，如果遇到了如下的这类场景，我们一般会怎么做？</p>
 <ol>
@@ -474,7 +473,7 @@
 <h2 id="u66F4_u591A_3F"><a href="#u66F4_u591A_3F" class="headerlink" title="更多?"></a>更多?</h2><p>我暂时没有想到更多，如果读者有什么要批评吐槽我的就赶紧让我一起涨姿势吧！&gt; 3 &lt;</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="u524D_u8A00"><a href="#u524D_u8A00" class="headerlink" title="前言"></a>前言</h2><p>一直想写一篇UITableView使用经验的干货，因为TableView实在是太万能了，它帮你维护了Co]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u524D_u8A00"><a href="#u524D_u8A00" class="headerlink" title="前言"></a>前言</h2><p>一直]]>
     </summary>
     
       <category term="UITableView" scheme="http://sergiochan.github.io/tags/UITableView/"/>
@@ -489,7 +488,7 @@
     <id>http://sergiochan.github.io/2016/02/06/过年/</id>
     <published>2016-02-06T12:53:46.000Z</published>
     <updated>2016-02-06T15:09:52.000Z</updated>
-    <content type="html"><![CDATA[<p>过年回家果然是毫无效率可言。到处拜年，和各种长辈嘘寒问暖，见朋友，陪长辈。  </p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>过年回家果然是毫无效率可言。到处拜年，和各种长辈嘘寒问暖，见朋友，陪长辈。  </p>
 <p>觉得自己现在的生活还是好脆弱，自己肩上的担子远比自己想象的更重。所错过和遗憾的大学头两年，也许并不是这么容易就能补回来的吧，那将成为我永远鞭策自己前进的一股伤痛。学是学了很多东西，但是确实转念一想，到现在也没有什么特别拿得出手的东西，现在静下心来把自己沉淀的东西开始整合成一个完整的项目了，然而又碰上过年，效率直线下跌，所以更加的烦闷。</p>
 <p>年后的新一年的生活，我忽然感觉到很迷茫。显昆去真格实习来北京，Kevin公司搬到北京，我在北京到底何去何从，能够让我想要的家稳定和安宁一些，少一些风浪。2016年必定还会有更多的Hackathon等着我去挑战，我相信创意是源源不断的，能力也是一步步提升的，只要我坚持每一次都学习新技术，不论获奖与否都会是巨大的进步。所以我就更需要一个稳定的生活，来为我在各种时候的冲刺积蓄力量储备体力。</p>
 <p>过年回来和父母坦白完，也狠下心来从今以后就连出国读书也要靠自己。我觉得我会为我没有在自己的人生中把自己砍得鲜血淋漓而在将来感到遗憾。我希望活的波澜壮阔，我希望哪怕是最后战死也要留下一段荡气回肠的故事，我希望我能和别人不一样，所以我继续往自己身上割出一道道伤口。从大四开始就已经完全经济独立，说实话那时候还比现在工作的我更有积蓄，毕竟在学校里，钱也没什么地方花，然而那时候也许是逆反，也许是不甘，我所努力完成的经济独立让我都为那时候的我感动了。然而现在，我有更严酷的未来要面对，真实的生活，社会，未来，这一切不再是学校那时候的水平了。我想过退缩，但是我还是不想让自己泯然众人，我还是想证明自己，证明自己能够将自己热爱的事情做到让世人都惊叹的时候。</p>
@@ -500,8 +499,8 @@
 <p>高中的时候，有一句话，从低谷的时候伴随着我走过来。<br><code>我们只要把事实讲清楚就好了，至于下结论是他们的事。</code></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>过年回家果然是毫无效率可言。到处拜年，和各种长辈嘘寒问暖，见朋友，陪长辈。  </p>
-<p>觉得自己现在的生活还是好脆弱，自己肩上的担子远比自己想象的更重。所错过和遗憾的大学头两年，也许并不是这么容易就能补回来的吧，那将成为我永远鞭策自己前进的一股伤痛。学是学了很多东西，]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>过年回家果然是毫无效率可言。到处拜年，和各种长辈嘘寒问暖，见朋友，陪长辈。  </p>
+<p>觉得自己现在的生活还是好脆弱，自己肩上的担子远比自己想象的更重。所错过和遗憾的大]]>
     </summary>
     
       <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
@@ -514,7 +513,7 @@
     <id>http://sergiochan.github.io/2016/01/27/三件小事/</id>
     <published>2016-01-27T13:36:18.000Z</published>
     <updated>2016-01-28T03:12:41.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="u4E09_u4EF6_u5C0F_u4E8B"><a href="#u4E09_u4EF6_u5C0F_u4E8B" class="headerlink" title="三件小事"></a>三件小事</h1><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。<br>一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来觉得大概是看的那些博客本身就讲的含糊不清吧。所以我就用我最直白的语言和解释来说明一下我对于id和NSObject的一些小见解。一开始直接就是跟着代码写的，所以非常的直接。<br>第二个是weak和assign的小事，为什么delegate需要声明weak而不是assign。<br>第三个是关于这个<code>NS_DESIGNATED_INITIALIZER</code>宏的解释。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="u4E09_u4EF6_u5C0F_u4E8B"><a href="#u4E09_u4EF6_u5C0F_u4E8B" class="headerlink" title="三件小事"></a>三件小事</h1><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。<br>一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来觉得大概是看的那些博客本身就讲的含糊不清吧。所以我就用我最直白的语言和解释来说明一下我对于id和NSObject的一些小见解。一开始直接就是跟着代码写的，所以非常的直接。<br>第二个是weak和assign的小事，为什么delegate需要声明weak而不是assign。<br>第三个是关于这个<code>NS_DESIGNATED_INITIALIZER</code>宏的解释。</p>
 <blockquote>
 <p>示例工程在<a href="https://github.com/SergioChan/id-NSObjectDemo" target="_blank" rel="external">这里</a>。</p>
 </blockquote>
@@ -544,7 +543,7 @@
 <p>参考<a href="http://stackoverflow.com/questions/26185239/ios-designated-initializers-using-ns-designated-initializer" target="_blank" rel="external">这里</a>。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h1 id="u4E09_u4EF6_u5C0F_u4E8B"><a href="#u4E09_u4EF6_u5C0F_u4E8B" class="headerlink" title="三件小事"></a>三件小事</h1><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="u4E09_u4EF6_u5C0F_u4E8B"><a href="#u4E09_u4EF6_u5C0F_u4E8B" class="headerlink" tit]]>
     </summary>
     
       <category term="NSObject" scheme="http://sergiochan.github.io/tags/NSObject/"/>
@@ -567,7 +566,7 @@
     <id>http://sergiochan.github.io/2016/01/20/无题-20160120/</id>
     <published>2016-01-20T09:05:04.000Z</published>
     <updated>2016-01-20T09:17:22.000Z</updated>
-    <content type="html"><![CDATA[<p>忽然发现拿再多第一，再多人认可你，这个世界还是那么大，还是总会有那么些人，无法满足他们那种居高临下，那种自以为占据所有主动地屌逼感，反而会让他们更加的想要刁难你和鄙视你。如果不是一路人的话，就不会是相互吸引，而只是相互排斥。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>忽然发现拿再多第一，再多人认可你，这个世界还是那么大，还是总会有那么些人，无法满足他们那种居高临下，那种自以为占据所有主动地屌逼感，反而会让他们更加的想要刁难你和鄙视你。如果不是一路人的话，就不会是相互吸引，而只是相互排斥。</p>
 <p>最近各种遇见和感受到。<br>But whatever, 你走你的路，有那么多人支持你，再说了，未来你想要的世界是依靠和你相似，相吸引的这群人一起来创造的，而且你也不断在证明这一点，那么那些所谓的其他人，是吧。</p>
 <p>最近准备重新开始读三国演义。觉得团队管理和自己未来的处世方式在里面都有很多可以借鉴的。</p>
 <p>例如 纵使你有十万大军，没有一个赵子龙，你一样被人家单骑救阿斗。</p>
@@ -575,8 +574,7 @@
 <p>那些鄙视我，不珍惜我的人，请等着被打脸吧。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>忽然发现拿再多第一，再多人认可你，这个世界还是那么大，还是总会有那么些人，无法满足他们那种居高临下，那种自以为占据所有主动地屌逼感，反而会让他们更加的想要刁难你和鄙视你。如果不是一路人的话，就不会是相互吸引，而只是相互排斥。</p>
-<p>最近各种遇见和感受到。<br>Bu]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>忽然发现拿再多第一，再多人认可你，这个世界还是那么大，还是总会有那么些人，无法满足他们那种居高临下，那种自以为占据所有主动地屌逼感，反而会让他们更加的想要刁难你和鄙视你。如果]]>
     </summary>
     
       <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
@@ -589,7 +587,7 @@
     <id>http://sergiochan.github.io/2015/12/21/2015/</id>
     <published>2015-12-21T12:13:17.000Z</published>
     <updated>2015-12-29T14:03:57.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807"><a href="#u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807" class="headerlink" title="看看去年底给自己定下的目标"></a>看看去年底给自己定下的目标</h1><p>还是觉得自己的2015年过的蛮有意义的。回头看了看去年底写的对2015年的展望，发现去年对自己的展望基本在今年8月份左右就已经实现完了，反而是在九月之后经历了又一次巨大的跌宕起伏，有了很多意外的收获。一年过得实在是太充实……</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807"><a href="#u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807" class="headerlink" title="看看去年底给自己定下的目标"></a>看看去年底给自己定下的目标</h1><p>还是觉得自己的2015年过的蛮有意义的。回头看了看去年底写的对2015年的展望，发现去年对自己的展望基本在今年8月份左右就已经实现完了，反而是在九月之后经历了又一次巨大的跌宕起伏，有了很多意外的收获。一年过得实在是太充实……</p>
 <h1 id="u4E0D_u5F97_u4E0D_u8BF4_u6211_u7684_u5B9E_u4E60_u548C_u5DE5_u4F5C_u7ECF_u5386"><a href="#u4E0D_u5F97_u4E0D_u8BF4_u6211_u7684_u5B9E_u4E60_u548C_u5DE5_u4F5C_u7ECF_u5386" class="headerlink" title="不得不说我的实习和工作经历"></a>不得不说我的实习和工作经历</h1><p>首先，我是在tata度过了从大四到毕业后的十个月，这里面的感情真的没法言说，这是我第一家稳定下来的公司，也是找到了归属感的团队。在公司里认识了一大帮子朋友，学了python，搭了一套newsfeed系统，尝试着做了一套TCP服务器间内部调用的框架。习惯了Linux服务器，习惯了shell，习惯了vim，在后端技能方面长进了太多。掌握了Redis和Mongo，学会了NoSQL的设计思想，当然部署和操作什么的都是简单的部分了。准备有空读Redis源码，大致看了一下感觉还好……同时也有了一定处理并发和较大规模系统的能力，在信息流系统并发较大的时候有了一定处理经验，这是我还在学校的时候最宝贵的经验，也是我去年底给自己定下的目标里写到的。对于一个还在大四的学生，有过处理百万级用户量的数据库和相当高的并发量的后端系统的经验真的是十分宝贵的。并且从陈健那儿学到了很多架构经验，很宝贵，这些架构思想极大的提高了我的系统设计能力。<br>遇到了老曹，很耐心的CTO，对我也十分的器重。谈不上人生导师，但对我的职业生涯，和对自己的定位都起了很大的影响，我开始明白自己应该怎么成长了，也懂得对自己做更好的职业生涯规划。同时整个全栈的知识体系和技能体系也变得丰富起来。<br>九月由于一些团队的原因，想要找个更高的平台提升自己，所以当时先是傻逼的在拉钩上投了微博小米和百度。可能在那个时候，还不是特别有信心直接就找内推，而且那个时候正好赶上秋招，机会还算蛮多的，于是打算自己先试试。第一个去的是微博。我在微博坐了半个小时没有人理我，做了一个小时的题也没有人给我倒杯水，二面的面试官也是急匆匆的就问完走了，并且在面试的过程中对我表示了极其明显的鄙视和轻蔑。虽然我在后来拉钩的评价上给了一颗星的差评，但是这段经历对我下半年最后几个月的转变是非常重要的。我开始明白我并不能要求所有人都对我满意，但是我至少还是得被一部分人认可，这样才不会说明我的所谓能力其实纯属扯淡。当我受到这样的对待的时候，虽然很大一部分是因为我是拉钩来的社招，并且他们甚至没有重视我刚毕业这个事实，而是认为我是刚跳槽的社会人员，但是我还是认为很大一部分原因出在自己的身上。回去之后，我开始更注重在工作中对自己能力的积累，我自己研究了runtime和runloop这些运行机制之后，发现天天写业务逻辑，和不懂技术瞎扯淡的产品经理配合简直就是对自己职业生涯的浪费和埋没，我被所谓需求所蒙蔽，根本难以接触到技术的真谛，我明白我需要做出一些改变了。所以才有了后来的波澜壮阔的历程。<br>第二个去的是百度。说实话这是我对百度印象最好的一次。然而最后的结局十分的无奈和可惜，百度砸在了O2O上，全面停止了社招，于是我阴差阳错的被自己误过了发出offer的时间点，错过了去百度的机会。但是百度的那次面试，前两面的面试官，以及最后三面电话里的负责人，都给了我非常好的印象，感觉真的可能是一个适合我的团队。并且二面的小哥，是我遇见的第一个会在面试的过程中打开我的博客和Github主页逐个问我并和我聊天的面试官。<br>不过还是那句话，上帝在给你关上一扇门的时候，总会给你打开另一扇窗户。所以当百度确认无法争取到offer之后，我当时满脑子只有一个想法，10月份的segmentfault Hackathon一定要好好玩，好好地和小萌配合一次，认真地，尽力的努力一次，去追求自己热爱和快乐的事情。  </p>
 <blockquote>
 <p>写下这些文字的时候，我正在踏上再次去寻找小萌的旅途。圣诞节将在杭州的西湖边度过。这一次，我想，既然我们已经找到了自己真正喜欢的事情，就一定要努力地奋斗下去。再不留遗憾。</p>
@@ -605,7 +603,7 @@
 <p>当然，我明白，这些期望，最后，肯定远不及明年的收获。对于我来说，只要这样疯狂的向前冲，从中体会到乐趣和自己所热爱的事情，我想，我能走多远，只有最后才会明白吧。  </p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h1 id="u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807"><a href="#u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="u770B_u770B_u53BB_u5E74_u5E95_u7ED9_u81EA_u5DF1_u5B9A_u4E0B_u7684_u76EE_u6807"><a ]]>
     </summary>
     
       <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
@@ -618,12 +616,12 @@
     <id>http://sergiochan.github.io/2015/12/21/语/</id>
     <published>2015-12-21T03:52:36.000Z</published>
     <updated>2015-12-21T03:54:08.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
 <p>对自己降低期望是对自己最好的宽恕。<br>有时候期望太高反而没有办法有所突破吧。</p>
 </blockquote>
 ]]></content>
     <summary type="html">
-    <![CDATA[<blockquote>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
 <p>对自己降低期望是对自己最好的宽恕。<br>有时候期望太高反而没有办法有所突破吧。</p>
 </blockquote>
 ]]>
@@ -639,7 +637,7 @@
     <id>http://sergiochan.github.io/2015/12/19/谈谈我对Hackathon的理解/</id>
     <published>2015-12-19T01:06:02.000Z</published>
     <updated>2015-12-19T01:08:13.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="Hackathon__u662F_u4EC0_u4E48"><a href="#Hackathon__u662F_u4EC0_u4E48" class="headerlink" title="Hackathon 是什么"></a>Hackathon 是什么</h1><p>我们先要理解Hackathon这个词的起源。它起源于1999年，词语本身来自于Hack和Marathon的组合，意思就是一群程序员或者软件工程师相聚在一起，像马拉松一样不停的从起点跑到终点进行比赛。由于大部分Hackathon都是现场命题制，这就意味着所有程序员在一开始都是站在同一起跑线上的，所以Hackathon成为了每一个热爱挑战的程序员能够挑战自身各方面能力的机会。</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="Hackathon__u662F_u4EC0_u4E48"><a href="#Hackathon__u662F_u4EC0_u4E48" class="headerlink" title="Hackathon 是什么"></a>Hackathon 是什么</h1><p>我们先要理解Hackathon这个词的起源。它起源于1999年，词语本身来自于Hack和Marathon的组合，意思就是一群程序员或者软件工程师相聚在一起，像马拉松一样不停的从起点跑到终点进行比赛。由于大部分Hackathon都是现场命题制，这就意味着所有程序员在一开始都是站在同一起跑线上的，所以Hackathon成为了每一个热爱挑战的程序员能够挑战自身各方面能力的机会。</p>
 <p>没错。我说的是，挑战。就如覃超大哥在SegmentFault的Hackathon开始的时候说的那样，hack精神就是Facebook最为推崇的理念，它的很多产品创新和突破都是来自于内部的Hackathon上迸发的灵感。所以应该不难理解，Hackathon的精神在于挑战自我和固有的事物、想法，从而去创造新的事物和新的想法。</p>
 <h1 id="u6211_u7684Hackathon_u7ECF_u5386"><a href="#u6211_u7684Hackathon_u7ECF_u5386" class="headerlink" title="我的Hackathon经历"></a>我的Hackathon经历</h1><p>先说说我的Hackathon经历吧。在接触Hackathon之前，我接触过很多创业团队，见过很多新的想法，但大部分都因为时间问题或者进度问题一拖再拖，亦或是这些想法并没有特别的打破人们固有的一些想法和思维模式。而我就已经乐衷于开拓自己的思维模式和范围，去接触更大的互联网世界。</p>
 <p>从创业和各种项目一路走来，我对软件工程的热爱逐渐在团队合作中被我自己培养了起来。对我来说，做一件事情，最重要的当然是这件事情是否有趣，是否值得我去热爱，其次就是能够和小伙伴一起去做这件事情，还记得两年前我刚开始走上这条道路的时候，我写到，“携两三靠谱好基友，凭一腔热血，青春年少，有什么做不到的。年轻就该气盛，才不负年华”。</p>
@@ -662,7 +660,7 @@
 <h2 id="u5C55_u793A_u7684_u65F6_u5019_uFF0C_u8C26_u865A_uFF0C_u4F46_u662F_u8BA9_u522B_u4EBA_u611F_u53D7_u3002"><a href="#u5C55_u793A_u7684_u65F6_u5019_uFF0C_u8C26_u865A_uFF0C_u4F46_u662F_u8BA9_u522B_u4EBA_u611F_u53D7_u3002" class="headerlink" title="展示的时候，谦虚，但是让别人感受。"></a>展示的时候，谦虚，但是让别人感受。</h2><p>展示也是相当重要的一部分，如我上文所提。当你在最后的展示的时候，你需要让所有人都能感受到你的热爱，感受到你们的想法和你们所实现的东西的激情，这时候就需要你的表达能力和感染力了。在台上不要害怕，保持谦虚是一种很好的驱赶恐慌感的方式。简单明了的让大家了解你的想法，并且通过demo的演示让大家感受到你的热爱。好的东西，才更需要一种好的途径进入每一个观众的内心。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h1 id="Hackathon__u662F_u4EC0_u4E48"><a href="#Hackathon__u662F_u4EC0_u4E48" class="headerlink" title="Hackathon 是什么"></a>Hackathon 是什么</h1]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="Hackathon__u662F_u4EC0_u4E48"><a href="#Hackathon__u662F_u4EC0_u4E48" class="heade]]>
     </summary>
     
       <category term="Hackathon" scheme="http://sergiochan.github.io/tags/Hackathon/"/>
@@ -677,7 +675,7 @@
     <id>http://sergiochan.github.io/2015/10/22/runloop初窥/</id>
     <published>2015-10-22T11:36:23.000Z</published>
     <updated>2015-12-18T13:13:14.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B" class="headerlink" title="先来说一个很简单的实例"></a>先来说一个很简单的实例</h2><p>在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B" class="headerlink" title="先来说一个很简单的实例"></a>先来说一个很简单的实例</h2><p>在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明</p>
 <figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">self.timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1.0</span>f <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(<span class="string">timeUpdate:</span>) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
 <p>那么当你滑动或者保持你的手指在scrollView上的时候，timer是不会被响应的，这不是因为刷新视图的操作被占用，而是因为当你没有显式声明的时候，你所定义的timer默认都是加在主线程上，并且，当你在对scrollView进行操作的时候，你的timer的事件根本不会被响应到，这就得说到runloop了。而runloop也是底层原理中相当重要的一部分。我们先从它说起。</p>
 <h2 id="u4EC0_u4E48_u662Frunloop"><a href="#u4EC0_u4E48_u662Frunloop" class="headerlink" title="什么是runloop"></a>什么是runloop</h2><p>Runloop，顾名思义就是运行的循环。简单理解就是多线程机制中的基础，它能够接收外部事件的输入，并且在有事件的时候保持运行，在没有事件的时候进入休眠。并且它对于线程的消息处理机制进行了很好的封装。</p>
@@ -762,7 +760,7 @@
 <p>也就是说，waitUntilDone意味着这个操作是否会在当前线程阻塞其他的输入源，如果等于True，则每一次runloop循环只会处理这一个selector的调用，如果为False，则队列中后面等待着的selector调用都会在同一次runloop循环中执行。至于上文的执行了两个runloop循环的现象，我猜测应该是当runloop从休眠模式被唤醒的时候，当前循环执行完唤醒的操作后就会立即结束，释放掉之前可能累积下来的内存，然后开始新的循环，将队列中的其他输入逐个放进runloop循环中执行。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148]]>
     </summary>
     
       <category term="NSThread" scheme="http://sergiochan.github.io/tags/NSThread/"/>
@@ -781,7 +779,7 @@
     <id>http://sergiochan.github.io/2015/10/22/objective-c-runtime是什么/</id>
     <published>2015-10-22T11:03:54.000Z</published>
     <updated>2015-12-18T13:13:14.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="u5F53_u4F60_u8C03_u7528_u4E00_u4E2A_u65B9_u6CD5_u7684_u65F6_u5019_uFF0C_u53D1_u751F_u4E86_u4EC0_u4E48"><a href="#u5F53_u4F60_u8C03_u7528_u4E00_u4E2A_u65B9_u6CD5_u7684_u65F6_u5019_uFF0C_u53D1_u751F_u4E86_u4EC0_u4E48" class="headerlink" title="当你调用一个方法的时候，发生了什么"></a>当你调用一个方法的时候，发生了什么</h2><p>在Objective-C里，当你调用一个方法的时候，例如</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u5F53_u4F60_u8C03_u7528_u4E00_u4E2A_u65B9_u6CD5_u7684_u65F6_u5019_uFF0C_u53D1_u751F_u4E86_u4EC0_u4E48"><a href="#u5F53_u4F60_u8C03_u7528_u4E00_u4E2A_u65B9_u6CD5_u7684_u65F6_u5019_uFF0C_u53D1_u751F_u4E86_u4EC0_u4E48" class="headerlink" title="当你调用一个方法的时候，发生了什么"></a>当你调用一个方法的时候，发生了什么</h2><p>在Objective-C里，当你调用一个方法的时候，例如</p>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">[foo <span class="function"><span class="keyword">method</span>];</span></span><br></pre></td></tr></table></figure>
 <p>的时候，实际上编译器会将它转化为这样</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">objc_msgSend</span><span class="params">(foo,selector)</span></span></span><br></pre></td></tr></table></figure>
@@ -812,7 +810,7 @@
 <p>哎，可是谁又会用得到呢。官方文档最后的小贴士说，这项技术不在走投无路的时候不要用，它不是用来替代继承的。对于我们最多只能是了解并且用到最表层的例如消息转发还有错误的拦截之类，在实际运用中也只对程序运行时的机制有了更好的了解，但是仍然并没有什么卵用。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="u5F53_u4F60_u8C03_u7528_u4E00_u4E2A_u65B9_u6CD5_u7684_u65F6_u5019_uFF0C_u53D1_u751F_u4E86_u4EC0_u4E48"><a href="#u5F53_u4F60_u8C03_u]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u5F53_u4F60_u8C03_u7528_u4E00_u4E2A_u65B9_u6CD5_u7684_u65F6_u5019_uFF0C_u53D1_u751]]>
     </summary>
     
       <category term="Objective-C" scheme="http://sergiochan.github.io/tags/Objective-C/"/>
@@ -831,7 +829,7 @@
     <id>http://sergiochan.github.io/2015/07/19/tornado-TCP服务器间内部通讯TCP服务器性能验证/</id>
     <published>2015-07-19T01:08:40.000Z</published>
     <updated>2015-12-19T01:19:46.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
 <p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/tornado-TCP" target="_blank" rel="external">https://github.com/SergioChan/tornado-TCP</a></p>
 </blockquote>
 <h1 id="u4E3A_u4EC0_u4E48_u8981_u6709tornado-TCP"><a href="#u4E3A_u4EC0_u4E48_u8981_u6709tornado-TCP" class="headerlink" title="为什么要有tornado-TCP"></a>为什么要有tornado-TCP</h1><p>在实际的业务场景中，当一个系统复杂到一定程度后，很多服务都需要被独立地分割出来，部署到独立的服务器上。例如日志服务，图像服务，短信服务和一些数据分析服务这些可能会被许多功能模块共用的且对服务器性能有一定消耗的服务。当功能划分后，各服务器之间就需要通过内部调用连接在一起，通常来说简便的做法就是通过HTTP请求，这样外部和内部访问的服务器都是通用的，对于开发，维护和部署来说是省去了不少功夫。但是，一方面，有一些HTTP Server可能会同时处理内部和外部请求，如果从其他模块发来的内部请求过多，占用了HTTP Server的处理资源，外部客户端的请求可能会因此变慢，因此对于一个想要拥有更高可靠性和稳定性的大型系统来说，将内部调用和外部调用从逻辑上分离开是一个比较好的优化手段。另一方面，虽然在这种场景下HTTP请求的性能不会差到哪里去，在拥有局域网的情况下，这种内部调用的处理速度会相当快，它的连接也会很快的被释放和刷新，但是由于HTTP毕竟是TCP上的应用层，TCP省去了一些HTTP Header的传输和消耗，因此一定意义上采用更低级的TCP来作为内部调用的传输手段，既是一种较为标准和专业化的方法，也是一种更加优化的方法。<br>我们先要理解HTTP连接和TCP连接的区别。首先，HTTP连接是基于TCP连接的。HTTP（HyperText Transport Protocol）是超文本传输协议的缩写。 HTTP协议采用了请求/响应模型。客户端向服务器发送一个请求，其中，请求头包含请求的方法、URL、协议版本、以及包含请求修饰符、客户信息和内容的类似于MIME的消息结构。服务器以一个状态行作为响应，响应的内容包括消息协议的版本，成功或者错误编码加上包含服务器信息、实体元信息以及可能的实体内容。它的最显著的特点是客户端发送的每次请求都需要服务器回送响应，在请求结束后，客户端会主动释放连接。从建立连接到关闭连接的过程称为“一次连接”。这个特点也使得HTTP协议成为了包括移动和web浏览器在内的客户端和服务器端通信的标准途径，因为大部分客户端和服务器的交互都是一次性的，例如一次读和一次写。当每次交互都是原子的时候，在没有特别需求的场景维持长连接对于资源是一种浪费，因此大部分客户端和服务器通信都采用了HTTP协议。虽然现在已经有一些HTTP长连接的实现，但它的机制其实也是基于HTTP协议的，通过类似心跳的模式保持HTTP连接不会被释放。<br>TCP提供一种面向连接的、可靠的字节流服务。面向连接意味着两个使用TCP的应用，通常是一个客户和一个服务器。在彼此交换数据包之前必须先建立一个TCP连接。在一个TCP连接中，仅有两方进行彼此通信。在普遍的场景中，TCP长连接常用于客户端推送、即时通信的实现。当然，在很多情况下，TCP也被用来作为服务器内部服务调用的实现。像日志服务这种公用的服务模块，整个系统对它的调用是十分频繁的，因此采用“一次连接”模式的HTTP请求和采用保持连接的TCP请求的区别十分明显，采用TCP会使系统省下大量的资源去重新建立和释放连接。</p>
@@ -857,8 +855,8 @@
 <p>详细介绍和代码请前往<a href="https://github.com/SergioChan/tornado-TCP" target="_blank" rel="external">https://github.com/SergioChan/tornado-TCP</a><br>欢迎关注和批评指导！</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<blockquote>
-<p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/tornado-TCP" target="_blank" rel="external">https://]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
+<p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/to]]>
     </summary>
     
       <category term="TCP" scheme="http://sergiochan.github.io/tags/TCP/"/>
@@ -875,7 +873,7 @@
     <id>http://sergiochan.github.io/2015/05/19/Python利用深度优先搜索解数独程序的实现/</id>
     <published>2015-05-19T13:30:29.000Z</published>
     <updated>2016-02-09T02:26:30.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
 <p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/Python-Sudoku" target="_blank" rel="external">https://github.com/SergioChan/Python-Sudoku</a></p>
 </blockquote>
 <p>前两天吃饭的时候听到旁边一桌估计是搜狐或者网易的程序猿在说要是新员工给我面试我就让他写个解数独的Python程序，他二十分钟就能连伪代码加实现一起搞定……我上网一看，解数独这个问题确实挺有趣的，主要是纯凭自己好像很偶尔才能解出一个数独来的样子，于是根据以前学的数据结构的基础和最近新学的Python功底，小试牛刀一下，就使用最简单的回溯方法来实现，我知道百度上其实挺多的，但是说实话那些乱七八糟的代码我也看不太懂，自己想自己写可能思路属于自己，会比较清晰吧。回溯搜索是深度优先搜索（DFS）的一种<br>对于某一个搜索树来说（搜索树是起记录路径和状态判断的作用），回溯和DFS，其主要的区别是，回溯法在求解过程中不保留完整的树结构，而深度优先搜索则记下完整的搜索树。<br>“芬兰数学家因卡拉，花费3个月时间设计出的世界上迄今难度最大的数独游戏，而且它只有一个答案。因卡拉说只有思考能力最快、头脑最聪明的人才能破解这个游戏。”这是英国《每日邮报》2012年6月30日的一篇报道。我接下来就会用这个数独来做示范，说明利用回溯解决这个问题的思路。</p>
@@ -908,8 +906,8 @@
 <p>在这种情况下，如果不用随机选择节点的方法，前进的次数稳定在9100次左右，比之前少了3000次左右，因此速度也提升到了3.6S，比4.8S提升了1.2S左右，变化显著。然后，尝试了一下随机选择节点的方式，目前计算出的最优解精确的是4142次，耗时1.6262S。另外，如何选择最优节点，继续减少解的路径应该是最终的优化办法了吧……</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">[<span class="number">8</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">9</span>]</span><br><span class="line">[<span class="number">9</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">5</span>]</span><br><span class="line">[<span class="number">6</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">3</span>]</span><br><span class="line">[<span class="number">1</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">6</span>]</span><br><span class="line">[<span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">[<span class="number">2</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">[<span class="number">5</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>]</span><br><span class="line">[<span class="number">4</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">7</span>]</span><br><span class="line">[<span class="number">7</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>]</span><br><span class="line">total forward: <span class="number">4142</span></span><br><span class="line">Finished! Time consuming: <span class="number">1.6262</span> Seconds</span><br></pre></td></tr></table></figure>]]></content>
     <summary type="html">
-    <![CDATA[<blockquote>
-<p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/Python-Sudoku" target="_blank" rel="external">https:]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
+<p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/Py]]>
     </summary>
     
       <category term="python" scheme="http://sergiochan.github.io/tags/python/"/>
@@ -926,7 +924,7 @@
     <id>http://sergiochan.github.io/2015/04/01/怎么设计和实现一个Newsfeed系统/</id>
     <published>2015-04-01T01:14:52.000Z</published>
     <updated>2015-12-19T01:19:28.000Z</updated>
-    <content type="html"><![CDATA[<p>也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。<br>首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不可，只是当一个系统的容量到一定级别之后，简单的技术就会变得难以满足系统的需求了。特别是在实际需求中，feed所在的表可能会经历超大并发的读写，而且由于feed的特殊性——例如Facebook，twitter，这些feed其实都只是一个简单的动态信息，而并非一个完整的对象信息，因此关系型数据库对于Newsfeed系统来说并不是最首选的方案。Feed的实际需求还有：</p>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。<br>首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不可，只是当一个系统的容量到一定级别之后，简单的技术就会变得难以满足系统的需求了。特别是在实际需求中，feed所在的表可能会经历超大并发的读写，而且由于feed的特殊性——例如Facebook，twitter，这些feed其实都只是一个简单的动态信息，而并非一个完整的对象信息，因此关系型数据库对于Newsfeed系统来说并不是最首选的方案。Feed的实际需求还有：</p>
 <blockquote>
 <ul>
 <li>1.用户需要频繁查询自己和自己好友产生的动态集合。</li>
@@ -949,7 +947,7 @@
 <p>说完了存储，就是最关键的分发。Stream framework的关键就在于利用celery异步队列处理机制实现了动态的分发。它默认必须安装django-celery来支持异步处理分发。<br>Django-celery是celery在django的一个支持版本。它是独立于django的一个异步队列处理框架，简单地说就是他有一个队列，有N个worker（由用户自定义）等待执行队列中的task和一个或多个django app，也就是task的发送方贯穿而成。因为是django的版本，所以它的task实际上都是在django中预先编译好的。在stream framework中，用来实现分发的task就包括了几个具体的task，如果要自己写一些定向分发动态或notification，djcelery是必须要熟悉和掌握的。<br>我们可能想要实现类似微信朋友圈推广那种下沉式feed，就要通过定向分发将这个动态分发到指定用户的feed中去，而这个分发的工作量是极其大的，如果要给前端的管理平台等提供一个发布的接口，我们必须要用djcelery在后台运行的一个worker来不断的执行这个task，然后先将http请求返回给用户，而这个task的执行结果可以通过设置celery的backend存储目标来输出。<br>具体的celery设置可以参考：<br><a href="http://docs.celeryproject.org/en/latest/django/" target="_blank" rel="external">http://docs.celeryproject.org/en/latest/django/</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现]]>
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够]]>
     </summary>
     
       <category term="Newsfeed" scheme="http://sergiochan.github.io/tags/Newsfeed/"/>
