@@ -55,22 +55,19 @@ var _hmt = _hmt || [];
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。
-首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
-$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled">
+<meta name="description" content="最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
+$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP图片处理 透明水印的处理和添加">
 <meta property="og:url" content="http://sergiochan.github.io/2014/12/26/PHP图片处理-透明水印的处理和添加/index.html">
 <meta property="og:site_name" content="一世烟雨江南">
-<meta property="og:description" content="最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。
-首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
-$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled">
-<meta property="og:updated_time" content="2015-12-18T13:13:14.000Z">
+<meta property="og:description" content="最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
+$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled(">
+<meta property="og:updated_time" content="2016-08-19T07:10:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP图片处理 透明水印的处理和添加">
-<meta name="twitter:description" content="最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。
-首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
-$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled">
+<meta name="twitter:description" content="最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
+$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled(">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -284,8 +281,7 @@ $thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjp
       
 
       
-        <span itemprop="articleBody"><script src="/assets/js/APlayer.min.js"> </script><p>最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。</p>
-<p>首先我需要将图片resize到640*480的尺寸，重绘的代码如下：</p>
+        <span itemprop="articleBody"><script src="/assets/js/APlayer.min.js"> </script><p>最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。<br>首先我需要将图片resize到640*480的尺寸，重绘的代码如下：</p>
 <figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="variable">$thumb</span> = imagecreatetruecolor(<span class="variable">$newwidth</span>, <span class="variable">$newheight</span>);</span><br><span class="line"><span class="variable">$source</span> = imagecreatefromjpeg(<span class="variable">$filename</span>);</span><br><span class="line">imagecopyresampled(<span class="variable">$thumb</span>, <span class="variable">$source</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="variable">$newwidth</span>, <span class="variable">$newheight</span>, <span class="variable">$width</span>, <span class="variable">$height</span>);</span><br><span class="line">imagejpeg(<span class="variable">$thumb</span>, <span class="variable">$filename</span>);</span><br></pre></td></tr></table></figure>
 <p>在这段重绘的代码里，包含了几个很基本的东西：</p>
 <p>第一个是imagecreatetruecolor和imagecreate<br>用imagecreatetruecolor(int x,int y)建立的是一幅大小为x和y的黑色图像(默认为黑色)，如想改变背景颜色则需要用填充颜色函数imagefill($img,0,0,$color)，imagecreate 新建一个空白图像资源，用imagecolorAllocate()添加背景色：</p>

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[有情怀的程序员，热爱设计的工程师。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-08-18T09:25:36.000Z</updated>
+  <updated>2016-08-18T09:27:45.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://sergiochan.github.io/2016/08/18/%E4%BD%BF%E7%94%A8-Photon-%E5%9C%A8-Unity-%E9%87%8C%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%A4%9A%E4%BA%BA%E8%81%94%E6%9C%BA%E6%B8%B8%E6%88%8F/"/>
     <id>http://sergiochan.github.io/2016/08/18/使用-Photon-在-Unity-里快速搭建一个多人联机游戏/</id>
     <published>2016-08-18T08:17:02.000Z</published>
-    <updated>2016-08-18T09:25:36.000Z</updated>
+    <updated>2016-08-18T09:27:45.000Z</updated>
     <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>如何最快的搭建一个 Unity 上的多人游戏？答案也许是自己搭建一个游戏服务器，也许是 LAN 解决方案，但是最快的解决方案还是使用成熟的第三方后端服务，我找到了 <a href="https://www.photonengine.com/en-US/Photon" target="_blank" rel="external">Photon</a>，一个看起来不错最后证实也挺靠谱的游戏后端解决方案。</p>
 <p>一个游戏服务器，最主要的就是对不同参与者的事件同步和世界状态的同步，所以根本还是在于和服务器的长连接上，至于游戏中的用户体系，积分体系，货币体系这些，就是属于大后端的范畴了，也是可以独立于游戏同步服务器存在的系统。</p>
 <h3 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h3><p>首先你需要集成 <strong>Photon SDK For Unity</strong>，下载地址在<a href="https://www.photonengine.com/en-US/Realtime/Download" target="_blank" rel="external">这里</a>。</p>

@@ -395,11 +395,10 @@ DeclarationOBJECTIVE-C
         
           <span itemprop="articleBody">
             
-             最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。
-首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
+             最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
 $thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);imagejpeg($thumb, $filename);
 在这段重绘的代码里，包含了几个很基本的东西：
-第一个是imagecreatetruecolor和imagecreate用imagecreatetruecolor(int x,int y)建立的是一幅
+第一个是imagecreatetruecolor和imagecreate用imagecreatetruecolor(int x,int y)建立的是一幅大
             ...
           </span>
           <div class="post-more-link text-center">
