@@ -6168,6 +6168,7 @@ pre code {
 }
 .avatar,
 .logo {
+  background-color: #fff;
   border-radius: 50%;
   border: 3px solid #fff;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
@@ -6275,7 +6276,7 @@ hr {
   background-image: linear-gradient(140deg, rgba(68,68,68,0.6) 20%, rgba(0,0,0,0.9));
 }
 .panel-cover__logo {
-  margin-bottom: 0.2em;
+  margin-bottom: 1em;
 }
 .panel-cover__description {
   margin: 0 30px;
@@ -6716,7 +6717,8 @@ input[type="tel"]:-ms-input-placeholder {
     right: 0;
     left: 0;
     width: 100%;
-    padding: 50px 0;
+    padding-top: 50px;
+    padding-bottom: 10px;
     background: rgba(51,51,51,0.98);
     border-bottom: 1px solid rgba(255,255,255,0.15);
   }
