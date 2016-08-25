@@ -6379,9 +6379,10 @@ hr {
 .btn-border-small {
   border: 1px solid #bf1827;
   border-radius: 20px;
-  padding: 6px 8px;
+  padding: 1px 6px;
   font-size: 0.8em;
   margin-left: 10px;
+  display: inline-block;
 }
 .btn-secondary {
   border-color: #5ba4e5;
