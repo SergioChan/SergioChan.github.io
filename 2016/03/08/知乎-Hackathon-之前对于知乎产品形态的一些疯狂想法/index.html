@@ -1,290 +1,174 @@
-<!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<!DOCTYPE html>
+<html>
 <head>
-  
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法 | Sergio Chan</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="description" content="Born hacker, Full-stack Developer. &lt;br/&gt; Crazy fan of Hackathons all around the world. &lt;br/&gt; Founder of Hackathon team &lt;em&gt;hACKbUSTER&lt;/em&gt; and open-source animation organization &lt;em&gt;Animatious&lt;/em&gt;.">
 
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法 | Sergio Chan">
+    <meta name="twitter:description" content="Born hacker, Full-stack Developer. &lt;br/&gt; Crazy fan of Hackathons all around the world. &lt;br/&gt; Founder of Hackathon team &lt;em&gt;hACKbUSTER&lt;/em&gt; and open-source animation organization &lt;em&gt;Animatious&lt;/em&gt;.">
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法 | Sergio Chan">
+    <meta property="og:description" content="Born hacker, Full-stack Developer. &lt;br/&gt; Crazy fan of Hackathons all around the world. &lt;br/&gt; Founder of Hackathon team &lt;em&gt;hACKbUSTER&lt;/em&gt; and open-source animation organization &lt;em&gt;Animatious&lt;/em&gt;.">
 
+    
+    <meta name="author" content="Sergio Chan">
+    
+    <link rel="stylesheet" href="/css/vno.css" type="text/css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" type="text/css">
 
+    
+    <link rel="icon" href="/favicon.ico">
+    
 
+    <meta name="generator" content="hexo"/>
+    
 
+    <link rel="canonical" href="http://sergiochan.github.io/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/"/>
 
-
-
-
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-
-  
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  
-
-
-<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
-
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?030a47db2df6601bda0225610cd6c323";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-    <meta name="description" content="Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。" />
-
-
-
-  <meta name="keywords" content="Hackathon," />
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
-
-
-<meta name="description" content="知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。
-然后好久没参加 Hackathon 了😂心里有点痒痒的
-Idea A第一个想法是一个开源的开放的人类知识库计划。互联网时代，一个革新是信息可以存在互联网上">
-<meta property="og:type" content="article">
-<meta property="og:title" content="知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法">
-<meta property="og:url" content="http://sergiochan.github.io/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/index.html">
-<meta property="og:site_name" content="一世烟雨江南">
-<meta property="og:description" content="知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。
-然后好久没参加 Hackathon 了😂心里有点痒痒的
-Idea A第一个想法是一个开源的开放的人类知识库计划。互联网时代，一个革新是信息可以存在互联网上">
-<meta property="og:updated_time" content="2016-03-08T10:00:24.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法">
-<meta name="twitter:description" content="知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。
-然后好久没参加 Hackathon 了😂心里有点痒痒的
-Idea A第一个想法是一个开源的开放的人类知识库计划。互联网时代，一个革新是信息可以存在互联网上">
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: 'hide'
-  };
-</script>
-
-
-
-  <title> 知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法 | 一世烟雨江南 </title>
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body class="home-template no-js">
 
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works at @RavenTech as the Leader of <em><strong>RavenLab Team</strong></em>.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/bio">Biography</a></li>
+            
+              <li class="navigation__item"><a href="/about">About</a></li>
+            
+              <li class="navigation__item"><a href="/portfolio">Portfolio</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" title="My Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
     </a>
-  </div>
-<![endif]-->
+  </li> 
+
+
+  <!-- Github -->
   
-
-
-
-
-
-
-  <div class="container one-column page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" style="background-color:white" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta custom-logo">
-    <div class="site-meta-headline">
-        <img class="custom-logo-image" style="display:inline-block" src="/image/NavLogo.png"
-             alt="一世烟雨江南"/>
-    </div>
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="site-title" style="color:black">一世烟雨江南</span>
+  <li class="navigation__item">
+    <a href="https://github.com/SergioChan" title="My Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
     </a>
-  </div>
-  <p class="site-subtitle">有情怀的程序员，热爱设计的工程师。</p>
-</div>
+  </li>
 
-<div style="margin-top: 10px;text-align: center;float:none" class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
 
-<nav class="site-nav">
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
   
 
-  
-    <ul id="menu" class="menu ">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-bio">
-          <a href="/bio" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-th"></i> <br />
-            
-            自传
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-user"></i> <br />
-            
-            关于我
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-portfolio">
-          <a href="/portfolio" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-question-circle"></i> <br />
-            
-            Portfolio
-          </a>
-        </li>
-      
-
-      
-      
-    </ul>
-  
+<!-- Facebook -->
 
   
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/Sergio2Chan" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+<!-- Linkedin -->
+
+  <li class="navigation__item">
+    <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" title="Linkedin" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+
+
+
+  <li class="navigation__item">
+    <a href="mailto:cyh9211@icloud.com" title="Email" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
 </nav>
 
-<img src="/image/LineImg.png" style="margin-top: 10px;height: 2px;align-content: center;width: 70%;margin-left: 15%;">
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content"> 
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-08T11:02:40+08:00" content="2016-03-08">
-              2016-03-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/闲言碎语/" itemprop="url" rel="index">
-                    <span itemprop="name">闲言碎语</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
 
+      </div>
 
-    <div class="post-body">
+    </div>
 
-      
-      
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
 
-      
-        <span itemprop="articleBody"><script src="/assets/js/APlayer.min.js"> </script><p>知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。<br>知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。</p>
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-03-08T03:02:40.000Z" class="post-list__meta--date date">2016-03-08</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Hackathon/">Hackathon</a>
+</span>
+    </div>
+    <h1 class="post-title">知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法</h1>
+  </header>
+
+  <section class="post article-entry">
+    <script src="/assets/js/APlayer.min.js"> </script><p>知乎的 Hackathon 又要开始了，然而不对外开放，因此也没办法参加了 =。- 实在可惜。<br>知乎一直是社区产品中比较奇葩的存在，因为同时期的其他社区都做得不是特别好，但是知乎带着并不特殊的产品形态，凭借着良好的运营，在社区类产品中鹤立鸡群。</p>
 <p>然后<br>好久没参加 Hackathon 了😂<br>心里有点痒痒的</p>
 <h2 id="Idea_A"><a href="#Idea_A" class="headerlink" title="Idea A"></a>Idea A</h2><p>第一个想法是一个开源的开放的人类知识库计划。互联网时代，一个革新是信息可以存在互联网上随时供大众访问，而知乎所在努力打造和维护的一种氛围，也是以知识为硬通货的共享经济。知乎通过良好的运营和口碑，积累了大量忠实用户，也有很大一部分处于社会高级知识阶层的用户愿意在这个社区里共享自己的知识。但是随着整个社区的快速扩张和开放，越来越多的知识需求方或者说知识缺乏者涌入了社区。这对于社区本来应该是好事，但是由于之前并没有对这些用户进行良好的区分，不得不说现在知乎的娱乐性越来越强，质量也没有以前那么好了。<br>所以我们需要这样一个开源的开放的人类知识库计划。为什么说是开源？因为任何人都可以申请成为贡献者，当然，贡献者会需要一定要求，比方说教授以上，论文质量，或者什么学术机构的负责人之类的，这样才可以保证进入这个知识库的知识都是得到出厂认证的。这个知识库可以以社区的形式存在，同一领域的不同专家可以各自发表意见，甚至可以互喷，要知道，人类的文明进步，可离不开辩论和争执。为什么说是开放？因为任何人都可以访问，都可以获取，它的存在形式，你可以理解为十万个为什么的进化版。在思考什么百度百科，维基百科这些所谓的同类产品的时候，我突然意识到这根本不在同一个维度上，十万个为什么忽然跳进我的脑海，一切就豁然开朗：百科是在完成对于事物的定义，而十万个为什么和这个所谓的知识库，是在完成对于知识的定义。知识的范畴可大了，才不仅仅包括事物。这也是百度经验，百度知道想做的事情吧。但是这两者的竞争力基本就可以不用考虑了。就像，你不会觉得十万个为什么会是知乎的竞争对手一样😂<br>So，十万个为什么这么伟大的存在，这个几乎所有人的知识启蒙老师，为什么现在地位越来越淡，没错，因为我们长大了啊😂，他所面对的人群和包含的知识水平都是很初级的，但是他在整个文化普及运动中起到了不可估量的作用。我觉得有兴趣的朋友可以去考证一下？（我记得以前看过类似的说法😂）所以，为了提高整个社会的知识水平，为了提高甚至整个人类文明的知识水平，同时利用互联网的优势，我觉得有必要，哪怕不是一个Hackathon能完成的东西，也应该有一家企业去完成这个艰巨的任务，抱着像谷歌那样的贡献社会，贡献人类的宗旨去努力。况且，这个知识库将是人类文明重新走上发展轨道的一块很重要的垫脚石。</p>
 <blockquote>
@@ -292,447 +176,48 @@ Idea A第一个想法是一个开源的开放的人类知识库计划。互联�
 </blockquote>
 <h2 id="Idea_B"><a href="#Idea_B" class="headerlink" title="Idea B"></a>Idea B</h2><p>第二个想法，是一个无比疯狂的想法，但是不幸的是，需要第一个想法的支撑。这也是我说<strong>「这个知识库将是人类文明重新走上发展轨道的一块很重要的垫脚石」</strong> 的原因。人类历史上所在进行的活动，一直都是在不断地将意识形态的东西转化成物质形态的东西，简单地说，就是将理论知识转化成哪怕是文字也好，产品也好的物质存在。人类在发展过程中不断地发现一些定律，发明一些理论，然后不断去打磨理论，就好比人类最后将 E=mc2 打磨成了小男孩一样。但是，没有人能够反向，也没有人想过反向。<br>我来讲一个很形象的故事吧。我想造一台手机，我需要先去了解各种手机厂商的历史，设计原理，我需要去学习工业设计，需要去学习什么人体工程学，然后我还要学习大量的硬件知识，或者说了解不同的硬件应该如何去组合来构成一个能够工作的机器，毕竟一些基本的组件现在都已经不用你去关心了，再然后你还要去学习各种材料化学方面的知识，来制作外壳之类的，就算是你了解完这些，你还要去了解销售，产品，仓储物流，市场营销这些七七八八的知识，从而把你的手机卖出去，当然，这些都没有算上手机里面的软件了。（我只是举例，所以说的不可能十分精确，毕竟我也没造过手机=。=）我们可以看到，人类历史上对于意识形态向物质形态转化的这种方式，随着我们文明的进化和物质形态复杂度的增加，已经变得十分的庞大和不可控制了。试想，如果让你去图书馆，或者更好一些，给你互联网，让你去搜索，你要花费多大的成本来获取这些所有的知识？因此我们可以试着反向去获取知识，将<strong>物质形态直接逆向解析成意识形态</strong>。我只要将这个手机拍下来，一个工具就会将它所包含的所有方面的知识都解析出来，并且以一种更直接和明显的方式显示出来。我就可以<strong>直接的</strong>获取到物质形态所包含的所有意识形态。  </p>
 <p>这对于未来的教育，人类去了解世界的方式都是一个重大的变革。也就是说，通过人类文明几千年的积累和互联网技术的发展，将人类到目前为止所有的知识收集在一起，并且完成这样一个工具，让未来的人类能够更加直接的去获取知识，了解世界。我们之前所接受的教育，都是在教给我们几乎所有的基础理论知识，然后再去了解这个世界，到了大学，虽然好像是分开了专业，学习了不同的专业课，但是我们在选择专业的时候本身就是迷茫的，并且即使选择了专业，每个专业的细分领域还是非常的多，如果我们按照现有的模式去学习，那么可能我们要花4到10年的时间去循序渐进的获取知识，成为专业人才，更别说浪费在通识教育的十几年了。然而，如果有了这样一个工具，我们只需要教育未来的孩子们如何去使用这样的工具，这是几乎不用教的吧😂 然后他就可以用这个工具去学习，从最基础的数学定理到最接近用户的设计，以这种更具针对性的方式去学习，我想，就看重人的学习能力，而这样的人才，也会更早成长，更专业吧。<br>但是吧，我觉得这个工具最大的意义，还是在于完整了人类文明发展的一个循环。意识形态的知识通过实践转化为物质形态的产品，而产品可以被解析成知识，从而可以在意识形态上更好的创新。</p>
-</span>
-      
-    </div>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Hackathon/" rel="tag">#Hackathon</a>
-          
-        </div>
-      
+  </section>
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/02/16/不要想当然的就使用UITableView/" rel="next" title="不要想当然的使用UITableView">
-                <i class="fa fa-chevron-left"></i> 不要想当然的使用UITableView
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/15/2016-03-15/" rel="prev" title="2016.03.15">
-                2016.03.15 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
+</article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
- </div>
-
-        
-
-        
-          <div class="comments" id="comments">
-            
-              <div class="ds-thread" data-thread-key="2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/"
-                   data-title="知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法" data-url="http://sergiochan.github.io/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/">
-              </div>
-            
-          </div>
-        
-      </div>
-
-      
-        
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" style="border-radius:50%" src="https://avatars2.githubusercontent.com/u/10103766?v=3&s=460" alt="Sergio Chan" itemprop="image"/>
-          <p class="site-author-name" itemprop="name">Sergio Chan</p>
-        </div>
-        <p class="site-description motion-element" style="color: wheat" itemprop="description">Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。</p>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">24</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          <div class="site-state-item site-state-categories">
-            
-              <span class="site-state-item-count">8</span>
-              <span class="site-state-item-name">分类</span>
-              
-          </div>
-
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">35</span>
-              <span class="site-state-item-name">标签</span>
-              </a>
-          </div>
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/SergioChan" target="_blank">
-                  <i class="fa fa-github"></i> github
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" target="_blank">
-                  <i class="fa fa-linkedin"></i> linkedin
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/3089081773/profile?topnav=1&wvr=6" target="_blank">
-                  <i class="fa fa-weibo"></i> weibo
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="yuheng9211@qq.com" target="_blank">
-                  <i class="fa fa-email"></i> email
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Idea_A"><span class="nav-number">1.</span> <span class="nav-text">Idea A</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Idea_B"><span class="nav-number">2.</span> <span class="nav-text">Idea B</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </section>
-      
-
-    </div>
-  </aside>
-
-
-      
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner"> <div style="text-align: center;" class="copyright" >
-  
-  &copy;  2014 - 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="icon-next-heart fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder"> Lovely designed and created by Sergio Chan </span>
-</div>
-</div>
-
-
- </div>
-    </footer>
-
-    <div class="back-to-top"></div>
-  </div>
-
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  
-  
-    
-
-  
-    
-  
-
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sergiochan.github.io/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/" data-title="知乎 Hackathon 之前对于知乎产品形态的一些疯狂想法" data-url="http://sergiochan.github.io/2016/03/08/知乎-Hackathon-之前对于知乎产品形态的一些疯狂想法/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
-    var duoshuoQuery = {short_name:"sergiochan"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+  var duoshuoQuery = {short_name:"sergiochan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
   </script>
-    
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+
      
-
-
-    
-  
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  
-
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
-
-
-
-
-  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.motion.complete', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      var $indicator = $(indicator);
-      var opacity = action === 'show' ? 0.4 : 0;
-      $indicator.velocity ?
-        $indicator.velocity('stop').velocity({
-          opacity: opacity
-        }, { duration: 100 }) :
-        $indicator.stop().animate({
-          opacity: opacity
-        }, 100);
-    }
-
-  });
-</script>
-
-<script type="text/javascript" id="sidebar.nav">
-  $(document).ready(function () {
-    var html = $('html');
-    var TAB_ANIMATE_DURATION = 200;
-    var hasVelocity = $.isFunction(html.velocity);
-
-    $('.sidebar-nav li').on('click', function () {
-      var item = $(this);
-      var activeTabClassName = 'sidebar-nav-active';
-      var activePanelClassName = 'sidebar-panel-active';
-      if (item.hasClass(activeTabClassName)) {
-        return;
-      }
-
-      var currentTarget = $('.' + activePanelClassName);
-      var target = $('.' + item.data('target'));
-
-      hasVelocity ?
-        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-            .addClass(activePanelClassName);
-        }) :
-        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
-          currentTarget.hide();
-          target
-            .stop()
-            .css({'opacity': 0, 'display': 'block'})
-            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
-              currentTarget.removeClass(activePanelClassName);
-              target.addClass(activePanelClassName);
-            });
-        });
-
-      item.siblings().removeClass(activeTabClassName);
-      item.addClass(activeTabClassName);
-    });
-
-    $('.post-toc a').on('click', function (e) {
-      e.preventDefault();
-      var targetSelector = escapeSelector(this.getAttribute('href'));
-      var offset = $(targetSelector).offset().top;
-      hasVelocity ?
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        }) :
-        $('html, body').stop().animate({
-          scrollTop: offset
-        }, 500);
-    });
-
-    // Expand sidebar on post detail page by default, when post has a toc.
-    motionMiddleWares.sidebar = function () {
-      var $tocContent = $('.post-toc-content');
-      if (CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
-        }
-      }
-    };
-  });
-</script>
-
-
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-
-      isMobile() && FastClick.attach(document.body);
-
-      // Define Motion Sequence.
-      motionIntegrator
-        .add(motionMiddleWares.logo)
-        .add(motionMiddleWares.menu)
-        .add(motionMiddleWares.backToTop)
-        .add(motionMiddleWares.postList)
-        .add(motionMiddleWares.sidebar);
-
-      // Bootstrap Motion.
-      motionIntegrator.bootstrap();
-    });
-  </script>
-
-  
-  
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/lazyload.js"></script>
-  <script type="text/javascript">
-    $(function () {
-      $("#posts").find('img').lazyload({
-        placeholder: "/images/loading.gif",
-        effect: "fadeIn"
-      });
-    });
-  </script>
 </body>
 </html>

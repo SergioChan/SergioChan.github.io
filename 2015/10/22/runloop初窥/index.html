@@ -1,291 +1,174 @@
-<!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<!DOCTYPE html>
+<html>
 <head>
-  
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>runloop初窥 | Sergio Chan</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="description" content="Born hacker, Full-stack Developer. &lt;br/&gt; Crazy fan of Hackathons all around the world. &lt;br/&gt; Founder of Hackathon team &lt;em&gt;hACKbUSTER&lt;/em&gt; and open-source animation organization &lt;em&gt;Animatious&lt;/em&gt;.">
 
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="runloop初窥 | Sergio Chan">
+    <meta name="twitter:description" content="Born hacker, Full-stack Developer. &lt;br/&gt; Crazy fan of Hackathons all around the world. &lt;br/&gt; Founder of Hackathon team &lt;em&gt;hACKbUSTER&lt;/em&gt; and open-source animation organization &lt;em&gt;Animatious&lt;/em&gt;.">
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="runloop初窥 | Sergio Chan">
+    <meta property="og:description" content="Born hacker, Full-stack Developer. &lt;br/&gt; Crazy fan of Hackathons all around the world. &lt;br/&gt; Founder of Hackathon team &lt;em&gt;hACKbUSTER&lt;/em&gt; and open-source animation organization &lt;em&gt;Animatious&lt;/em&gt;.">
 
+    
+    <meta name="author" content="Sergio Chan">
+    
+    <link rel="stylesheet" href="/css/vno.css" type="text/css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" type="text/css">
 
+    
+    <link rel="icon" href="/favicon.ico">
+    
 
+    <meta name="generator" content="hexo"/>
+    
 
+    <link rel="canonical" href="http://sergiochan.github.io/2015/10/22/runloop初窥/"/>
 
-
-
-
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
-
-  
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  
-
-
-<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
-
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?030a47db2df6601bda0225610cd6c323";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-    <meta name="description" content="Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。" />
-
-
-
-  <meta name="keywords" content="NSThread,iOS,runloop," />
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
-
-
-<meta name="description" content="先来说一个很简单的实例在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明
-self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeUpdate:) userInfo:nil repeats:YES];
-那么当你滑动或者保持你的手指在scrol">
-<meta property="og:type" content="article">
-<meta property="og:title" content="runloop初窥">
-<meta property="og:url" content="http://sergiochan.github.io/2015/10/22/runloop初窥/index.html">
-<meta property="og:site_name" content="一世烟雨江南">
-<meta property="og:description" content="先来说一个很简单的实例在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明
-self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeUpdate:) userInfo:nil repeats:YES];
-那么当你滑动或者保持你的手指在scrol">
-<meta property="og:image" content="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/Multithreading/Art/runloop.jpg">
-<meta property="og:updated_time" content="2015-12-18T13:13:14.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="runloop初窥">
-<meta name="twitter:description" content="先来说一个很简单的实例在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明
-self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeUpdate:) userInfo:nil repeats:YES];
-那么当你滑动或者保持你的手指在scrol">
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: 'hide'
-  };
-</script>
-
-
-
-  <title> runloop初窥 | 一世烟雨江南 </title>
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body class="home-template no-js">
 
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works at @RavenTech as the Leader of <em><strong>RavenLab Team</strong></em>.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/bio">Biography</a></li>
+            
+              <li class="navigation__item"><a href="/about">About</a></li>
+            
+              <li class="navigation__item"><a href="/portfolio">Portfolio</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" title="My Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
     </a>
-  </div>
-<![endif]-->
+  </li> 
+
+
+  <!-- Github -->
   
-
-
-
-
-
-
-  <div class="container one-column page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" style="background-color:white" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta custom-logo">
-    <div class="site-meta-headline">
-        <img class="custom-logo-image" style="display:inline-block" src="/image/NavLogo.png"
-             alt="一世烟雨江南"/>
-    </div>
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="site-title" style="color:black">一世烟雨江南</span>
+  <li class="navigation__item">
+    <a href="https://github.com/SergioChan" title="My Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
     </a>
-  </div>
-  <p class="site-subtitle">有情怀的程序员，热爱设计的工程师。</p>
-</div>
+  </li>
 
-<div style="margin-top: 10px;text-align: center;float:none" class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
 
-<nav class="site-nav">
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
   
 
-  
-    <ul id="menu" class="menu ">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-bio">
-          <a href="/bio" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-th"></i> <br />
-            
-            自传
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-user"></i> <br />
-            
-            关于我
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-portfolio">
-          <a href="/portfolio" rel="section" style="color:black">
-            
-              <i class="menu-item-icon fa fa-question-circle"></i> <br />
-            
-            Portfolio
-          </a>
-        </li>
-      
-
-      
-      
-    </ul>
-  
+<!-- Facebook -->
 
   
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/Sergio2Chan" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+<!-- Linkedin -->
+
+  <li class="navigation__item">
+    <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" title="Linkedin" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+
+
+
+  <li class="navigation__item">
+    <a href="mailto:cyh9211@icloud.com" title="Email" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
 </nav>
 
-<img src="/image/LineImg.png" style="margin-top: 10px;height: 2px;align-content: center;width: 70%;margin-left: 15%;">
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content"> 
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  <article class="post post-type-normal " style="margin-top: 0px; padding-bottom: 0px; padding-top: 0px; padding-left: 30px; padding-right: 30px;" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                runloop初窥
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-10-22T19:36:23+08:00" content="2015-10-22">
-              2015-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS菜鸟心得/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS菜鸟心得</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/10/22/runloop初窥/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/22/runloop初窥/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
 
+      </div>
 
-    <div class="post-body">
+    </div>
 
-      
-      
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
 
-      
-        <span itemprop="articleBody"><script src="/assets/js/APlayer.min.js"> </script><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B" class="headerlink" title="先来说一个很简单的实例"></a>先来说一个很简单的实例</h2><p>在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明</p>
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2015-10-22T11:36:23.000Z" class="post-list__meta--date date">2015-10-22</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/NSThread/">NSThread</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>, <a class="tag-link" href="/tags/runloop/">runloop</a>
+</span>
+    </div>
+    <h1 class="post-title">runloop初窥</h1>
+  </header>
+
+  <section class="post article-entry">
+    <script src="/assets/js/APlayer.min.js"> </script><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B" class="headerlink" title="先来说一个很简单的实例"></a>先来说一个很简单的实例</h2><p>在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明</p>
 <figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">self.timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1.0</span>f <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(<span class="string">timeUpdate:</span>) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
 <p>那么当你滑动或者保持你的手指在scrollView上的时候，timer是不会被响应的，这不是因为刷新视图的操作被占用，而是因为当你没有显式声明的时候，你所定义的timer默认都是加在主线程上，并且，当你在对scrollView进行操作的时候，你的timer的事件根本不会被响应到，这就得说到runloop了。而runloop也是底层原理中相当重要的一部分。我们先从它说起。</p>
 <h2 id="u4EC0_u4E48_u662Frunloop"><a href="#u4EC0_u4E48_u662Frunloop" class="headerlink" title="什么是runloop"></a>什么是runloop</h2><p>Runloop，顾名思义就是运行的循环。简单理解就是多线程机制中的基础，它能够接收外部事件的输入，并且在有事件的时候保持运行，在没有事件的时候进入休眠。并且它对于线程的消息处理机制进行了很好的封装。</p>
@@ -368,451 +251,48 @@ self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@
 <p>Performs the specified selector on any thread for which you have an NSThread object. These methods give you the option of blocking the current thread until the selector is performed.</p>
 </blockquote>
 <p>也就是说，waitUntilDone意味着这个操作是否会在当前线程阻塞其他的输入源，如果等于True，则每一次runloop循环只会处理这一个selector的调用，如果为False，则队列中后面等待着的selector调用都会在同一次runloop循环中执行。至于上文的执行了两个runloop循环的现象，我猜测应该是当runloop从休眠模式被唤醒的时候，当前循环执行完唤醒的操作后就会立即结束，释放掉之前可能累积下来的内存，然后开始新的循环，将队列中的其他输入逐个放进runloop循环中执行。</p>
-</span>
-      
-    </div>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/NSThread/" rel="tag">#NSThread</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
-          
-            <a href="/tags/runloop/" rel="tag">#runloop</a>
-          
-        </div>
-      
+  </section>
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/10/22/objective-c-runtime是什么/" rel="next" title="objective-c_runtime是什么">
-                <i class="fa fa-chevron-left"></i> objective-c_runtime是什么
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/19/谈谈我对Hackathon的理解/" rel="prev" title="谈谈我对Hackathon的理解">
-                谈谈我对Hackathon的理解 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
+</article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
- </div>
-
-        
-
-        
-          <div class="comments" id="comments">
-            
-              <div class="ds-thread" data-thread-key="2015/10/22/runloop初窥/"
-                   data-title="runloop初窥" data-url="http://sergiochan.github.io/2015/10/22/runloop初窥/">
-              </div>
-            
-          </div>
-        
-      </div>
-
-      
-        
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" style="border-radius:50%" src="https://avatars2.githubusercontent.com/u/10103766?v=3&s=460" alt="Sergio Chan" itemprop="image"/>
-          <p class="site-author-name" itemprop="name">Sergio Chan</p>
-        </div>
-        <p class="site-description motion-element" style="color: wheat" itemprop="description">Full-Stacker，毕业于北京航空航天大学软件工程，就职于渡鸦科技。<br/> 曾作为创业团队CTO带领团队完成完整的需求，设计和开发流程并最终获得天使投资，曾加入天使轮创业团队负责iOS前端和服务器后台的开发，也曾在传统项目型企业负责iOS客户端的开发。<br/> 热爱工程，热爱产品，热爱互联网，希望在未来用自己最好的设计理念去拥抱用户。有情怀的程序员，热爱设计的工程师。</p>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">24</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          <div class="site-state-item site-state-categories">
-            
-              <span class="site-state-item-count">8</span>
-              <span class="site-state-item-name">分类</span>
-              
-          </div>
-
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">35</span>
-              <span class="site-state-item-name">标签</span>
-              </a>
-          </div>
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/SergioChan" target="_blank">
-                  <i class="fa fa-github"></i> github
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://cn.linkedin.com/pub/sergio-chan/42/14b/a6" target="_blank">
-                  <i class="fa fa-linkedin"></i> linkedin
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/3089081773/profile?topnav=1&wvr=6" target="_blank">
-                  <i class="fa fa-weibo"></i> weibo
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="yuheng9211@qq.com" target="_blank">
-                  <i class="fa fa-email"></i> email
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><span class="nav-number">1.</span> <span class="nav-text">先来说一个很简单的实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u4EC0_u4E48_u662Frunloop"><span class="nav-number">2.</span> <span class="nav-text">什么是runloop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode"><span class="nav-number">3.</span> <span class="nav-text">Mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Input_Source"><span class="nav-number">4.</span> <span class="nav-text">Input Source</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runloop_u751F_u547D_u5468_u671F"><span class="nav-number">5.</span> <span class="nav-text">runloop生命周期</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </section>
-      
-
-    </div>
-  </aside>
-
-
-      
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner"> <div style="text-align: center;" class="copyright" >
-  
-  &copy;  2014 - 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="icon-next-heart fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder"> Lovely designed and created by Sergio Chan </span>
-</div>
-</div>
-
-
- </div>
-    </footer>
-
-    <div class="back-to-top"></div>
-  </div>
-
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  
-  
-    
-
-  
-    
-  
-
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sergiochan.github.io/2015/10/22/runloop初窥/" data-title="runloop初窥" data-url="http://sergiochan.github.io/2015/10/22/runloop初窥/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
-    var duoshuoQuery = {short_name:"sergiochan"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+  var duoshuoQuery = {short_name:"sergiochan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
   </script>
-    
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+
      
-
-
-    
-  
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  
-
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
-
-
-
-
-  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.motion.complete', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      var $indicator = $(indicator);
-      var opacity = action === 'show' ? 0.4 : 0;
-      $indicator.velocity ?
-        $indicator.velocity('stop').velocity({
-          opacity: opacity
-        }, { duration: 100 }) :
-        $indicator.stop().animate({
-          opacity: opacity
-        }, 100);
-    }
-
-  });
-</script>
-
-<script type="text/javascript" id="sidebar.nav">
-  $(document).ready(function () {
-    var html = $('html');
-    var TAB_ANIMATE_DURATION = 200;
-    var hasVelocity = $.isFunction(html.velocity);
-
-    $('.sidebar-nav li').on('click', function () {
-      var item = $(this);
-      var activeTabClassName = 'sidebar-nav-active';
-      var activePanelClassName = 'sidebar-panel-active';
-      if (item.hasClass(activeTabClassName)) {
-        return;
-      }
-
-      var currentTarget = $('.' + activePanelClassName);
-      var target = $('.' + item.data('target'));
-
-      hasVelocity ?
-        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-            .addClass(activePanelClassName);
-        }) :
-        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
-          currentTarget.hide();
-          target
-            .stop()
-            .css({'opacity': 0, 'display': 'block'})
-            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
-              currentTarget.removeClass(activePanelClassName);
-              target.addClass(activePanelClassName);
-            });
-        });
-
-      item.siblings().removeClass(activeTabClassName);
-      item.addClass(activeTabClassName);
-    });
-
-    $('.post-toc a').on('click', function (e) {
-      e.preventDefault();
-      var targetSelector = escapeSelector(this.getAttribute('href'));
-      var offset = $(targetSelector).offset().top;
-      hasVelocity ?
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        }) :
-        $('html, body').stop().animate({
-          scrollTop: offset
-        }, 500);
-    });
-
-    // Expand sidebar on post detail page by default, when post has a toc.
-    motionMiddleWares.sidebar = function () {
-      var $tocContent = $('.post-toc-content');
-      if (CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
-        }
-      }
-    };
-  });
-</script>
-
-
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-
-      isMobile() && FastClick.attach(document.body);
-
-      // Define Motion Sequence.
-      motionIntegrator
-        .add(motionMiddleWares.logo)
-        .add(motionMiddleWares.menu)
-        .add(motionMiddleWares.backToTop)
-        .add(motionMiddleWares.postList)
-        .add(motionMiddleWares.sidebar);
-
-      // Bootstrap Motion.
-      motionIntegrator.bootstrap();
-    });
-  </script>
-
-  
-  
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/lazyload.js"></script>
-  <script type="text/javascript">
-    $(function () {
-      $("#posts").find('img').lazyload({
-        placeholder: "/images/loading.gif",
-        effect: "fadeIn"
-      });
-    });
-  </script>
 </body>
 </html>
