@@ -5672,6 +5672,8 @@
   border: none;
   margin: 0;
   padding: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 .article-entry .highlight table,
 .article-entry .highlight tbody,
