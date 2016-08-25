@@ -6665,6 +6665,7 @@ input[type="tel"]:-ms-input-placeholder {
   .panel-cover--collapsed {
     width: 100%;
     max-width: none;
+    background-image: url("/image/background-cover-small.jpg");
   }
   .panel-main__inner {
     display: table-cell;
