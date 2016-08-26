@@ -162,98 +162,25 @@
   
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2015/04/01/怎么设计和实现一个Newsfeed系统/" title="link to post.title">怎么设计和实现一个Newsfeed系统</a></h2>
+      <h2 class="post-list__post-title post-title"><a href="/2016/08/26/Leetcode-Database-刷题记录/" title="link to post.title">Leetcode - Database 刷题记录</a></h2>
       <p class="excerpt">
     
-      也是拖了好久，才开始写这篇关于Newsfeed系统设计与实现的介绍。今天已经把新产品需要的第一个版本的Newsfeed系统部署完了，所以对整个过程也有了清晰的了解。我希望能够通过我研究，设计，实现和部署这个系统的过程，来展示Facebook，Twitter和朋友圈的基本实现原理大概是什么样的。首先，想要实现类似Facebook的信息流的系统，如果使用最简单的脚本语言加Mysql的实现方式也是未尝不可，只是当一个系统的容量到一定级别之后，简单的技术就会变得难以满足系统的需求了。特别是在实际需求中，
+      偶然被 Cee 酱吸引打开了 Leetcode，这个大一的时候觉得自己一辈子都不会去做的事情……居然。发现 OJ 竟然有 Database 模块了，想当年大学学数据库的时候最想有的就是一个和 OJ 一样的 SQL 在线运行平台，不然数据库上机只会教你安装 SQL Server = = 想想都想哭，时间都浪费在那了。而且做了之后发现好多自己在生产环境都不会遇到的神奇的坑……因此抽着空闲做了大部分，留下此篇笔记。
+浮生若梦。
+List
+175 . Combine Two Tables
+177 . N
     &hellip;
       </p>
-      <div class="post-list__meta"><time datetime="2015-04-01T01:14:52.000Z" class="post-list__meta--date date">2015-04-01</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/Newsfeed/">Newsfeed</a>, <a class="tag-link" href="/tags/celery/">celery</a>, <a class="tag-link" href="/tags/djcelery/">djcelery</a>, <a class="tag-link" href="/tags/redis/">redis</a>, <a class="tag-link" href="/tags/stream-framework/">stream framework</a>
-</span><a class="btn-border-small" href="/2015/04/01/怎么设计和实现一个Newsfeed系统/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2015/02/02/UIColor-colorWithRed-green-blue-alpha-的正确用法/" title="link to post.title">[UIColor colorWithRed: green: blue: alpha:] 的正确用法</a></h2>
-      <p class="excerpt">
-    
-      [UIColor colorWithRed: green: blue: alpha:] 颜色值范围都是在0.0~1.0之间的，并不是我们误认为的0~255。
-正确用法：
-[UIColor colorWithRed:240.0/255 green:240.0/255 blue:240.0/255 alpha:1.0];
-
-colorWithRed:green:blue:alpha:Creates and returns a color object using the specified opac
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2015-02-02T13:37:10.000Z" class="post-list__meta--date date">2015-02-02</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/UIColor/">UIColor</a>
-</span><a class="btn-border-small" href="/2015/02/02/UIColor-colorWithRed-green-blue-alpha-的正确用法/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2014/12/26/PHP图片处理-透明水印的处理和添加/" title="link to post.title">PHP图片处理 透明水印的处理和添加</a></h2>
-      <p class="excerpt">
-    
-      最近玩了下PHP的图片处理，实现了一个给图片添加水印或者是重叠两张图片的功能，把自己的解决过程记录下来。首先我需要将图片resize到640*480的尺寸，重绘的代码如下：
-$thumb = imagecreatetruecolor($newwidth, $newheight);$source = imagecreatefromjpeg($filename);imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2014-12-26T01:11:25.000Z" class="post-list__meta--date date">2014-12-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/PHP图片处理，水印/">PHP图片处理，水印</a>
-</span><a class="btn-border-small" href="/2014/12/26/PHP图片处理-透明水印的处理和添加/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2014/12/12/Ubuntu下重置MySQL的root密码/" title="link to post.title">Ubuntu下重置MySQL的root密码</a></h2>
-      <p class="excerpt">
-    
-      sudo vi /etc/mysql/my.cnf，在[mysqld]段中加入一行“skip-grant-tables”具体环境中可能my.cnf已经存在且在其他目录，记得要找到有效的my.cnf配置文件路径
-sudo service mysql restart，重启mySQL服务具体参考实际的重启MySQL的命令
-sudo mysql -u root -p mysql，用空密码进入mysql管理命令行
-(进入mysql,或者用use mysql指令)
-update user set passw
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2014-12-12T02:10:45.000Z" class="post-list__meta--date date">2014-12-12</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/Ubuntu/">Ubuntu</a>
-</span><a class="btn-border-small" href="/2014/12/12/Ubuntu下重置MySQL的root密码/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2014/12/10/iOS-静态库封装和使用方法/" title="link to post.title">iOS 静态库封装和使用方法</a></h2>
-      <p class="excerpt">
-    
-      由于现在的任务是将之前已经进行了第一步demo的验证，我需要将demo里的需要的部分整理出来，封装成静态库，从而给其他开发者使用。iOS封装静态库在百度上已经有很多教程了，但是实际中我却遇到了这样的问题：
-
-静态库里的代码需要引用到其他静态库，不是简单的控件封装。
-之前的项目大部分引用的文件都只是加在了Library和Header search path中，并没有真正添加在项目中。
-
-第一步，新建一个Framework&amp;amp;Library -&amp;gt;Cocoa Touch Static Li
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2014-12-10T12:47:54.000Z" class="post-list__meta--date date">2014-12-10</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/iOS静态库/">iOS静态库</a>
-</span><a class="btn-border-small" href="/2014/12/10/iOS-静态库封装和使用方法/">继续阅读</a></div>
+      <div class="post-list__meta"><time datetime="2016-08-26T07:50:59.000Z" class="post-list__meta--date date">2016-08-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Leetcode/">Leetcode</a>, <a class="tag-link" href="/tags/MySQL/">MySQL</a>
+</span><a class="btn-border-small" href="/2016/08/26/Leetcode-Database-刷题记录/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
     
   </ol>
 
-
-  <nav class="pagination" role="navigation">
-    
-      <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/archives/page/2/">Prev</a>
-    
-    
-  </nav>
 
 
 </div>
