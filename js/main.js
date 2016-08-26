@@ -14,6 +14,12 @@ $(document).ready(function() {
   //   }
   // });
 
+  console.log(window.location.hash);
+  console.log(window.innerWidth);
+  if (window.innerWidth < 500 && window.location.hash == "") {
+    $('.panel-cover').addClass('panel-cover--collapsed');
+  }
+
   if (window.location.hash && window.location.hash == "#blog") {
     $('.panel-cover').addClass('panel-cover--collapsed');
   }

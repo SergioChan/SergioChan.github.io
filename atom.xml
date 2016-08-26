@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-08-26T09:16:33.000Z</updated>
+  <updated>2016-08-26T09:16:34.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://sergiochan.github.io/2016/08/26/Leetcode-Database-%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/"/>
     <id>http://sergiochan.github.io/2016/08/26/Leetcode-Database-刷题记录/</id>
     <published>2016-08-26T07:50:59.000Z</published>
-    <updated>2016-08-26T09:16:33.000Z</updated>
+    <updated>2016-08-26T09:16:34.000Z</updated>
     <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>偶然被 Cee 酱吸引打开了 Leetcode，这个大一的时候觉得自己一辈子都不会去做的事情……居然。发现 OJ 竟然有 Database 模块了，想当年大学学数据库的时候最想有的就是一个和 OJ 一样的 SQL 在线运行平台，不然数据库上机只会教你安装 SQL Server = = 想想都想哭，时间都浪费在那了。而且做了之后发现好多自己在生产环境都不会遇到的神奇的坑……因此抽着空闲做了大部分，留下此篇笔记。</p>
 <p>浮生若梦。</p>
 <h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><ul>
