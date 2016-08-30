@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>iOS Airplay 中的 Airtunes Server 服务协议和机制详解以及 Android Demo 的实现 | Sergio Chan</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="iOS Airplay 中的 Airtunes Server 服务协议和机制详解以及 Android Demo 的实现 | Sergio Chan">
+    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="iOS Airplay 中的 Airtunes Server 服务协议和机制详解以及 Android Demo 的实现 | Sergio Chan">
+    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    
+    <meta name="author" content="Sergio Chan">
+    
+    <link rel="stylesheet" href="/css/vno.css" type="text/css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" type="text/css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://sergiochan.github.io/2016/08/29/iOS-Airplay-中的-Airtunes-Server-服务协议和机制详解以及-Android-Demo-的实现/"/>
+
+    
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/archives" title="" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/bio">Biography</a></li>
+            
+              <li class="navigation__item"><a href="/about">About</a></li>
+            
+              <li class="navigation__item"><a href="/portfolio">Portfolio</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" title="My Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/SergioChan" title="My Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/Sergio2Chan" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+<!-- Linkedin -->
+
+  <li class="navigation__item">
+    <a href="http://www.linkedin.com/in/sergiochan" title="Linkedin" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+
+
+
+  <li class="navigation__item">
+    <a href="mailto:cyh9211@icloud.com" title="Email" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-08-29T02:03:22.000Z" class="post-list__meta--date date">2016-08-29</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Airplay/">Airplay</a>, <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+</span>
+    </div>
+    <h1 class="post-title">iOS Airplay 中的 Airtunes Server 服务协议和机制详解以及 Android Demo 的实现</h1>
+  </header>
+
+  <section class="post article-entry">
+    <script src="/assets/js/APlayer.min.js"> </script><p>在 Android 设备上搭建一个 Airplay Server 其实是一件很浩大的工程，因为这需要逆向苹果的 Airplay 协议流程啊格式啊什么的，万幸这件事情已经由许许多多国外的大神们帮我们做好了，因此我们只要基于他们逆向出来的 Airplay 协议来搭建一个服务就可以了。话虽如此，整个过程中的工作量和需要掌握的知识点还是非常非常多的。</p>
+<p>在局域网中实现流媒体传输的主流协议有两种，一种是苹果封闭的 Airplay 协议，一种是 DLNA 。</p>
+<blockquote>
+<p><strong>D</strong>IGITAL <strong>L</strong>IVING <strong>N</strong>ETWORK <strong>A</strong>LLIANCE 数字生活网络联盟，是索尼、英特尔、微软等发起的一套 PC、移动设备、消费电器之间互联互通的协议。它们的宗旨是“随时随地享受音乐、照片和视频”。据说苹果当时也是 DLNA 联盟的成员，而后来退出了并自立门户。</p>
+</blockquote>
+<p>对于 iOS 系统来说，对用户最友好且体验最好的方式自然还是通过 Airplay 协议了（其实我是不太喜欢在每个单独的视频或者音乐播放器里面去找到 DLNA 或者 Airplay 的按钮然后切换模式，系统级的服务体验还是更好一些，因此我更倾向使用 Airplay）。因此在很多场景下，你需要让你的<strong>安卓硬件</strong>或者<strong>设备</strong>支持 Airplay 服务，本文就是通过一步步解释和分析这个基于 DroidPlay 改出的稳定可用的 Airtunes 服务，给大家展示一个比较清晰的 Airplay 中的 Airtunes 的机制和服务流程。</p>
+<blockquote>
+<p>代码在 GitHub 上开放给大家学习和改动。地址在<a href="https://github.com/SergioChan/Android-Airplay-Server" target="_blank" rel="external">这里</a>。</p>
+</blockquote>
+<h2 id="u9996_u5148_uFF0C_u5982_u4F55_u8BA9_iOS__u8BBE_u5907_u53D1_u73B0_u4F60"><a href="#u9996_u5148_uFF0C_u5982_u4F55_u8BA9_iOS__u8BBE_u5907_u53D1_u73B0_u4F60" class="headerlink" title="首先，如何让 iOS 设备发现你"></a>首先，如何让 iOS 设备发现你</h2><p>这是万事开头的第一步：你需要让自己的安卓设备出现在 iOS 设备 Airplay 的设备列表中。由于 Airplay 是基于局域网的，苹果设备会在当前局域网里搜寻支持 Airplay 服务的设备，因此在这里你就需要通过 mDNS 服务向局域网发送一个组播来让 iOS 设备能够在内网中发现你。在 Android 上你可以使用 <strong>jmDNS</strong> 库来实现这个功能:</p>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><span class="line">final JmDNS jmDNS = JmDNS.create(addr, hostName + <span class="string">"-jmdns"</span>);</span><br><span class="line">jmDNSInstances.add(jmDNS);</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span> Publish RAOP service <span class="keyword">*</span>/</span><br><span class="line">final ServiceInfo airTunesServiceInfo = ServiceInfo.create(</span><br><span class="line">AIR_TUNES_SERVICE_TYPE,</span><br><span class="line">hardwareAddressString + <span class="string">"@"</span> + hostName,</span><br><span class="line">getRtspPort(),</span><br><span class="line">0 /<span class="keyword">*</span> weight <span class="keyword">*</span>/, 0 /<span class="keyword">*</span> priority <span class="keyword">*</span>/,</span><br><span class="line">AIRTUNES_SERVICE_PROPERTIES</span><br><span class="line">);</span><br><span class="line">jmDNS.registerService(airTunesServiceInfo);</span><br></pre></td></tr></table></figure>
+<p>这个注册的服务类型和参数都是固定的，服务类型为 <code>_raop._tcp.local.</code>，参数列表如下:</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="string">"txtvers"</span>, <span class="string">"1"</span>,</span><br><span class="line"><span class="string">"tp"</span>, <span class="string">"UDP"</span>,</span><br><span class="line"><span class="string">"ch"</span>, <span class="string">"2"</span>,</span><br><span class="line"><span class="string">"ss"</span>, <span class="string">"16"</span>,</span><br><span class="line"><span class="string">"sr"</span>, <span class="string">"44100"</span>,</span><br><span class="line"><span class="string">"pw"</span>, <span class="string">"false"</span>,</span><br><span class="line"><span class="string">"sm"</span>, <span class="string">"false"</span>,</span><br><span class="line"><span class="string">"sv"</span>, <span class="string">"false"</span>,</span><br><span class="line"><span class="string">"ek"</span>, <span class="string">"1"</span>,</span><br><span class="line"><span class="string">"et"</span>, <span class="string">"0,1"</span>,</span><br><span class="line"><span class="string">"cn"</span>, <span class="string">"0,1"</span>,</span><br><span class="line"><span class="string">"vn"</span>, <span class="string">"3"</span></span><br></pre></td></tr></table></figure>
+<p>通过注册上这个 mDNS 服务，现在你应该可以在你的 iOS 设备上的 Airplay 列表里看到一个名字为你设置的 <code>hostName</code> 的设备了。当然，现在点击连接应该是没有任何反应的，因为接下来需要进行好几次的  RTSP 请求来进行校验和连接，我们要做的也主要就是接下来这几个步骤了。</p>
+<blockquote>
+<p><strong>Airplay 连接一开始的延迟貌似是没有办法解决的</strong>。参考这篇<a href="http://stackoverflow.com/questions/9997882/detecting-the-airplay-latency" target="_blank" rel="external">SO回答</a>，里面明确指出，Airplay 连接的延迟来源于发送方需要多次 RTSP 请求握手，大概在<strong>两秒左右</strong>，当然，如果你在客户端层面去做自己的传输协议当然是没有问题的，但是你并不能按照 Airplay 的包格式来实现系统级的 Airplay 到其他不论是原生的 iOS 设备还是支持了 Airplay 的 Android 设备上去，这会被苹果 Reject。所以如果在之后的开发中最后遇到了一点几秒的延迟没法解决的时候，记住不要钻进坑里了。实际测试中延迟大概在 1.6 秒左右。</p>
+</blockquote>
+<h2 id="u5F00_u542F_u4F60_u7684_u670D_u52A1_u7AEF"><a href="#u5F00_u542F_u4F60_u7684_u670D_u52A1_u7AEF" class="headerlink" title="开启你的服务端"></a>开启你的服务端</h2><p>告知了 iOS 设备你的端口信息之后，接下来就是在指定的端口开启你的服务端等候 iOS 设备传来的包了。在这里我们使用的是 Netty 库的 bootstrap 来搭建一个服务器，关于 Netty 你可以在百度和谷歌上找到更多介绍。总之它的机制是每一个新的 TCP 连接都会建立一个子的 channel 然后每一个 channel 的处理都是一个 pipeline 的处理模式，接收到消息的时候消息会在 pipeline 中流动，直到不再往下流动，发送消息反之亦然。</p>
+<p>苹果的 Airplay 协议主要是通过 RTSP 协议的 Header 中的几个参数来进行身份的验证和包的校验，所以为了满足苹果自己需要的校验规则，我们需要在 pipeline 中加上这几个处理校验的 Handler：</p>
+<figure class="highlight sml"><table><tr><td class="code"><pre><span class="line">pipeline.addLast(<span class="string">"challengeResponse"</span>, new <span class="type">RaopRtspChallengeResponseHandler</span>(<span class="type">NetworkUtils</span>.getInstance<span class="literal">()</span>.getHardwareAddress<span class="literal">()</span>));</span><br><span class="line">pipeline.addLast(<span class="string">"header"</span>, new <span class="type">RaopRtspHeaderHandler</span><span class="literal">()</span>);</span><br><span class="line">pipeline.addLast(<span class="string">"options"</span>, new <span class="type">RaopRtspOptionsHandler</span><span class="literal">()</span>);</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>由 iOS 设备向 Android 设备发送的 Request 的 Header 中 （注意这里你的 Android 是作为服务端的）包含一个叫做 <code>Apple-Challenge</code> 的字段，它的值需要经过 Base64 解密之后获得一个凭证，这个凭证是要在每一次的 Response 中使用到的。</li>
+<li>由 Android 设备向 iOS 设备发送的 Response 的 Header 中需要包含一个叫做 <code>Apple-Response</code> 的字段，它的值需要经过一层 RSA 加密和一层 Base64 加密，原始数据则是 16 位 <code>Apple-Challenge</code> 解密后的凭证 + 16位 InetAddress.getAddress() 获取到的 byte 数组 + 6 位 硬件地址。分别是从 Request 中，<code>InetAddress.getAddress()</code> 和下面这段代码中的 <code>NetworkInterface</code> 来获得硬件地址。带有 <code>Apple-Challenge</code> Header 的包只会在 RTSP 连接建立的时候发送一次，因此稍微判断一下是否需要返回 <code>Apple-Response</code> 的 Header 就可以了。另外，在这里的 RSA 加密中用到的秘钥是一个私钥，也就是双方提前约定好的一个串，这个串会不定期的更新，破解的事情应该只有少数大神才做的了吧……对于我们主要还是从国外的一些博客和网站上经常去关注是否有私钥更新比较靠谱。这个私钥在所有的 RSA 解密操作中都要用到。</li>
+</ul>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">final</span> NetworkInterface iface: Collections.list(NetworkInterface.getNetworkInterfaces())) &#123;</span><br><span class="line"><span class="keyword">if</span> (iface.isLoopback())&#123;</span><br><span class="line"><span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (iface.isPointToPoint())&#123;</span><br><span class="line"><span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">byte</span>[] ifaceMacAddress = iface.getHardwareAddress();</span><br><span class="line"><span class="keyword">if</span> ((ifaceMacAddress != <span class="keyword">null</span>) &amp;&amp; (ifaceMacAddress.length == <span class="number">6</span>) &amp;&amp; !isBlockedHardwareAddress(ifaceMacAddress)) &#123;</span><br><span class="line"><span class="function"><span class="keyword">return</span> Arrays.<span class="title">copyOfRange</span><span class="params">(ifaceMacAddress, <span class="number">0</span>, <span class="number">6</span>)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (<span class="keyword">final</span> Throwable e) &#123;</span><br><span class="line"><span class="comment">/* Ignore */</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于 RTSP Header 的处理，每个 RTSP 包都会带有 <code>CSeq</code> 的头，这个头需要在 Response 和 Request 中保持一致。它指定了 RTSP 请求回应对的序列号，在每个请求或回应中都必须包括这个头字段。对每个包含一个给定序列号的请求消息，都会有一个相同序列号的回应消息。</li>
+<li>每个 RTSP Header 还要带上一个值为 <code>connected; type=analog</code> 的头 <code>Audio-Jack-Status</code>。</li>
+<li>你还要响应 RTSP 的 OPTION 请求，这个请求是由客户端向服务端发起，要求服务端告知支持的所有请求类型，因此这里我们需要将所有的 RTSP 请求方法带在 Response 中返回给客户端。</li>
+</ul>
+<h2 id="u63A5_u6536_u5E76_u5904_u7406_u4F60_u7684_u6570_u636E_u6D41"><a href="#u63A5_u6536_u5E76_u5904_u7406_u4F60_u7684_u6570_u636E_u6D41" class="headerlink" title="接收并处理你的数据流"></a>接收并处理你的数据流</h2><p>当请求经过了上面几层 Handler 还在往下传递的时候，这个时候数据包应该就到了 RTSP 的正常处理流程中了。而这些所有的关于 RTSP 的处理都是在 <code>AudioHandler</code> 中来完成的。我们会收到下面这几种请求</p>
+<ul>
+<li>ANNOUNCE 初始化步骤，传输媒体信息，编码和加密秘钥</li>
+<li>SETUP 连接步骤</li>
+<li>RECORD 不需要做什么，在这里所有的工作都在前两步里面完成了</li>
+<li>FLUSH 当客户端终止了 Airtunes 传输的时候发送，用来清空数据队列</li>
+<li>TEARDOWN 直接关闭连接</li>
+</ul>
+<h3 id="ANNOUNCE"><a href="#ANNOUNCE" class="headerlink" title="ANNOUNCE"></a>ANNOUNCE</h3><p>ANNOUNCE 中主要是带来了一些 RTP 数据的参数，Android 可以根据这些参数来初始化相应的 <strong>RTP 处理队列</strong>，<strong>ALAC Decoder</strong> 和 <strong>AES 解密处理器</strong>（注意所有之后的 RTP 包都是 AES 加密过的，需要用这里初始化的解密处理器解一遍，但是 RTSP 包不是 ）。ANNOUNCE 在传输的时候遵循 <strong>SDP 描述格式</strong>来传输媒体信息：</p>
+<blockquote>
+<p><strong>关于 SDP</strong></p>
+<p>SDP 是一种会话描述格式，它不属于传输协议。</p>
+<p>SDP协议是基于文本的协议，这样就能保证协议的可扩展性比较强。SDP 不支持会话内容或媒体编码的协商，所以在流媒体中只用来描述媒体信息。</p>
+<p>SDP描述由许多文本行组成，文本行的格式为:</p>
+<p><strong>类型 = 值</strong></p>
+<p>其中，类型是一个字母，值是结构化的文本串，其格式依类型而定。</p>
+<p><strong>sdp的格式:</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><span class="line">&gt; v=<span class="variable">&lt;version&gt;</span></span><br><span class="line">&gt; o=<span class="variable">&lt;username&gt;</span> <span class="variable">&lt;session id&gt;</span> <span class="variable">&lt;version&gt;</span> <span class="variable">&lt;network type&gt;</span> <span class="variable">&lt;address type&gt;</span> <span class="variable">&lt;address&gt;</span></span><br><span class="line">&gt; s=<span class="variable">&lt;session name&gt;</span></span><br><span class="line">&gt; i=<span class="variable">&lt;session description&gt;</span></span><br><span class="line">&gt; u=<span class="variable">&lt;URI&gt;</span></span><br><span class="line">&gt; e=<span class="variable">&lt;email address&gt;</span></span><br><span class="line">&gt; p=<span class="variable">&lt;phone number&gt;</span></span><br><span class="line">&gt; c=<span class="variable">&lt;network type&gt;</span> <span class="variable">&lt;address type&gt;</span> <span class="variable">&lt;connection address&gt;</span></span><br><span class="line">&gt; b=<span class="variable">&lt;modifier&gt;</span>:<span class="variable">&lt;bandwidth-value&gt;</span></span><br><span class="line">&gt; t=<span class="variable">&lt;start time&gt;</span> <span class="variable">&lt;stop time&gt;</span></span><br><span class="line">&gt; r=<span class="variable">&lt;repeat interval&gt;</span> <span class="variable">&lt;active duration&gt;</span> <span class="variable">&lt;list of offsets from start-time&gt;</span></span><br><span class="line">&gt; z=<span class="variable">&lt;adjustment time&gt;</span> <span class="variable">&lt;offset&gt;</span> <span class="variable">&lt;adjustment time&gt;</span> <span class="variable">&lt;offset&gt;</span> ....</span><br><span class="line">&gt; k=<span class="variable">&lt;method&gt;</span></span><br><span class="line">&gt; k=<span class="variable">&lt;method&gt;</span>:<span class="variable">&lt;encryption key&gt;</span></span><br><span class="line">&gt; a=<span class="variable">&lt;attribute&gt;</span></span><br><span class="line">&gt; a=<span class="variable">&lt;attribute&gt;</span>:<span class="variable">&lt;value&gt;</span></span><br><span class="line">&gt; m=<span class="variable">&lt;media&gt;</span> <span class="variable">&lt;port&gt;</span> <span class="variable">&lt;transport&gt;</span> <span class="variable">&lt;fmt list&gt;</span></span><br><span class="line">&gt;</span><br><span class="line">&gt; v = (协议版本)</span><br><span class="line">&gt; o = (所有者/创建者和会话标识符)</span><br><span class="line">&gt; s = (会话名称)</span><br><span class="line">&gt; i = <span class="keyword">*</span> (会话信息)</span><br><span class="line">&gt; u = <span class="keyword">*</span> (URI 描述)</span><br><span class="line">&gt; e = <span class="keyword">*</span> (Email 地址)</span><br><span class="line">&gt; p = <span class="keyword">*</span> (电话号码)</span><br><span class="line">&gt; c = <span class="keyword">*</span> (连接信息)</span><br><span class="line">&gt; b = <span class="keyword">*</span> (带宽信息)</span><br><span class="line">&gt; z = <span class="keyword">*</span> (时间区域调整)</span><br><span class="line">&gt; k = <span class="keyword">*</span> (加密密钥)</span><br><span class="line">&gt; a = <span class="keyword">*</span> (0 个或多个会话属性行)</span><br><span class="line">&gt;</span><br><span class="line">&gt; 时间描述: </span><br><span class="line">&gt; t = (会话活动时间)</span><br><span class="line">&gt; r = <span class="keyword">*</span> (0或多次重复次数)</span><br><span class="line">&gt;</span><br><span class="line">&gt; 媒体描述: </span><br><span class="line">&gt; m = (媒体名称和传输地址)</span><br><span class="line">&gt; i = <span class="keyword">*</span> (媒体标题)</span><br><span class="line">&gt; c = <span class="keyword">*</span> (连接信息 — 如果包含在会话层则该字段可选)</span><br><span class="line">&gt; b = <span class="keyword">*</span> (带宽信息)</span><br><span class="line">&gt; k = <span class="keyword">*</span> (加密密钥)</span><br><span class="line">&gt; a = <span class="keyword">*</span> (0 个或多个媒体属性行)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>Airplay 服务所定义的 ANNOUNCE 包的 SDP 格式如下：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">* Sample sdp content:</span><br><span class="line">* </span><br><span class="line"><span class="constant">v</span>=0</span><br><span class="line"><span class="constant">o</span>=iTunes 3413821438 0 IN IP4 fe80::217:f2ff:fe0f:e0f6</span><br><span class="line"><span class="constant">s</span>=iTunes</span><br><span class="line"><span class="constant">c</span>=IN IP4 fe80::5a55:caff:fe1a:e187</span><br><span class="line"><span class="constant">t</span>=0 0</span><br><span class="line"><span class="constant">m</span>=audio 0 RTP/AVP 96</span><br><span class="line"><span class="constant">a</span>=rtpmap:96 AppleLossless</span><br><span class="line"><span class="constant">a</span>=fmtp:96 352 0 16 40 10 14 2 255 0 0 44100</span><br><span class="line"><span class="constant">a</span>=fpaeskey:RlBMWQECAQAAAAA8AAAAAPFOnNe+zWb5/n4L5KZkE2AAAAAQlDx69reTdwHF9LaNmhiRURTAbcL4brYAceAkZ49YirXm62N4</span><br><span class="line"><span class="constant">a</span>=aesiv:5b+YZi9Ikb845BmNhaVo+Q</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>根据样例格式我们可以解析出 AES 解密的<strong>秘钥</strong>和<strong>初始化矩阵IV</strong>以及流的数据格式，从而初始化 <strong>ALAC Decoder</strong>。其中，参数 m 的最后一个值和 rtpmap 的第一个值需要保持一致，rtpmap 的第一个值和 fmtp 的第一个值需要保持一致，他们都是 <strong>payload type</strong> 的值，因此在解析完包的数据之后要进行校验。fmtp 第一个参数之后的所有参数表示的都是媒体格式的指定参数。我们用这些参数来初始化 ALAC Decoder。<em>关于 SDP 的详细参数描述你可以在谷歌上找到更多</em>。</p>
+<blockquote>
+<p>a=fmtp:<format> <format specific="" parameters=""><br>​       This attribute allows parameters that are specific to a particular format to be conveyed in a way that SDP doesn’t have to understand them.  The format must be one of the formats specified for the media.  Format-specific parameters may be any set of parameters required to be conveyed by SDP and given unchanged to the media tool that will use this format.</format></format></p>
+<p>​       It is a media attribute, and is not dependent on charset.</p>
+</blockquote>
+<p>接下来是 AES 解密的秘钥和初始化矩阵 IV：</p>
+<figure class="highlight cs"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">"rsaaeskey"</span>.equals(key)) &#123;</span><br><span class="line"><span class="comment">/* Sets the AES key required to decrypt the audio data. The key is</span><br><span class="line">* encrypted wih the AirTunes private key</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">byte</span>[] aesKeyRaw;</span><br><span class="line"></span><br><span class="line">rsaPkCS1OaepCipher.init(Cipher.DECRYPT_MODE, AirTunesCryptography.PrivateKey);</span><br><span class="line">aesKeyRaw = rsaPkCS1OaepCipher.doFinal(Base64.decodeUnpadded(<span class="keyword">value</span>));</span><br><span class="line"></span><br><span class="line">aesKey = <span class="keyword">new</span> SecretKeySpec(aesKeyRaw, <span class="string">"AES"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="string">"aesiv"</span>.equals(key</span>)) </span>&#123;</span><br><span class="line"><span class="comment">/* Sets the AES initialization vector */</span></span><br><span class="line">aesIv = <span class="keyword">new</span> IvParameterSpec(Base64.decodeUnpadded(<span class="keyword">value</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两个值都是用 Base64 加密过的，所以我们要先 Base64 解密得到原始数据，然后 <strong>AES Key</strong> 需要再通过 Airtunes 的秘钥来 RSA 解密，最后得到 AES 解密需要的 Key。</p>
+<h3 id="SETUP"><a href="#SETUP" class="headerlink" title="SETUP"></a>SETUP</h3><p>在 ANNOUNCE 中我们主要是得到了数据格式，数据解密的方法参数这些基本信息，那么 SETUP 的时候客户端就是在和我们交换一些连接信息：主要也就是三个 port 的信息，对应三个 channel，分别是 <strong>control port -&gt; control channel</strong>，<strong>timing port -&gt; timing channel</strong> 和 <strong>server port -&gt; audio channel</strong>，这是三个 <strong>UDP 连接</strong>的端口。这也是整个 Airtunes 服务结构中最重要的部分了：</p>
+<ul>
+<li><strong>control port</strong> 是用来发送 resendTransmitRequest 的 channel，也就是当 Android 这边发现我收到的音乐流数据包中有丢失帧的时候，可以通过 control port 发送 resendTransmit 的 request 给 iOS 设备，设备收到后会将帧在 response 中补发回来</li>
+<li><strong>timing port</strong> 用来传输 Airplay 的时间同步包，同时也可以主动向 iOS 设备请求当前的时间戳来校准流的时间戳</li>
+<li><strong>server port</strong> 则是用来传输最主要的音乐流数据包</li>
+</ul>
+<blockquote>
+<p>在这里我们将 control 和 timing 的包统一 reroute 到 audio 的 channel 上来处理。接收到的 UpStream 将包从 control 和 timing 集中到 audio 来处理，而发送出去的 DownStream 则是将指定类型的包从 audio 分发到 control 和 timing 去发送和接收 response。下面会详细展开。</p>
+</blockquote>
+<figure class="highlight processing"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Split Transport header into individual options and prepare response options list */</span></span><br><span class="line"><span class="keyword">final</span> Deque&lt;<span class="keyword">String</span>&gt; requestOptions = <span class="keyword">new</span> java.util.LinkedList&lt;<span class="keyword">String</span>&gt;(Arrays.asList(req.getHeader(HEADER_TRANSPORT).<span class="built_in">split</span>(<span class="string">";"</span>)));</span><br><span class="line"><span class="keyword">final</span> List&lt;<span class="keyword">String</span>&gt; responseOptions = <span class="keyword">new</span> java.util.LinkedList&lt;<span class="keyword">String</span>&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transport header. Protocol must be RTP/AVP/UDP */</span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">String</span> requestProtocol = requestOptions.removeFirst();</span><br><span class="line"><span class="keyword">if</span> ( ! <span class="string">"RTP/AVP/UDP"</span>.equals(requestProtocol))&#123;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> ProtocolException(<span class="string">"Transport protocol must be RTP/AVP/UDP, but was "</span> + requestProtocol);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">responseOptions.<span class="built_in">add</span>(requestProtocol);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>HEADER 中 key 为 <strong>Transport</strong> 的字段值必须为 <code>RTP/AVP/UDP</code> 。</p>
+</blockquote>
+<p>首先对 SETUP 的参数列表进行解析，解出来的 <code>requestOptions</code> 仍然是用正则匹配的形式获取到 key - value 对：</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Parse incoming transport options and build response options */</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">final</span> <span class="keyword">String</span> requestOption: requestOptions) &#123;</span><br><span class="line"><span class="comment">/* Split option into key and value */</span></span><br><span class="line"><span class="keyword">final</span> Matcher transportOption = PATTERN_TRANSPORT_OPTION.matcher(requestOption);</span><br><span class="line"><span class="keyword">if</span> ( ! transportOption.matches() )&#123;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> ProtocolException(<span class="string">"Cannot parse Transport option "</span> + requestOption);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">String</span> <span class="variable">key</span> = transportOption.group(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">String</span> value = transportOption.group(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>其中我们只要对指定几个 key 进行 response 就可以了，其中，除了 <code>interleaved</code> 和 <code>mode</code> 返回的参数是固定的之外，<code>control_port</code> 和 <code>timing_port</code> 在 request 中所对应的 value 是客户端的端口，而 response 中需要带上服务端的端口。同时，这两个 UDP 连接由服务端发起去连接客户端对应的端口。最后再告知客户端 <code>server_port</code> 的端口。</p>
+<p><strong>interleaved</strong> 指的是由于这条 TCP 连接 RTP 和 RTCP 都要使用，因此两个连接的数据包会交叉传输在同一个 TCP 连接上，每个包都会再加一层标识，而标识 Channel 的值就由这里的 interleaved 后面的值 0-1 来决定，表示有 0 和 1 两种交叉混用的 Channel 类型。</p>
+<figure class="highlight ceylon"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Probably means that two channels are interleaved in the stream. Included in the response options */</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="string">"0-1"</span>.equals(<span class="keyword">value</span>))&#123;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> ProtocolException(<span class="string">"Unsupported Transport option, interleaved must be 0-1 but was "</span> + <span class="keyword">value</span>);</span><br><span class="line">&#125;</span><br><span class="line">responseOptions.add(<span class="string">"interleaved=0-1"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>mode</strong> 则是校验客户端要求我们做的事情，这是 RTSP 协议中规定的一部分，在 Airplay 中，Server 永远承担的是接收数据的工作，因此 mode 的值也应当保持为 <strong>record</strong> 。</p>
+<figure class="highlight ceylon"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Means the we're supposed to receive audio data, not send it. Included in the response options */</span></span><br><span class="line"><span class="keyword">if</span> ( ! <span class="string">"record"</span>.equals(<span class="keyword">value</span>))&#123;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> ProtocolException(<span class="string">"Unsupported Transport option, mode must be record but was "</span> + <span class="keyword">value</span>);</span><br><span class="line">&#125;</span><br><span class="line">responseOptions.add(<span class="string">"mode=record"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>control_port</strong> 是 control channel 对应的客户端的端口号，而我们返回的 response 中需要改成服务端的端口号。可以随便分配一个比较大的端口号就行。</p>
+<figure class="highlight sml"><table><tr><td class="code"><pre><span class="line">/* <span class="type">Port</span> number <span class="keyword">of</span> the client's control socket. <span class="type">Response</span> includes port number <span class="keyword">of</span> *our* control port */</span><br><span class="line">final <span class="built_in">int</span> clientControlPort = <span class="type">Integer</span>.valueOf(value);</span><br><span class="line"></span><br><span class="line">controlChannel = createRtpChannel(</span><br><span class="line">substitutePort((<span class="type">InetSocketAddress</span>)ctx.getChannel<span class="literal">()</span>.getLocalAddress<span class="literal">()</span>, <span class="number">53670</span>),</span><br><span class="line">substitutePort((<span class="type">InetSocketAddress</span>)ctx.getChannel<span class="literal">()</span>.getRemoteAddress<span class="literal">()</span>, clientControlPort),</span><br><span class="line"><span class="type">RaopRtpChannelType</span>.<span class="type">Control</span></span><br><span class="line">);</span><br><span class="line">responseOptions.add(<span class="string">"control_port="</span> + ((<span class="type">InetSocketAddress</span>)controlChannel.getLocalAddress<span class="literal">()</span>).getPort<span class="literal">()</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>timing_port</strong> 则是 timing channel 对应的客户端的端口号。</p>
+<figure class="highlight sml"><table><tr><td class="code"><pre><span class="line">/* <span class="type">Port</span> number <span class="keyword">of</span> the client's timing socket. <span class="type">Response</span> includes port number <span class="keyword">of</span> *our* timing port */</span><br><span class="line">final <span class="built_in">int</span> clientTimingPort = <span class="type">Integer</span>.valueOf(value);</span><br><span class="line"></span><br><span class="line">timingChannel = createRtpChannel(</span><br><span class="line">substitutePort((<span class="type">InetSocketAddress</span>)ctx.getChannel<span class="literal">()</span>.getLocalAddress<span class="literal">()</span>, <span class="number">53669</span>),</span><br><span class="line">substitutePort((<span class="type">InetSocketAddress</span>)ctx.getChannel<span class="literal">()</span>.getRemoteAddress<span class="literal">()</span>, clientTimingPort),</span><br><span class="line"><span class="type">RaopRtpChannelType</span>.<span class="type">Timing</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">responseOptions.add(<span class="string">"timing_port="</span> + ((<span class="type">InetSocketAddress</span>)timingChannel.getLocalAddress<span class="literal">()</span>).getPort<span class="literal">()</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>server_port</strong> 这个 key 并不在 SETUP 的参数列表中，但是你需要在 response 中带上，告知客户端你在哪个端口打开了你的 audio 数据接收。因此它不需要主动去连接客户端的端口。</p>
+<figure class="highlight sml"><table><tr><td class="code"><pre><span class="line">/* <span class="type">Create</span> audio socket <span class="keyword">and</span> <span class="keyword">include</span> it's port <span class="keyword">in</span> our response */</span><br><span class="line">audioChannel = createRtpChannel(</span><br><span class="line">substitutePort((<span class="type">InetSocketAddress</span>)ctx.getChannel<span class="literal">()</span>.getLocalAddress<span class="literal">()</span>, <span class="number">53671</span>),</span><br><span class="line">null,</span><br><span class="line"><span class="type">RaopRtpChannelType</span>.<span class="type">Audio</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">responseOptions.add(<span class="string">"server_port="</span> + ((<span class="type">InetSocketAddress</span>)audioChannel.getLocalAddress<span class="literal">()</span>).getPort<span class="literal">()</span>);</span><br></pre></td></tr></table></figure>
+<p>其中的 <code>createRtpChannel</code> 方法中，我们同样也为每一个端口新建一个 bootstrap 实例，添加 pipeline Handler，然后将 timing 和 control 两个 port 连接到 SETUP 包带来的 iOS 客户端端口上去。连接成功后 SETUP 也就处理完毕了。</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Set pipeline factory for the RTP channel */</span></span><br><span class="line">bootstrap.setPipelineFactory(<span class="keyword">new</span> ChannelPipelineFactory() &#123;</span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function">ChannelPipeline <span class="title">getPipeline</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"><span class="keyword">final</span> ChannelPipeline pipeline = Channels.pipeline();</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> AirPlayServer airPlayServer = AirPlayServer.getIstance();</span><br><span class="line"></span><br><span class="line">pipeline.addLast(<span class="string">"executionHandler"</span>, airPlayServer.getChannelExecutionHandler());</span><br><span class="line">pipeline.addLast(<span class="string">"exceptionLogger"</span>, exceptionLoggingHandler);</span><br><span class="line">pipeline.addLast(<span class="string">"decoder"</span>, decodeHandler);</span><br><span class="line">pipeline.addLast(<span class="string">"encoder"</span>, encodeHandler);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* We pretend that all communication takes place on the audio channel,</span><br><span class="line">* and simply re-route packets from and to the control and timing channels</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">if</span> ( ! channelType.equals(RaopRtpChannelType.Audio)) &#123;</span><br><span class="line">pipeline.addLast(<span class="string">"inputToAudioRouter"</span>, inputToAudioRouterDownstreamHandler);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Must come *after* the router, otherwise incoming packets are logged twice */</span></span><br><span class="line">pipeline.addLast(<span class="string">"packetLogger"</span>, packetLoggingHandler);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">/* Must come *before* the router, otherwise outgoing packets are logged twice */</span></span><br><span class="line">pipeline.addLast(<span class="string">"packetLogger"</span>, packetLoggingHandler);</span><br><span class="line">pipeline.addLast(<span class="string">"audioToOutputRouter"</span>, audioToOutputRouterUpstreamHandler);</span><br><span class="line">pipeline.addLast(<span class="string">"timing"</span>, timingHandler);</span><br><span class="line">pipeline.addLast(<span class="string">"resendRequester"</span>, resendRequestHandler);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (decryptionHandler != <span class="keyword">null</span>)&#123;</span><br><span class="line">pipeline.addLast(<span class="string">"decrypt"</span>, decryptionHandler);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (audioDecodeHandler != <span class="keyword">null</span>)&#123;</span><br><span class="line">pipeline.addLast(<span class="string">"audioDecode"</span>, audioDecodeHandler);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pipeline.addLast(<span class="string">"enqueue"</span>, audioEnqueueHandler);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> pipeline;</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这里的 pipeline 模型如图，也是三个 channel 处理流程的结构图，接下来的小节会展开说明：</p>
+<p><img src="https://ooo.0o0.ooo/2016/08/28/57c300b59b89e.png" alt=""></p>
+<h2 id="Audio_Pipeline__u548C__u4E09_u4E2A_Channel__u4E4B_u95F4_u7684_u5173_u7CFB"><a href="#Audio_Pipeline__u548C__u4E09_u4E2A_Channel__u4E4B_u95F4_u7684_u5173_u7CFB" class="headerlink" title="Audio Pipeline 和 三个 Channel 之间的关系"></a>Audio Pipeline 和 三个 Channel 之间的关系</h2><p>SETUP 结束之后就会开始收到 Audio 的数据包了。那么正式的处理就要开始了。</p>
+<p>根据上面这张我总结出来的流程图，Airplay Service 可以根据 bootstrap 的 pipeline 的特性可以分为 <code>Up Stream</code> 和 <code>Down Stream</code>，一个是从客户端向服务端传递的消息，一个是从服务端向客户端传递的消息。</p>
+<h5 id="Up_Stream"><a href="#Up_Stream" class="headerlink" title="Up Stream"></a>Up Stream</h5><p>首先不论是 Up 还是 Down Stream，都要先经过一个 Executor Handler，这个 Handler 中包括了一个线程池 Executor，当收到新的 UpStream 的数据包的时候，都会交给这个线程池来分配线程处理，在这里声明的线程池是一个 <code>OrderedMemoryAwareThreadPoolExecutor</code>。至于为什么在 Netty 的 pipeline 处理中要用到线程池来分配任务，可以参考<a href="http://www.techv5.com/topic/85/" target="_blank" rel="external">这篇文章</a>。简要地说就是由于 Handler 处理的工作量很大，为了不堵塞线程，Netty 会开好几个线程来处理，并且 <code>OrderedMemoryAwareThreadPoolExecutor</code> 能够保证处理的事件流的顺序，所以这里要加这一层。</p>
+<p>数据进入 pipeline 之后，先是按照 RTP Packet 的格式进行 decode。在 Airplay 协议中，总共有如下几种 Packet Type：</p>
+<ul>
+<li>TimingRequest</li>
+<li>TimingResponse</li>
+<li>Sync</li>
+<li>RetransmitRequest</li>
+<li>AudioRetransmit</li>
+<li>AudioTransmit</li>
+</ul>
+<p>其中 <code>TimingRequest</code>，<code>TimingResponse</code> 和 <code>Sync</code> 三种包类型都是属于 timing channel的，<code>RetransmitRequest</code> 是由 control channel 发起的对丢失包重传的请求，而 <code>AudioRetransmit</code> 和 <code>AudioTransmit</code> 都是由 audio channel 处理的包含了音乐数据的包。</p>
+<p>消息继续往下传递，过了 Logger 之后就到了 router。router 维护了 audio channel 和另外两个 channel 之间的关系：router 将另外两个 channel 应该处理的包发送给对应的 Handler 去处理。</p>
+<p>timing channel 不仅处理 Sync 数据包，同时在 channel 启动的时候也会启动一个单独的线程，每三秒钟执行一次 timing request，来确认本地时钟和客户端时钟的同步。而 control channel 做的事情则是在<strong>每收到一个</strong>新的 audio 数据包的时候都会<strong>确认一次数据包的 sequence number 是否和当前的是连续的</strong>，如果不是连续的，则将中间缺失的 number 标记为 missing 的数据包，并且向客户端发送一个 resend 的请求。当客户端发来了 <code>AudioRetransmit</code> 类型的数据包后，它的内容其实也是由 audio channel 接收的，control channcel 只是负责将刚才标记为 missing 的 sequence number 清除掉。</p>
+<p>这两个 channel 在发送 request 的时候，也会发回到 audio channel 的 Handler 上来，通过 audio channel 这边的 encode 之后再发送出去。</p>
+<p>而音乐数据包，则需要经过 AES 解密，这个解密器我们已经在 ANNOUNCE 的时候初始化好了，再经过 ALACDecoder，也是在 ANNOUNCE 的时候根据获得的媒体信息初始化的音频解码器，最后在 EnqueueHandler 中决定是否进入音频输出队列。</p>
+<h5 id="Down_Stream"><a href="#Down_Stream" class="headerlink" title="Down Stream"></a>Down Stream</h5><p>往客户端发送的信息主要就是 timine 和 control 两个 channel 发起的一些请求了，audio channel 没有参与 down stream 的传递。</p>
+<h2 id="EnqueueHandler__u97F3_u4E50_u6570_u636E_u961F_u5217_Handler"><a href="#EnqueueHandler__u97F3_u4E50_u6570_u636E_u961F_u5217_Handler" class="headerlink" title="EnqueueHandler 音乐数据队列 Handler"></a>EnqueueHandler 音乐数据队列 Handler</h2><p>当一个数据包经过层层解密和解析进入队列 Handler 之后，还要进行一大堆的时间戳合法性校验。<strong>每一个数据包都包含了很多帧，每一个帧都包含了一个帧序号，而每一个包也都有一个开始的帧序号。</strong>这里涉及到好几个地方的时间和与时间相对应的帧序列：</p>
+<ul>
+<li>Android 上  Audio Track 当前的 time</li>
+<li>服务端队列中当前的 frame time</li>
+<li>audio channel 中客户端传来的数据包中的 frame time</li>
+<li>timing channel 中客户端传来的 Sync 和 timing response 包中的 frame time</li>
+</ul>
+<p>首先，我们允许一定范围的延迟，因为数据的传输，最开始的握手包括 iOS 端 Airplay 的机制都可能导致一定的延迟，因此 <strong>timing channel 最重要的作用之一就是维护和当前主队列最新 frame time的 offset</strong>。在每一个 timing response 的包中，我可以知道当前客户端的帧序号和服务端已经播放到的帧序号的 offset，在每解析一个数据包的时候，都要使用当前的 offset 来将客户端的帧序号转换成服务端的帧序号。每个包所带的 frame time 都可能有下面三种情况：</p>
+<ol>
+<li><strong>太迟了</strong></li>
+</ol>
+<p><img src="https://ooo.0o0.ooo/2016/08/29/57c42046195f6.png" alt=""></p>
+<p>太迟了的情况如图所示，Line Time 这条轴就是 Audio Track ，<strong>Now Time</strong> 指的是当前音乐数据已经播放到什么时间了，这时候服务端接收到的一个 Packet，在包中的开始帧序列为 frame time，将这个帧序列转换为本地 Audio Track 对应的 Line Time，加上整个 Packet 包含的帧数，这个值与 Now Time 的差距<strong>转化成时间</strong>就是它的 Delay，当这个 delay 大于一个包长度的时候，由于它已经是播放过的时间线了，因此当一个包迟到了一个包的长度以上，它就不再被需要了，这时候这个包也就不会被加进 queue 了。</p>
+<ol>
+<li><strong>太早</strong></li>
+</ol>
+<p><img src="https://ooo.0o0.ooo/2016/08/29/57c42030293f6.png" alt=""></p>
+<p>太早的情况如图所示。有别于迟到的包，提前来的包其实是件好事，但是提前来的太早的包也不一定是件好事，它很可能要么是个错误的包，要么是个传输错误的包。因此对于提前到来的包一般都有一个时间长度的阈值，提前了大于多少秒到来的包才会被认定是 too early 然后被丢掉。在这个项目中这个阈值为 10 秒。</p>
+<ol>
+<li><strong>正正好，还行</strong></li>
+</ol>
+<p><img src="https://ooo.0o0.ooo/2016/08/29/57c42013d2672.png" alt=""></p>
+<p>正正好的情况如图所示。当一个数据包上述两种情况都不满足的时候，那就说明这个包的时间戳和帧序列是我们可以接受的，于是我们将这个包加进最后的音频处理队列。</p>
+<p>进入了队列之后，我们还要将数据从这个队列中按顺序写到 Audio Track 上去。首先确保 Audio Track 的模式为 <strong>MODE_STREAM</strong> ，然后按照先进先出的顺序处理队列。其实在这里的处理中对于每一个包的开始帧的序列号又做了一次校验，类似上面对于 Delay 的做法，在这里又会从队列中再次筛选掉一些无用帧。接下去在将帧最后添加到 Audio Track 上去的时候，由于我们添加到队列中的包只是上面的<strong>正正好，还行</strong>的情况，很有可能会出现下一个包的开始和当前 Audio Track 的 Line Time 无法完全吻合的情况出现，这时候我们就需要在缺少帧的地方补上空帧，在多余帧的地方等待一会直到帧的序号完全对上，然后再将帧写入 Audio Track，这样能够保证最终播放的帧一定是序列正确的。</p>
+<h2 id="u66F4_u591A"><a href="#u66F4_u591A" class="headerlink" title="更多"></a>更多</h2><p>其实这篇博客没有涉及太多安卓相关的东西，说白了也只是 Airplay Server 的一种 Java 实现。在实现的基础上，掌握了 Airplay 实现的原理的话，在不论是什么平台上都可以按照相应的原理来实现一个 Airplay Server。用这个将你闲置废弃的安卓手机变成你的无线音箱吧！</p>
+
+  </section>
+
+</article>
+
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sergiochan.github.io/2016/08/29/iOS-Airplay-中的-Airtunes-Server-服务协议和机制详解以及-Android-Demo-的实现/" data-title="iOS Airplay 中的 Airtunes Server 服务协议和机制详解以及 Android Demo 的实现" data-url="http://sergiochan.github.io/2016/08/29/iOS-Airplay-中的-Airtunes-Server-服务协议和机制详解以及-Android-Demo-的实现/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sergiochan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+
+     
+</body>
+</html>
