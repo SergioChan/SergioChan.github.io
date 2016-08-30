@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-08-30T04:33:51.000Z</updated>
+  <updated>2016-08-30T07:01:08.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://sergiochan.github.io/2016/08/29/iOS-Airplay-%E4%B8%AD%E7%9A%84-Airtunes-Server-%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE%E5%92%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%E4%BB%A5%E5%8F%8A-Android-Demo-%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
     <id>http://sergiochan.github.io/2016/08/29/iOS-Airplay-中的-Airtunes-Server-服务协议和机制详解以及-Android-Demo-的实现/</id>
     <published>2016-08-29T02:03:22.000Z</published>
-    <updated>2016-08-30T04:33:51.000Z</updated>
+    <updated>2016-08-30T07:01:08.000Z</updated>
     <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>在 Android 设备上搭建一个 Airplay Server 其实是一件很浩大的工程，因为这需要逆向苹果的 Airplay 协议流程啊格式啊什么的，万幸这件事情已经由许许多多国外的大神们帮我们做好了，因此我们只要基于他们逆向出来的 Airplay 协议来搭建一个服务就可以了。话虽如此，整个过程中的工作量和需要掌握的知识点还是非常非常多的。</p>
 <p>在局域网中实现流媒体传输的主流协议有两种，一种是苹果封闭的 Airplay 协议，一种是 DLNA 。</p>
 <blockquote>
@@ -136,19 +136,17 @@
 <li>timing channel 中客户端传来的 Sync 和 timing response 包中的 frame time</li>
 </ul>
 <p>首先，我们允许一定范围的延迟，因为数据的传输，最开始的握手包括 iOS 端 Airplay 的机制都可能导致一定的延迟，因此 <strong>timing channel 最重要的作用之一就是维护和当前主队列最新 frame time的 offset</strong>。在每一个 timing response 的包中，我可以知道当前客户端的帧序号和服务端已经播放到的帧序号的 offset，在每解析一个数据包的时候，都要使用当前的 offset 来将客户端的帧序号转换成服务端的帧序号。每个包所带的 frame time 都可能有下面三种情况：</p>
-<ol>
-<li><strong>太迟了</strong></li>
-</ol>
+<p>{0}. <strong>太迟了</strong></p>
 <p><img src="https://ooo.0o0.ooo/2016/08/29/57c42046195f6.png" alt=""></p>
 <p>太迟了的情况如图所示，Line Time 这条轴就是 Audio Track ，<strong>Now Time</strong> 指的是当前音乐数据已经播放到什么时间了，这时候服务端接收到的一个 Packet，在包中的开始帧序列为 frame time，将这个帧序列转换为本地 Audio Track 对应的 Line Time，加上整个 Packet 包含的帧数，这个值与 Now Time 的差距<strong>转化成时间</strong>就是它的 Delay，当这个 delay 大于一个包长度的时候，由于它已经是播放过的时间线了，因此当一个包迟到了一个包的长度以上，它就不再被需要了，这时候这个包也就不会被加进 queue 了。</p>
-<ol>
+<ul>
 <li><strong>太早</strong></li>
-</ol>
+</ul>
 <p><img src="https://ooo.0o0.ooo/2016/08/29/57c42030293f6.png" alt=""></p>
 <p>太早的情况如图所示。有别于迟到的包，提前来的包其实是件好事，但是提前来的太早的包也不一定是件好事，它很可能要么是个错误的包，要么是个传输错误的包。因此对于提前到来的包一般都有一个时间长度的阈值，提前了大于多少秒到来的包才会被认定是 too early 然后被丢掉。在这个项目中这个阈值为 10 秒。</p>
-<ol>
+<ul>
 <li><strong>正正好，还行</strong></li>
-</ol>
+</ul>
 <p><img src="https://ooo.0o0.ooo/2016/08/29/57c42013d2672.png" alt=""></p>
 <p>正正好的情况如图所示。当一个数据包上述两种情况都不满足的时候，那就说明这个包的时间戳和帧序列是我们可以接受的，于是我们将这个包加进最后的音频处理队列。</p>
 <p>进入了队列之后，我们还要将数据从这个队列中按顺序写到 Audio Track 上去。首先确保 Audio Track 的模式为 <strong>MODE_STREAM</strong> ，然后按照先进先出的顺序处理队列。其实在这里的处理中对于每一个包的开始帧的序列号又做了一次校验，类似上面对于 Delay 的做法，在这里又会从队列中再次筛选掉一些无用帧。接下去在将帧最后添加到 Audio Track 上去的时候，由于我们添加到队列中的包只是上面的<strong>正正好，还行</strong>的情况，很有可能会出现下一个包的开始和当前 Audio Track 的 Line Time 无法完全吻合的情况出现，这时候我们就需要在缺少帧的地方补上空帧，在多余帧的地方等待一会直到帧的序号完全对上，然后再将帧写入 Audio Track，这样能够保证最终播放的帧一定是序列正确的。</p>
