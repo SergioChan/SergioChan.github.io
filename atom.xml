@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-08-30T07:02:11.000Z</updated>
+  <updated>2016-09-04T11:58:14.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,23 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[2016.9.4 基督山伯爵]]></title>
+    <link href="http://sergiochan.github.io/2016/09/04/2016-9-4-%E5%9F%BA%E7%9D%A3%E5%B1%B1%E4%BC%AF%E7%88%B5/"/>
+    <id>http://sergiochan.github.io/2016/09/04/2016-9-4-基督山伯爵/</id>
+    <published>2016-09-04T11:56:53.000Z</published>
+    <updated>2016-09-04T11:58:14.000Z</updated>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>“要开发深藏在人类智慧里的神秘宝藏，就需要遭遇不幸；要想引爆炸药，就需要压力。” - 《基督山伯爵》</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>“要开发深藏在人类智慧里的神秘宝藏，就需要遭遇不幸；要想引爆炸药，就需要压力。” - 《基督山伯爵》</p>
+]]>
+    </summary>
+    
+      <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[iOS Airplay 中的 Airtunes Server 服务协议和机制详解以及 Android Demo 的实现]]></title>
@@ -1064,50 +1081,6 @@
       <category term="runtime" scheme="http://sergiochan.github.io/tags/runtime/"/>
     
       <category term="iOS菜鸟心得" scheme="http://sergiochan.github.io/categories/iOS%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[tornado-TCP服务器间内部通讯TCP服务器性能验证]]></title>
-    <link href="http://sergiochan.github.io/2015/07/19/tornado-TCP%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%B4%E5%86%85%E9%83%A8%E9%80%9A%E8%AE%AFTCP%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E9%AA%8C%E8%AF%81/"/>
-    <id>http://sergiochan.github.io/2015/07/19/tornado-TCP服务器间内部通讯TCP服务器性能验证/</id>
-    <published>2015-07-19T01:08:40.000Z</published>
-    <updated>2015-12-19T01:19:46.000Z</updated>
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
-<p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/tornado-TCP" target="_blank" rel="external">https://github.com/SergioChan/tornado-TCP</a></p>
-</blockquote>
-<h1 id="u4E3A_u4EC0_u4E48_u8981_u6709tornado-TCP"><a href="#u4E3A_u4EC0_u4E48_u8981_u6709tornado-TCP" class="headerlink" title="为什么要有tornado-TCP"></a>为什么要有tornado-TCP</h1><p>在实际的业务场景中，当一个系统复杂到一定程度后，很多服务都需要被独立地分割出来，部署到独立的服务器上。例如日志服务，图像服务，短信服务和一些数据分析服务这些可能会被许多功能模块共用的且对服务器性能有一定消耗的服务。当功能划分后，各服务器之间就需要通过内部调用连接在一起，通常来说简便的做法就是通过HTTP请求，这样外部和内部访问的服务器都是通用的，对于开发，维护和部署来说是省去了不少功夫。但是，一方面，有一些HTTP Server可能会同时处理内部和外部请求，如果从其他模块发来的内部请求过多，占用了HTTP Server的处理资源，外部客户端的请求可能会因此变慢，因此对于一个想要拥有更高可靠性和稳定性的大型系统来说，将内部调用和外部调用从逻辑上分离开是一个比较好的优化手段。另一方面，虽然在这种场景下HTTP请求的性能不会差到哪里去，在拥有局域网的情况下，这种内部调用的处理速度会相当快，它的连接也会很快的被释放和刷新，但是由于HTTP毕竟是TCP上的应用层，TCP省去了一些HTTP Header的传输和消耗，因此一定意义上采用更低级的TCP来作为内部调用的传输手段，既是一种较为标准和专业化的方法，也是一种更加优化的方法。<br>我们先要理解HTTP连接和TCP连接的区别。首先，HTTP连接是基于TCP连接的。HTTP（HyperText Transport Protocol）是超文本传输协议的缩写。 HTTP协议采用了请求/响应模型。客户端向服务器发送一个请求，其中，请求头包含请求的方法、URL、协议版本、以及包含请求修饰符、客户信息和内容的类似于MIME的消息结构。服务器以一个状态行作为响应，响应的内容包括消息协议的版本，成功或者错误编码加上包含服务器信息、实体元信息以及可能的实体内容。它的最显著的特点是客户端发送的每次请求都需要服务器回送响应，在请求结束后，客户端会主动释放连接。从建立连接到关闭连接的过程称为“一次连接”。这个特点也使得HTTP协议成为了包括移动和web浏览器在内的客户端和服务器端通信的标准途径，因为大部分客户端和服务器的交互都是一次性的，例如一次读和一次写。当每次交互都是原子的时候，在没有特别需求的场景维持长连接对于资源是一种浪费，因此大部分客户端和服务器通信都采用了HTTP协议。虽然现在已经有一些HTTP长连接的实现，但它的机制其实也是基于HTTP协议的，通过类似心跳的模式保持HTTP连接不会被释放。<br>TCP提供一种面向连接的、可靠的字节流服务。面向连接意味着两个使用TCP的应用，通常是一个客户和一个服务器。在彼此交换数据包之前必须先建立一个TCP连接。在一个TCP连接中，仅有两方进行彼此通信。在普遍的场景中，TCP长连接常用于客户端推送、即时通信的实现。当然，在很多情况下，TCP也被用来作为服务器内部服务调用的实现。像日志服务这种公用的服务模块，整个系统对它的调用是十分频繁的，因此采用“一次连接”模式的HTTP请求和采用保持连接的TCP请求的区别十分明显，采用TCP会使系统省下大量的资源去重新建立和释放连接。</p>
-<h1 id="u5B9E_u9645_u7ED3_u679C"><a href="#u5B9E_u9645_u7ED3_u679C" class="headerlink" title="实际结果"></a>实际结果</h1><p>对于服务器内部通信采用HTTP协议和TCP协议的性能表现差异，我用对比实验的方式来验证结果。首先，我模拟了传统的HTTP Server的环境，采用了Django作为服务器，并实现了一个基于HTTP协议的内部调用的协议。同时，我将tornado-TCP也部署在相同机器上，在Django上同样实现了一个基于TCP协议的内部调用的协议。然后通过压力测试，得出了以下结果：</p>
-<h2 id="u6BCF_u79D2_u5E76_u53D1_u7684_u6D41_u91CF_u6D4B_u8BD5_uFF1A"><a href="#u6BCF_u79D2_u5E76_u53D1_u7684_u6D41_u91CF_u6D4B_u8BD5_uFF1A" class="headerlink" title="每秒并发的流量测试："></a>每秒并发的流量测试：</h2><p>基于HTTP的内部调用的协议请求：<br>Used 1.00223088264 s for requests, success count is: 289<br>基于TCP的内部调用的协议请求：<br>Used 1.00016713142 s for requests, success count is: 633  </p>
-<h2 id="u4E00_u5B9A_u6570_u91CF_u5E76_u53D1_u8BF7_u6C42_u7684_u5904_u7406_u901F_u5EA6_uFF1A"><a href="#u4E00_u5B9A_u6570_u91CF_u5E76_u53D1_u8BF7_u6C42_u7684_u5904_u7406_u901F_u5EA6_uFF1A" class="headerlink" title="一定数量并发请求的处理速度："></a>一定数量并发请求的处理速度：</h2><p>基于HTTP的内部调用的协议请求：<br>Used 47.3748078346 s for 10,000 requests, success count is: 9998<br>Used 281.623967171 s for 50,000 requests, success count is: 49999<br>基于TCP的内部调用的协议请求：<br>Used 14.8007540703 s for 10,000 requests, success count is: 9999<br>Used 123.114969015 s for 50,000 requests, success count is: 49999<br>以上的测试结果均基于相同的Django环境，由于测试的时候使用的是单进程的Django自带的HTTP Server，因此TCP Server也采用了单进程模式。如果切换成多进程模式，采用的原理和tornado相同。也就是说，当基于Django的HTTP Server以单进程模式运行的时候，其处理速度大概是相同条件的tornado-TCP服务器的一半以上。<br>这是这三个服务器的进程情况：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="number">501</span> <span class="number">68455</span>  <span class="number">1492</span>   <span class="number">0</span> <span class="number">10</span>:<span class="number">11</span>上午 ??         <span class="number">0</span>:<span class="number">08.05</span> /usr/bin/python /Users/useruser/tornado-TCP/Server/Manage.py</span><br><span class="line"><span class="number">501</span> <span class="number">68465</span> <span class="number">68433</span>   <span class="number">0</span> <span class="number">10</span>:<span class="number">12</span>上午 ttys001    <span class="number">0</span>:<span class="number">00.63</span> /usr/bin/python manage.py runserver <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9555</span></span><br><span class="line"><span class="number">501</span> <span class="number">68468</span> <span class="number">68465</span>   <span class="number">0</span> <span class="number">10</span>:<span class="number">12</span>上午 ttys001    <span class="number">0</span>:<span class="number">08.13</span> /usr/bin/python manage.py runserver <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9555</span></span><br><span class="line"><span class="number">501</span> <span class="number">68475</span> <span class="number">68472</span>   <span class="number">0</span> <span class="number">10</span>:<span class="number">12</span>上午 ttys002    <span class="number">0</span>:<span class="number">00.43</span> /usr/bin/python manage.py runserver <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9556</span></span><br><span class="line"><span class="number">501</span> <span class="number">68478</span> <span class="number">68475</span>   <span class="number">0</span> <span class="number">10</span>:<span class="number">12</span>上午 ttys002    <span class="number">0</span>:<span class="number">43.47</span> /usr/bin/python manage.py runserver <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9556</span></span><br></pre></td></tr></table></figure>
-<p>其中9555端口运行的是内部调用的HTTP Server，9556端口运行的是主测试服务器，TCP服务器运行在8889端口上。</p>
-<h1 id="u6846_u67B6_u4ECB_u7ECD"><a href="#u6846_u67B6_u4ECB_u7ECD" class="headerlink" title="框架介绍"></a>框架介绍</h1><h2 id="tornado-TCP_framework"><a href="#tornado-TCP_framework" class="headerlink" title="tornado-TCP framework"></a>tornado-TCP framework</h2><p>tornado-TCP的框架可以由以上的架构图来表示。和传统的HTTP Server相比，它相当于是在不同的Server之间建立了一个长连接，而这个连接的主体是一个IOStream，由Connection类来保持监听和字节流的读取。其余模块都是参考传统HTTP Server的架构来添加的。<br>任意其他连接到tornado-TCP的服务器实际上都是一个客户端。每个客户端都需要自己维护一个和tornado-TCP服务器的TCP Socket连接。如果这种内部调用在可预见的范围内十分的频繁，这个连接最好在全局建立和维护，随着服务器的启动初始化。保持IOStream的连接可以使得服务器之间的局域网通信比传统的HTTP请求更快。</p>
-<h2 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h2><p>Any other server that was connected to this tornado-TCP server will be represented as a client-server. Each client-server will maintain a TCP connection with tornado-TCP server. If the connection will be used very frequently, it’s better not to close it. Keeping an IOStream for the connection will make the communication in the server-side Local Area Network faster than typical HTTP request.<br>Connection will read the request from IOStream and handle the requests. When a request handling is over, the Connection will automatically read the stream to get the next request. As the source code shown below:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_request</span><span class="params">(self, data)</span>:</span></span><br><span class="line">    tmp_body = data[:-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    request = Request(address=self._address, Body=tmp_body)</span><br><span class="line">    handler = urls.Handler_mapping.get(request.cmdid)</span><br><span class="line"></span><br><span class="line">    handler_instance = handler()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> isinstance(handler_instance,BaseHandler):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            handler_instance.process(request=request)</span><br><span class="line">            self._stream.write(handler_instance.res)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            baseLogger.error(e.message)</span><br><span class="line"></span><br><span class="line">self.read_request()</span><br></pre></td></tr></table></figure>
-<h2 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h2><p>Handler is the class type for processing the request object. You can sub-class your own Handler from BaseHandler to implement custom processing method. This is the sample of TestHandler:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="decorator">@urls.handler(constant.TEST_CMDID)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestHandler</span><span class="params">(BaseHandler)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process</span><span class="params">(self,request)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(request, Request):</span><br><span class="line">            <span class="keyword">print</span> request.params</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> TypeError</span><br></pre></td></tr></table></figure>
-<p>Notice the decorator @urls.handler which is used to add mapping between cmdId and Handler. The definition of this decorator is in the urls.py. Each custom Handler should decorated by this decorator.</p>
-<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><p>Request is the basic object type in the IOStream. Each Request is delimited by a delimiter ‘\n’.Request is transported in a serialization mode, using normal json type.<br>To extend Request, define a subclass and there is no need to override anything.<br>Request has following parameters:  </p>
-<ul>
-<li>1.address: simple ip address combined with port number representing the request origin server.</li>
-<li>2.rawBody: raw content of the request body</li>
-<li>3.cmdid: command id defines in Command</li>
-<li>4.timestamp: the date when request was sent</li>
-<li>5.params: a dict that storage all the data it takes</li>
-</ul>
-<p>详细介绍和代码请前往<a href="https://github.com/SergioChan/tornado-TCP" target="_blank" rel="external">https://github.com/SergioChan/tornado-TCP</a><br>欢迎关注和批评指导！</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><blockquote>
-<p>本文附带项目Github仓库地址，随手star是个好习惯：<br><a href="https://github.com/SergioChan/to]]>
-    </summary>
-    
-      <category term="TCP" scheme="http://sergiochan.github.io/tags/TCP/"/>
-    
-      <category term="tornado" scheme="http://sergiochan.github.io/tags/tornado/"/>
-    
-      <category term="Python学习笔记" scheme="http://sergiochan.github.io/categories/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
