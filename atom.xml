@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-10-21T06:55:55.000Z</updated>
+  <updated>2016-10-21T07:08:23.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -19,16 +19,17 @@
     <link href="http://sergiochan.github.io/2016/10/21/%E5%A6%82%E4%BD%95%E5%9C%A8-WKWebView-%E4%B8%AD%E5%AE%9E%E7%8E%B0-Safari-%E5%8E%9F%E7%94%9F%E7%9A%84%E9%98%85%E8%AF%BB%E6%A8%A1%E5%BC%8F/"/>
     <id>http://sergiochan.github.io/2016/10/21/如何在-WKWebView-中实现-Safari-原生的阅读模式/</id>
     <published>2016-10-21T06:28:16.000Z</published>
-    <updated>2016-10-21T06:55:55.000Z</updated>
+    <updated>2016-10-21T07:08:23.000Z</updated>
     <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>在浏览器中，阅读模式通常是一个很有用的功能，有人说这是读小说神器，有些人则认为阅读模式可以改善新闻网站的阅读体验，而有些广告商则对此抗议，认为阅读模式损害了广告主利益。当然，阅读模式对于普通用户来说是一种很方便实用的功能，这个无可厚非。</p>
 <p>在手机上，阅读模式有两种实现方式，一种是和 Safari 的实现类似的，利用 js 去解析网页数据分析出文本，基本上手机浏览器的实现都和 Safari 类似，另外一种则是抓取网页对应的 RSS 源，解析 RSS 源中的数据格式，取出需要的文本来显示。接下来我要展开讲的就是和 Safari 类似的阅读模式的实现，且是基于 WKWebView 来实现的。</p>
 <p>详细的项目代码在这： <a href="https://github.com/PerfectFreeze/PFWebViewController" target="_blank" rel="external">PFWebViewController</a></p>
-<h3 id="u4E86_u89E3_Safari__u9605_u8BFB_u6A21_u5F0F_u7684_u5B9E_u73B0"><a href="#u4E86_u89E3_Safari__u9605_u8BFB_u6A21_u5F0F_u7684_u5B9E_u73B0" class="headerlink" title="了解 Safari 阅读模式的实现"></a>了解 Safari 阅读模式的实现</h3><p>关于实现，你可以先参考这两篇博客：</p>
+<h3 id="u4E86_u89E3_Safari__u9605_u8BFB_u6A21_u5F0F_u7684_u5B9E_u73B0"><a href="#u4E86_u89E3_Safari__u9605_u8BFB_u6A21_u5F0F_u7684_u5B9E_u73B0" class="headerlink" title="了解 Safari 阅读模式的实现"></a>了解 Safari 阅读模式的实现</h3><p>关于实现，你可以先参考下面这两篇博客：</p>
 <ul>
 <li><a href="http://blog.csdn.net/horkychen/article/details/50959785" target="_blank" rel="external">iOS Safari阅读模式分析过程</a> </li>
 <li><a href="http://blog.csdn.net/horkychen/article/details/50959771" target="_blank" rel="external">iOS Safari阅读模式研究</a></li>
 </ul>
 <blockquote>
+<p>一定要写这篇博客的原因就是，我能查到与此相关的中文博客有且仅有这两篇，我接下来讲的会更通俗易懂一些，毕竟最后模仿系统实现出来了。上面两篇的作者最后的结论和代码并不能正常运行，但是提供的信息和资源多多少少给了我很多参考。</p>
 <p>其中，第二篇中提到的 JavaScriptCore，由于 WKWebView <a href="http://stackoverflow.com/questions/25792131/how-to-get-jscontext-from-wkwebview" target="_blank" rel="external">不再支持</a>，我们会用到 WebKit 支持的发送消息的传递信息模式。核心要用到的 JavaScript 文件在这两篇博客中也有给出。</p>
 </blockquote>
 <p>首先，我们需要用两个 WKWebView 来实现整个流程，一个是主要的浏览窗口 ( 暂且命名为 ) <strong>MainWebView</strong>，另一个则是用于阅读模式页面显示的 <strong>ReaderWebView</strong> 。参与整个阅读模式渲染流程的文件大致有这些：</p>
@@ -56,10 +57,13 @@
 <blockquote>
 <p>这里采用的使 div 不可见的方式比较特别，因为 visibilty 或者 display 或者 height 这些参数都会被 js 排除在计算的节点之外，所以用 <strong>top: -999em</strong> 的写法。</p>
 </blockquote>
-<p><strong>ReaderWebView</strong> 在 load 之后就会调用挂载在上面的 script 中的 loaded 方法：</p>
+<p><strong>ReaderWebView</strong> 在 load 之后就会调用挂载在上面的 safari-reader.js 中的 loaded 方法：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">loaded: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!ReaderArticleFinderJS || <span class="keyword">this</span>._shouldSkipActivationWhenPageLoads())</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.loadArticle(), ReaderAppearanceJS.initialize(), ReadingPositionStabilizerJS.initialize(), <span class="keyword">this</span>._shouldRestoreScrollPositionFromOriginalPageAtActivation) &#123;</span><br><span class="line">        <span class="keyword">var</span> e = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (e &gt; <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">document</span>.body.scrollTop = e;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> t = <span class="built_in">document</span>.getElementById(<span class="string">"safari-reader-element-marker"</span>);</span><br><span class="line">            <span class="keyword">if</span> (t) &#123;</span><br><span class="line">                <span class="keyword">var</span> n = <span class="built_in">parseFloat</span>(t.style.top) / <span class="number">100</span>,</span><br><span class="line">                i = t.parentElement,</span><br><span class="line">                a = i.getBoundingClientRect();</span><br><span class="line">                <span class="built_in">document</span>.body.scrollTop = <span class="built_in">window</span>.scrollY + a.top + a.height * n, i.removeChild(t)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>._clickingOutsideOfPaperRectangleDismissesReader &amp;&amp; (<span class="built_in">document</span>.documentElement.addEventListener(<span class="string">"mousedown"</span>, monitorMouseDownForPotentialDeactivation), <span class="built_in">document</span>.documentElement.addEventListener(<span class="string">"click"</span>, deactivateIfEventIsOutsideOfPaperContainer));</span><br><span class="line">    <span class="keyword">var</span> o = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setUserVisibleWidth(<span class="keyword">this</span>.lastKnownUserVisibleWidth)</span><br><span class="line">    &#125;.bind(<span class="keyword">this</span>);</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">"resize"</span>, o, !<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> article_node = <span class="built_in">document</span>.getElementById(<span class="string">"article"</span>);</span><br><span class="line">    article_node.firstChild.remove();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> message = &#123; <span class="string">'code'</span> : <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="built_in">window</span>.webkit.messageHandlers.JSController.postMessage(message);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <p>最后几行先是移除了 article 这个节点之下的第一个子节点，也就是我们添加上去的不可见的临时节点。然后通过 <code>WKWebView</code> 新的 js 交互方式发送消息，向原生的 Controller 发送一个加载完成的信号，我们可以在原生的 Controller 里面获取这个信息，然后随即开始阅读模式页面切换的动画：</p>
 <figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="tag">-</span> (void)<span class="tag">userContentController</span>:(WKUserContentController *)<span class="tag">userContentController</span></span><br><span class="line">      <span class="tag">didReceiveScriptMessage</span>:(WKScriptMessage *)<span class="tag">message</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>除了 loaded 方法，safari-reader.js 还有许多代码需要修改，最终可用的版本请参考项目仓库中的文件。</p>
+</blockquote>
 <p><img src="https://ooo.0o0.ooo/2016/10/21/5809b43604002.jpeg" width="40%"></p>
 <h3 id="u4E00_u4E2A_u591A_u4F59_u7684_u95EE_u9898_u8BB0_u5F55_-__u300C_u5728_u5FAE_u4FE1_u4E2D_u6253_u5F00_u300D_u6309_u94AE_u70B9_u51FB_u5931_u6548"><a href="#u4E00_u4E2A_u591A_u4F59_u7684_u95EE_u9898_u8BB0_u5F55_-__u300C_u5728_u5FAE_u4FE1_u4E2D_u6253_u5F00_u300D_u6309_u94AE_u70B9_u51FB_u5931_u6548" class="headerlink" title="一个多余的问题记录 - 「在微信中打开」按钮点击失效"></a>一个多余的问题记录 - 「在微信中打开」按钮点击失效</h3><p>在 <code>WKWebView</code> 中，比如微信网页有一个 「在微信中打开」的按钮会失效。这是因为微信网页的 HTML 写法是直接在 a 标签的 href 里面写上了 <code>weixin://</code> 这样开头的链接，对于 <code>WKWebView</code> 来说会作为一个普通的 URL 打开，从而无响应，不会有弹框。</p>
 <p><strong>解决办法</strong>就是拦截非 Http:// 和 Https:// 开头的请求，转成应用内跳转：</p>
