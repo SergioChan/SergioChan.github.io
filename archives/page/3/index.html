@@ -162,6 +162,24 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2015/10/22/objective-c-runtime是什么/" title="link to post.title">objective-c_runtime是什么</a></h2>
+      <p class="excerpt">
+    
+      当你调用一个方法的时候，发生了什么在Objective-C里，当你调用一个方法的时候，例如
+[foo method];
+的时候，实际上编译器会将它转化为这样
+objc_msgSend(foo,selector)
+selector就是你能够经常用到的那个addTarget中使用到的，它在runtime机制中相当于一个函数的名牌，而IMP则是函数的实现。消息机制的关键是编译器是如何处理每一个类和对象的。一般来说，一个类会被编译成这样的结构，一个指向父类的指针，一个类的分派表。这个列表里存的是所有的s
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2015-10-22T11:03:54.000Z" class="post-list__meta--date date">2015-10-22</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Objective-C/">Objective-C</a>, <a class="tag-link" href="/tags/objc-msgSend/">objc_msgSend</a>, <a class="tag-link" href="/tags/runtime/">runtime</a>
+</span><a class="btn-border-small" href="/2015/10/22/objective-c-runtime是什么/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2015/07/19/tornado-TCP服务器间内部通讯TCP服务器性能验证/" title="link to post.title">tornado-TCP服务器间内部通讯TCP服务器性能验证</a></h2>
       <p class="excerpt">
     
