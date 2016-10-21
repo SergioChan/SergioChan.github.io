@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-10-21T06:40:10.000Z</updated>
+  <updated>2016-10-21T06:52:39.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -19,9 +19,9 @@
     <link href="http://sergiochan.github.io/2016/10/21/%E5%A6%82%E4%BD%95%E5%9C%A8-WKWebView-%E4%B8%AD%E5%AE%9E%E7%8E%B0-Safari-%E5%8E%9F%E7%94%9F%E7%9A%84%E9%98%85%E8%AF%BB%E6%A8%A1%E5%BC%8F/"/>
     <id>http://sergiochan.github.io/2016/10/21/如何在-WKWebView-中实现-Safari-原生的阅读模式/</id>
     <published>2016-10-21T06:28:16.000Z</published>
-    <updated>2016-10-21T06:40:10.000Z</updated>
+    <updated>2016-10-21T06:52:39.000Z</updated>
     <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>在浏览器中，阅读模式通常是一个很有用的功能，有人说这是读小说神器，有些人则认为阅读模式可以改善新闻网站的阅读体验，而有些广告商则对此抗议，认为阅读模式损害了广告主利益。当然，阅读模式对于普通用户来说是一种很方便实用的功能，这个无可厚非。</p>
-<p>在手机上，阅读模式有两种实现方式，一种是和 Safari 的实现类似的，利用 JS 去解析网页数据分析出文本，基本上手机浏览器的实现都和 Safari 类似，另外一种则是抓取网页对应的 RSS 源，解析 RSS 源中的数据格式，取出需要的文本来显示。接下来我要展开讲的就是和 Safari 类似的阅读模式的实现，且是基于 WKWebView 来实现的。</p>
+<p>在手机上，阅读模式有两种实现方式，一种是和 Safari 的实现类似的，利用 js 去解析网页数据分析出文本，基本上手机浏览器的实现都和 Safari 类似，另外一种则是抓取网页对应的 RSS 源，解析 RSS 源中的数据格式，取出需要的文本来显示。接下来我要展开讲的就是和 Safari 类似的阅读模式的实现，且是基于 WKWebView 来实现的。</p>
 <p>详细的项目代码在这： <a href="https://github.com/PerfectFreeze/PFWebViewController" target="_blank" rel="external">PFWebViewController</a></p>
 <h3 id="u4E86_u89E3_Safari__u9605_u8BFB_u6A21_u5F0F_u7684_u5B9E_u73B0"><a href="#u4E86_u89E3_Safari__u9605_u8BFB_u6A21_u5F0F_u7684_u5B9E_u73B0" class="headerlink" title="了解 Safari 阅读模式的实现"></a>了解 Safari 阅读模式的实现</h3><p>关于实现，你可以先参考这两篇博客：</p>
 <ul>
@@ -34,8 +34,8 @@
 <p>首先，我们需要用两个 WKWebView 来实现整个流程，一个是主要的浏览窗口 ( 暂且命名为 ) <strong>MainWebView</strong>，另一个则是用于阅读模式页面显示的 <strong>ReaderWebView</strong> 。参与整个阅读模式渲染流程的文件大致有这些：</p>
 <ul>
 <li>index.html</li>
-<li>safari-reader.js # 这个 js 负责的是内容的格式化和渲染，挂载在 MainWebView 上</li>
-<li>safari-reader-check.js # 这个 js 负责的是内容的判断和提取，挂载在 ReaderWebView 上，（在最新的 Safari 中我一直没有截到这个脚本，从最后实现的效果来看，苹果可能将这部分放进原生实现了，所以这里我们就只能使用这个比较早期版本的 js 实现的内容判断，会出现一些网页最新版 Safari 会出现阅读模式的按钮而你使用它却判断无法进入阅读模式）</li>
+<li>safari-reader.js # 这个 js 负责的是内容的格式化和渲染，挂载在 <strong>ReaderWebView</strong> 上</li>
+<li>safari-reader-check.js # 这个 js 负责的是内容的判断和提取，挂载在 <strong>MainWebView</strong>  上，（在最新的 Safari 中我一直没有截到这个脚本，从最后实现的效果来看，苹果可能将这部分放进原生实现了，所以这里我们就只能使用这个比较早期版本的 js 实现的内容判断，会出现一些网页最新版 Safari 会出现阅读模式的按钮而你使用它却判断无法进入阅读模式）</li>
 <li>ReaderContext.h # 这就是原生实现的 C++ 代码头文件，应该是作为上面两个 js 之间的原生 Bridge，用指针插入的方法用 C++ 向 js 中插入可以直接调用的原生类和方法</li>
 </ul>
 <p>Safari 的基本流程就是，当 <strong>MainWebView</strong> 上的网页的 HTML 加载完成后，执行 safari-reader-check (当然后来可能执行原生代码去判断了，或者使用了更新的 js 文件) 中的 FinderJS 的函数来判断当前网页是否存在合适的 Node 来作为 Article，判断的规则大致就是根据 H 标签的个数，文本的长度之类的参数计算出权重，最后获得一个权重最高的 Node 作为 Article 对象。如果存在这个对象，则会告知浏览器显示阅读模式的按钮，反之浏览器则不会显示这个按钮。</p>
@@ -43,9 +43,9 @@
 <p><img src="https://ooo.0o0.ooo/2016/10/13/57ff3ba696edb.png" alt=""></p>
 <p>在 macOS 的 Safari 中就可以取到，Safari 中在任意有阅读模式选项的页面下点击这个按钮，然后进入页面的检查模式，你会看到 HTML 代码如下：</p>
 <p><img src="https://ooo.0o0.ooo/2016/10/13/57ff3c766c7a9.png" alt=""></p>
-<p>当 body 加载的时候，它会调用 <code>ReaderJS.loaded()</code> 方法，这个方法负责处理 ReaderContext 传递过来的 Article 对象并将生成的 <code>&lt;div class=&quot;page&quot;&gt;</code> 这个标签添加到 id 为 article 的标签下面。 用到的两个 js 文件都是匿名脚本，其中主要的 safari_reader.js 脚本可以通过点击空白区域添加断点来截获的，因为他有一个监听鼠标点击的事件。</p>
+<p>当 body 加载的时候，它会调用 <code>ReaderJS.loaded()</code> 方法，这个方法负责处理 ReaderContext 传递过来的 Article 对象并将生成的 <code>&lt;div class=&quot;page&quot;&gt;</code> 这个标签添加到 id 为 article 的标签下面。 用到的两个 js 文件都是匿名脚本，其中主要的 safari_reader.js 脚本可以通过点击空白区域添加断点来截获的（因为他实现了一个监听鼠标点击的事件）。</p>
 <h3 id="u6211_u7684_u5B9E_u73B0"><a href="#u6211_u7684_u5B9E_u73B0" class="headerlink" title="我的实现"></a>我的实现</h3><p>首先，初始化两个 webView，并在 <strong>MainWebView</strong> 上加载原网页，记得：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">_webView.navigationDelegate = self;&#10;_readerWebView.navigationDelegate = self;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">_webView.navigationDelegate = <span class="keyword">self</span>;</span><br><span class="line">_readerWebView.navigationDelegate = <span class="keyword">self</span>;</span><br></pre></td></tr></table></figure>
 <p>初始化的时候，我们需要为两个 <strong>MainWebView</strong> 挂载 safari-reader-check.js 的脚本，需要为 <strong>ReaderWebView</strong>  同时挂载 safari-reader-check.js 和 safari-reader.js 这两个脚本，初始化的时候赋给两个 webview 的 <code>WKWebViewConfiguration</code> 按照如下来定义：</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (WKWebViewConfiguration *)configuration &#123;</span><br><span class="line">    <span class="comment">// Load reader mode js script</span></span><br><span class="line">    <span class="built_in">NSBundle</span> *bundle = [<span class="built_in">NSBundle</span> bundleForClass:[<span class="keyword">self</span> class]];</span><br><span class="line">    <span class="built_in">NSURL</span> *url = [bundle URLForResource:<span class="string">@"PFWebViewController"</span> withExtension:<span class="string">@"bundle"</span>];</span><br><span class="line">    <span class="built_in">NSBundle</span> *scriptBundle = [<span class="built_in">NSBundle</span> bundleWithURL:url];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSString</span> *readerScriptFilePath = [scriptBundle pathForResource:<span class="string">@"safari-reader"</span> ofType:<span class="string">@"js"</span>];</span><br><span class="line">    <span class="built_in">NSString</span> *readerCheckScriptFilePath = [scriptBundle pathForResource:<span class="string">@"safari-reader-check"</span> ofType:<span class="string">@"js"</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSString</span> *indexPageFilePath = [scriptBundle pathForResource:<span class="string">@"index"</span> ofType:<span class="string">@"html"</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Load HTML for reader mode</span></span><br><span class="line">    readerHTMLString = [[<span class="built_in">NSString</span> alloc] initWithContentsOfFile:indexPageFilePath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSString</span> *script = [[<span class="built_in">NSString</span> alloc] initWithContentsOfFile:readerScriptFilePath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</span><br><span class="line">    WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:<span class="literal">NO</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSString</span> *check_script = [[<span class="built_in">NSString</span> alloc] initWithContentsOfFile:readerCheckScriptFilePath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</span><br><span class="line">    WKUserScript *check_userScript = [[WKUserScript alloc] initWithSource:check_script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:<span class="literal">NO</span>];</span><br><span class="line">    </span><br><span class="line">    WKUserContentController *userContentController = [[WKUserContentController alloc] init];</span><br><span class="line">    [userContentController addUserScript:userScript];</span><br><span class="line">    [userContentController addUserScript:check_userScript];</span><br><span class="line">    [userContentController addScriptMessageHandler:<span class="keyword">self</span> name:<span class="string">@"JSController"</span>];</span><br><span class="line">    </span><br><span class="line">    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];</span><br><span class="line">    configuration<span class="variable">.userContentController</span> = userContentController;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> configuration;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样我们就可以在 <code>decidePolicyForNavigationResponse</code> 这个回调中进行阅读模式的判断，这个回调发生的时机是在获得 HTML 响应但尚未根据 HTML 去加载的时候，所以是判断阅读模式的最佳时机：</p>
