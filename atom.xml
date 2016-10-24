@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-10-21T07:08:23.000Z</updated>
+  <updated>2016-10-24T14:29:43.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[ADB 两三事-残]]></title>
+    <link href="http://sergiochan.github.io/2016/10/24/ADB-%E4%B8%A4%E4%B8%89%E4%BA%8B-%E6%AE%8B/"/>
+    <id>http://sergiochan.github.io/2016/10/24/ADB-两三事-残/</id>
+    <published>2016-10-24T04:24:50.000Z</published>
+    <updated>2016-10-24T14:29:43.000Z</updated>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>折腾了两天 ADB， 宛若一个智障。遇到如下问题。</p>
+<h2 id="u4ECE_u7535_u8111_push__u591A_u4E2A_u6587_u4EF6_u5230_u8BBE_u5907__3A_wildCard"><a href="#u4ECE_u7535_u8111_push__u591A_u4E2A_u6587_u4EF6_u5230_u8BBE_u5907__3A_wildCard" class="headerlink" title="从电脑 push 多个文件到设备 : wildCard"></a>从电脑 push 多个文件到设备 : wildCard</h2><p>参考<a href="http://xmodulo.com/how-to-copy-or-transfer-multiple-files-to-android-devices.html" target="_blank" rel="external">这篇</a>。</p>
+<p>一开始用 *.* 的方式将文件夹下的所有文件 push 到设备的目录下，但是始终失败。查无果，只看到了上面这篇说不支持的，于是看了下自己的 ADB 版本号，1.0.32。确认这个版本是不支持 wildCard 匹配文件的。遂将 *.* 这种表示方式改成了 shell 中的 for 循环。</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i in <span class="string">`ls /Users/sergiochan/xxx/`</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">echo <span class="string">"/Users/sergiochan/xxx/<span class="variable">$i</span>"</span></span><br><span class="line">adb <span class="keyword">push</span> <span class="string">"/Users/sergiochan/xxx/<span class="variable">$i</span>"</span> /<span class="keyword">system</span>/<span class="string">&#123;destination&#125;</span>/</span><br><span class="line">adb <span class="keyword">push</span> <span class="string">"/Users/sergiochan/xxx/<span class="variable">$i</span>"</span> /<span class="keyword">system</span>/<span class="string">&#123;destination&#125;</span>/<span class="string">&#123;subDestination&#125;</span>/</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>后来试了一下才发现升级到 1.0.36 是可以支持的。遂，卒。</p>
+<h2 id="ADB_remount__u663E_u793A_succeeded__u5374_u5E76_u6CA1_u6709_u6210_u529F_u6302_u8F7D"><a href="#ADB_remount__u663E_u793A_succeeded__u5374_u5E76_u6CA1_u6709_u6210_u529F_u6302_u8F7D" class="headerlink" title="ADB remount 显示 succeeded 却并没有成功挂载"></a>ADB remount 显示 succeeded 却并没有成功挂载</h2><p>重启大法好哈哈哈哈哈哈。</p>
+<h2 id="u60F3_u8981_u5728_Android_App__u4E2D_u8FD0_u884C_shell_uFF1F"><a href="#u60F3_u8981_u5728_Android_App__u4E2D_u8FD0_u884C_shell_uFF1F" class="headerlink" title="想要在 Android App 中运行 shell？"></a>想要在 Android App 中运行 shell？</h2><p>可以说很麻烦么 =3=</p>
+<p>除非你是以 root 用户运行的 app，否则如果是普通用户的话，连 system 路径下的文件都没法修改，更别说 su 了。不过，如果想要修改 system 路径下的文件，可以在 manifest 中加上 <strong>android:sharedUserId=”android.uid.system”</strong> 让你的 app 以 system 用户运行，然后就可以直接通过 <strong>FileOutputStream</strong> 的方式修改 system 路径下的文件，例如控制 CPU 内存什么的。</p>
+<p>想要运行 shell ，可以在 ADB 命令行通过 ps 命令查看你的 package 运行的用户是谁，例如用户 test，如果你 <code>su test</code> 之后再运行 <code>su</code> 显示的是 <strong>Permission Denied</strong>，那就没有办法了。如果 root 过后的设备给你的运行用户配了用户权限什么的，那记得在 Android 中执行 shell 之前，执行一下 <code>su</code> :</p>
+<figure class="highlight xquery"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	Process process = Runtime.getRuntime().exec(<span class="string">"su"</span>);</span><br><span class="line">	process.waitFor();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>折腾了两天 ADB， 宛若一个智障。遇到如下问题。</p>
+<h2 id="u4ECE_u7535_u8111_push__u591A_u4E2A_u6587_u4EF6_u]]>
+    </summary>
+    
+      <category term="ADB" scheme="http://sergiochan.github.io/tags/ADB/"/>
+    
+      <category term="Android" scheme="http://sergiochan.github.io/tags/Android/"/>
+    
+      <category term="Android Debug Bridge" scheme="http://sergiochan.github.io/tags/Android-Debug-Bridge/"/>
+    
+      <category term="智障" scheme="http://sergiochan.github.io/tags/%E6%99%BA%E9%9A%9C/"/>
+    
+      <category term="残念" scheme="http://sergiochan.github.io/tags/%E6%AE%8B%E5%BF%B5/"/>
+    
+      <category term="安卓菜鸟心得" scheme="http://sergiochan.github.io/categories/%E5%AE%89%E5%8D%93%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何在 WKWebView 中实现 Safari 原生的阅读模式]]></title>
@@ -1010,110 +1046,6 @@
       <category term="Hackathon" scheme="http://sergiochan.github.io/tags/Hackathon/"/>
     
       <category term="Hacker" scheme="http://sergiochan.github.io/categories/Hacker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[runloop初窥]]></title>
-    <link href="http://sergiochan.github.io/2015/10/22/runloop%E5%88%9D%E7%AA%A5/"/>
-    <id>http://sergiochan.github.io/2015/10/22/runloop初窥/</id>
-    <published>2015-10-22T11:36:23.000Z</published>
-    <updated>2015-12-18T13:13:14.000Z</updated>
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B" class="headerlink" title="先来说一个很简单的实例"></a>先来说一个很简单的实例</h2><p>在scrollView中添加一个timer来刷新视图的时候，如果只是简单的声明</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">self.timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1.0</span>f <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(<span class="string">timeUpdate:</span>) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
-<p>那么当你滑动或者保持你的手指在scrollView上的时候，timer是不会被响应的，这不是因为刷新视图的操作被占用，而是因为当你没有显式声明的时候，你所定义的timer默认都是加在主线程上，并且，当你在对scrollView进行操作的时候，你的timer的事件根本不会被响应到，这就得说到runloop了。而runloop也是底层原理中相当重要的一部分。我们先从它说起。</p>
-<h2 id="u4EC0_u4E48_u662Frunloop"><a href="#u4EC0_u4E48_u662Frunloop" class="headerlink" title="什么是runloop"></a>什么是runloop</h2><p>Runloop，顾名思义就是运行的循环。简单理解就是多线程机制中的基础，它能够接收外部事件的输入，并且在有事件的时候保持运行，在没有事件的时候进入休眠。并且它对于线程的消息处理机制进行了很好的封装。</p>
-<p>对于线程来说，每一个线程都有一个runloop对象，是否能向某个线程的runloop发送事件取决于你是否启动了这个runloop，系统会默认在你的程序启动的时候运行主线程上的runloop，但是你自定义创建出来的线程可以不需要运行runloop，一些第三方框架，例如AFNetworking，就有在自己的线程上维护一个runloop对象。</p>
-<p>在 Core Foundation 里面关于 RunLoop 有5个类:</p>
-<ul>
-<li>CFRunLoopRef</li>
-<li>CFRunLoopModeRef</li>
-<li>CFRunLoopSourceRef </li>
-<li>CFRunLoopTimerRef </li>
-<li>CFRunLoopObserverRef</li>
-</ul>
-<p>他们的关系可以从NSRunloop对象的结构定义中得出。首先，runloop对象在Cocoa和Core Foundation中都有实现，但是他们做了很好的桥接，你可以直接调用</p>
-<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">CFRunLoopRef runLoopRef = currentThreadRunLoop.getCFRunLoop<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>来获取一个CoreFoundation中的runloop对象。然后，当你在查看NSRunloop的结构的时候，你应该能看到：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&lt;CFRunLoop <span class="number">0x7fd360f5af30</span> [<span class="number">0x1090a1180</span>]&gt;&#123;wakeup port = <span class="number">0x4507</span>, stopped = <span class="literal">false</span>, ignoreWakeUps = <span class="literal">true</span>, </span><br><span class="line">current mode = (none),</span><br><span class="line">common modes = &lt;CFBasicHash <span class="number">0x7fd360f5a470</span> [<span class="number">0x1090a1180</span>]&gt;&#123;type = <span class="keyword">mutable</span> <span class="built_in">set</span>, count = <span class="number">1</span>,</span><br><span class="line">entries =&gt;</span><br><span class="line">	<span class="number">2</span> : &lt;CFString <span class="number">0x10907d080</span> [<span class="number">0x1090a1180</span>]&gt;&#123;contents = <span class="string">"kCFRunLoopDefaultMode"</span>&#125;&#125;,</span><br><span class="line">common mode items = (null),</span><br><span class="line">modes = &lt;CFBasicHash <span class="number">0x7fd360f5b2b0</span> [<span class="number">0x1090a1180</span>]&gt;&#123;type = <span class="keyword">mutable</span> <span class="built_in">set</span>, count = <span class="number">1</span>,</span><br><span class="line">entries =&gt;</span><br><span class="line">	<span class="number">2</span> : &lt;CFRunLoopMode <span class="number">0x7fd360f5aff0</span> [<span class="number">0x1090a1180</span>]&gt;&#123;name = kCFRunLoopDefaultMode, port <span class="built_in">set</span> = <span class="number">0x4703</span>, timer port = <span class="number">0x4803</span>, </span><br><span class="line">	sources0 = (null),</span><br><span class="line">	sources1 = (null),</span><br><span class="line">	observers = &lt;CFArray <span class="number">0x7fd360f5b1a0</span> [<span class="number">0x1090a1180</span>]&gt;&#123;type = <span class="keyword">mutable</span>-small, count = <span class="number">1</span>, values = (</span><br><span class="line">	<span class="number">0</span> : &lt;CFRunLoopObserver <span class="number">0x7fd360f5c7f0</span> [<span class="number">0x1090a1180</span>]&gt;&#123;valid = Yes, activities = <span class="number">0xfffffff</span>, repeats = Yes, order = <span class="number">0</span>, callout = currentRunLoopObserver (<span class="number">0x10855b340</span>), context = &lt;CFRunLoopObserver context <span class="number">0x7fd361213d70</span>&gt;&#125;</span><br><span class="line">)&#125;,</span><br><span class="line">	timers = &lt;CFArray <span class="number">0x7fd360e020d0</span> [<span class="number">0x1090a1180</span>]&gt;&#123;type = <span class="keyword">mutable</span>-small, count = <span class="number">1</span>, values = (</span><br><span class="line">	<span class="number">0</span> : &lt;CFRunLoopTimer <span class="number">0x7fd360e01f90</span> [<span class="number">0x1090a1180</span>]&gt;&#123;valid = Yes, firing = No, interval = <span class="number">1</span>, tolerance = <span class="number">0</span>, next fire date = <span class="number">463742311</span> (-<span class="number">2.53606331</span> @ <span class="number">23607719248079</span>), callout = (NSTimer) [SCCustomThread handleTimerTask] (<span class="number">0x1086416f1</span> / <span class="number">0x10855b560</span>) (/Users/useruser/Library/Developer/CoreSimulator/Devices/<span class="number">424</span>D3C6E-<span class="number">8</span>DC0-<span class="number">418</span>B-A2EC-<span class="number">8</span>EDF89507348/data/Containers/Bundle/Application/<span class="number">4</span>D07AF38-<span class="number">9</span>BFC-<span class="number">4617</span>-BAE0-<span class="number">4</span>CB0D7966CC8/runloopTest.app/runloopTest), context = &lt;CFRunLoopTimer context <span class="number">0x7fd360e01f70</span>&gt;&#125;</span><br><span class="line">)&#125;,</span><br><span class="line">	currently <span class="number">463742313</span> (<span class="number">23610255156065</span>) / soft deadline in: <span class="number">1.84467441e+10</span> sec (@ <span class="number">23607719248079</span>) / hard deadline in: <span class="number">1.84467441e+10</span> sec (@ <span class="number">23607719248079</span>)</span><br><span class="line">&#125;,&#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到一个runloop对象包含各种Mode——currentMode，common mode，modes等等，这里的示例我只指定了一个defaultMode。每个mode对应了source，observers和timers。</p>
-<blockquote>
-<p>也许你会注意到 source 包括了source0和source1两个版本。</p>
-<ul>
-<li>Source0 只包含了一个回调（函数指针），它并不能主动触发事件。使用时，你需要先调用 CFRunLoopSourceSignal(source)，将这个 Source 标记为待处理，然后手动调用 CFRunLoopWakeUp(runloop) 来唤醒 RunLoop，让其处理这个事件。</li>
-<li>Source1 包含了一个 mach_port 和一个回调（函数指针），被用于通过内核和其他线程相互发送消息。这种 Source 能主动唤醒 RunLoop 的线程。</li>
-</ul>
-</blockquote>
-<p>CFRunLoopObserver类型的对象也可以称之为观察者。每个观察者都包含了一个回调，当runloop的状态发生变化时，你可以通过回调来知道当前的状态。</p>
-<h2 id="Mode"><a href="#Mode" class="headerlink" title="Mode"></a>Mode</h2><p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/Multithreading/Art/runloop.jpg" alt="image"></p>
-<p>在你的程序中，runloop的过程实际上是一个无限循环的循环体，这个循环体是由你的程序来运行的。主线程的runloop由于系统已经实现并且没有它程序就不能运行，因此不需要我们手动去运行这个runloop。然而如果我们需要在自定义的线程中使用到runloop，我们则需要用一个do…while循环来驱动它。而runloop对象负责不断地在循环体中运行传进来的事件，然后将事件发给相应的响应。</p>
-<blockquote>
-<p>如果你打开你的程序的main.m，你就会发现其实主线程的runloop就是在main函数中进行的，并且系统已经为你生成好了autoreleasepool，因此你也无需操心主线程上的内存释放到底是在什么时候执行了：</p>
-</blockquote>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">     <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="built_in">UIApplicationMain</span>(argc, argv, <span class="literal">nil</span>, <span class="built_in">NSStringFromClass</span>([AppDelegate class]));</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根据响应源的不同，runloop也被分成了许多种不同的模式，这就是被Cocoa和Core Foundation都封装了的runloopMode。主要是这么几种：</p>
-<ul>
-<li>NSDefaultRunLoopMode: 大多数工作中默认的运行方式。</li>
-<li>NSConnectionReplyMode: 使用这个Mode去监听NSConnection对象的状态。</li>
-<li>NSModalPanelRunLoopMode: 使用这个Mode在Model Panel情况下去区分事件(OS X开发中会遇到)。</li>
-<li>NSEventTrackingRunLoopMode: 使用这个Mode去跟踪来自用户交互的事件（比如UITableView上下滑动）。</li>
-<li>NSRunLoopCommonModes: 这是一个伪模式，其为一组run loop mode的集合。如果将Input source加入此模式，意味着关联Input source到Common Modes中包含的所有模式下。在iOS系统中NSRunLoopCommonMode包含NSDefaultRunLoopMode、NSTaskDeathCheckMode、NSEventTrackingRunLoopMode.可使用CFRunLoopAddCommonMode方法向Common Modes中添加自定义mode。</li>
-</ul>
-<p>在文首的情况中，我们可以根据苹果官方文档的定义知道，当你在滑动页面的时候，主线程的runloop自动进入了NSEventTrackingRunLoopMode，而你的timer只是运行在DefaultMode下，所以不能响应。那么最简单的办法就是将你的timer添加在其他的mode下，像这样即可：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="attr_selector">[[NSRunLoop currentRunLoop]</span> <span class="tag">addTimer</span><span class="pseudo">:self</span><span class="class">.timer</span> <span class="tag">forMode</span><span class="pseudo">:NSRunLoopCommonModes</span>];</span><br></pre></td></tr></table></figure>
-<p>需要注意的是CommonModes其实并不是一种Mode，而是一个集合。因此runloop并不能在CommonModes下运行，相反，你可以将需要输入的事件源添加为这个mode，这样无论runloop运行在哪个mode下都可以响应这个输入事件，否则这个事件将不会得到响应。</p>
-<h2 id="Input_Source"><a href="#Input_Source" class="headerlink" title="Input Source"></a>Input Source</h2><p>输入源包括三种，端口，自定义输入源和performSelector的消息。根据上面的图我们可以看出，在runloop接收到消息并执行了指定方法的时候，它会执行runUntilDate:这个方法来退出当前循环。</p>
-<p>端口源是基于Mach port的，其他进程或线程可以通过端口来发送消息。这里的知识点需要深入到Mach，就已经比较晦涩难懂了……这里你只需要知道你可以用Cocoa封装的NSPort对象来进行线程之间的通信，而这种通信方式所产生的事件就是通过端口源来传入runloop的。关于Mach port的更深层介绍可以看<a href="http://segmentfault.com/a/1190000002400329" target="_blank" rel="external">这篇</a>。</p>
-<p>自定义输入源。Core Foundation提供了CFRunLoopSourceRef类型的相关函数，可以用来创建自定义输入源。</p>
-<p>performSelector输入源:</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在主线程的Run Loop下执行指定的 @selector 方法</span></span><br><span class="line"><span class="string">performSelectorOnMainThread:</span><span class="string">withObject:</span><span class="string">waitUntilDone:</span></span><br><span class="line"><span class="string">performSelectorOnMainThread:</span><span class="string">withObject:</span><span class="string">waitUntilDone:</span><span class="string">modes:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//在当前线程的Run Loop下执行指定的 @selector 方法</span></span><br><span class="line"><span class="string">performSelector:</span><span class="string">onThread:</span><span class="string">withObject:</span><span class="string">waitUntilDone:</span></span><br><span class="line"><span class="string">performSelector:</span><span class="string">onThread:</span><span class="string">withObject:</span><span class="string">waitUntilDone:</span><span class="string">modes:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//在当前线程的Run Loop下延迟加载指定的 @selector 方法</span></span><br><span class="line"><span class="string">performSelector:</span><span class="string">withObject:</span><span class="string">afterDelay:</span></span><br><span class="line"><span class="string">performSelector:</span><span class="string">withObject:</span><span class="string">afterDelay:</span><span class="string">inModes:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//取消当前线程的调用</span></span><br><span class="line"><span class="string">cancelPreviousPerformRequestsWithTarget:</span></span><br><span class="line"><span class="string">cancelPreviousPerformRequestsWithTarget:</span><span class="string">selector:</span><span class="string">object:</span></span><br></pre></td></tr></table></figure>
-<h2 id="runloop_u751F_u547D_u5468_u671F"><a href="#runloop_u751F_u547D_u5468_u671F" class="headerlink" title="runloop生命周期"></a>runloop生命周期</h2><p>每一次runloop其实都是一次循环，runloop会在循环中执行runUntilDate: 或者runMode: beforeDate: 来开始每一个循环。而每一个循环又分为下面几个阶段，也就是runloop的生命周期：</p>
-<ul>
-<li>kCFRunLoopEntry 进入循环</li>
-<li>kCFRunLoopBeforeTimers 先接收timer的事件</li>
-<li>kCFRunLoopBeforeSources 接收来自input source的事件</li>
-<li>kCFRunLoopBeforeWaiting 如果没有事件，则准备进入休眠模式，在这里，如果没有事件传入，runloop会运行直到循环中给定的日期，如果你给的是distantFuture，那么这个runloop会无限等待下去</li>
-<li>kCFRunLoopAfterWaiting 从休眠中醒来，直接回到kCFRunLoopBeforeTimers状态</li>
-<li>kCFRunLoopExit 退出循环</li>
-</ul>
-<p>这些状态也是一个枚举类型，系统是这么定义的，你可以使用observer来观测到这些状态：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Run Loop Observer Activities */</span></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">CF_OPTIONS</span><span class="params">(CFOptionFlags, CFRunLoopActivity)</span> </span>&#123;</span><br><span class="line">    kCFRunLoopEntry = (<span class="number">1U</span>L &lt;&lt; <span class="number">0</span>),</span><br><span class="line">    kCFRunLoopBeforeTimers = (<span class="number">1U</span>L &lt;&lt; <span class="number">1</span>),</span><br><span class="line">    kCFRunLoopBeforeSources = (<span class="number">1U</span>L &lt;&lt; <span class="number">2</span>),</span><br><span class="line">    kCFRunLoopBeforeWaiting = (<span class="number">1U</span>L &lt;&lt; <span class="number">5</span>),</span><br><span class="line">    kCFRunLoopAfterWaiting = (<span class="number">1U</span>L &lt;&lt; <span class="number">6</span>),</span><br><span class="line">    kCFRunLoopExit = (<span class="number">1U</span>L &lt;&lt; <span class="number">7</span>),</span><br><span class="line">    kCFRunLoopAllActivities = <span class="number">0x0FFFFFFF</span>U</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>我们下面做一个测试，在demo中我们定义了一个新的线程类，这样我们可以自己启动和维护它的runloop对象。</p>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)main</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Thread Enter"</span>);</span><br><span class="line">        [[<span class="built_in">NSThread</span> currentThread] setName:<span class="string">@"This is a test thread"</span>];</span><br><span class="line">        <span class="built_in">NSRunLoop</span> *currentThreadRunLoop = [<span class="built_in">NSRunLoop</span> currentRunLoop];</span><br><span class="line">        <span class="comment">// 或者</span></span><br><span class="line">        <span class="comment">// CFRunLoopRef currentThreadRunLoop = CFRunLoopGetCurrent();</span></span><br><span class="line">        </span><br><span class="line">        <span class="built_in">CFRunLoopObserverContext</span> context = &#123;<span class="number">0</span>, (__bridge <span class="keyword">void</span> *)(<span class="keyword">self</span>), <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;;</span><br><span class="line">        <span class="built_in">CFRunLoopObserverRef</span> observer = <span class="built_in">CFRunLoopObserverCreate</span>(k<span class="built_in">CFAllocatorDefault</span>, k<span class="built_in">CFRunLoopAllActivities</span>, <span class="literal">YES</span>, <span class="number">0</span>, &amp;currentRunLoopObserver, &amp;context);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (observer) &#123;</span><br><span class="line">            <span class="built_in">CFRunLoopRef</span> runLoopRef = currentThreadRunLoop<span class="variable">.getCFRunLoop</span>;</span><br><span class="line">            <span class="built_in">CFRunLoopAddObserver</span>(runLoopRef, observer, k<span class="built_in">CFRunLoopDefaultMode</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 创建一个Timer，重复调用来驱动Run Loop</span></span><br><span class="line">        <span class="comment">//[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(handleTimerTask) userInfo:nil repeats:YES];</span></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            [currentThreadRunLoop runMode:<span class="built_in">NSDefaultRunLoopMode</span> beforeDate:[<span class="built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="number">3</span>]];</span><br><span class="line">        &#125; <span class="keyword">while</span> (<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输入源或者timer对于runloop来说是必要条件，如果没有添加任何输入源，则runloop根本不会启动，所以上面的代码中添加timer的操作，实际上是添加了一个默认的事件输入源，能让runloop保持运行。但是实际上，当你创建好一个runloop对象后，任何输入的事件都可以触发runloop的启动。</p>
-<p>例如下面的：</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(selectorTest) <span class="string">onThread:</span>self.runLoopThread <span class="string">withObject:</span>nil <span class="string">waitUntilDone:</span>NO];</span><br></pre></td></tr></table></figure>
-<p>记住，如果你需要自己来启动和维护runloop的话，核心就在于一个do…while循环，你可以为runloop的跳出设置一个条件，也可以让runloop无限进行下去。在runloop没有接收到事件进入休眠状态之后，如果调用performSelector，runloop的状态变化如下：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopAfterWaiting</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">fuck</span><br><span class="line">fuck_1</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopExit</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopEntry</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopExit</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopEntry</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeWaiting</span><br></pre></td></tr></table></figure>
-<p>在这里我连续调用了两次performSelector，可以看到runloop也经历了两个循环，而如果只调用一次的话，不会有多出来的那次runloop（你可以自己尝试一下），这是否说明每一次performSelector执行完毕之后都会立即结束当前runloop开始新的，苹果的官方文档里有一句话：</p>
-<blockquote>
-<p>The run loop processes all queued perform selector calls each time through the loop, rather than processing one during each loop iteration</p>
-</blockquote>
-<p>应该意思是并不是像上面看到的结果那样每一次循环执行一次，而是有一个待执行的操作队列。如果我同时执行四次performSelector，像这样：</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">[self <span class="string">performSelector:</span><span class="annotation">@selector</span>(selectorTest) <span class="string">onThread:</span>self.runLoopThread <span class="string">withObject:</span>nil <span class="string">waitUntilDone:</span>NO];</span><br><span class="line">   [self <span class="string">performSelector:</span><span class="annotation">@selector</span>(selectorTest_1) <span class="string">onThread:</span>self.runLoopThread <span class="string">withObject:</span>nil <span class="string">waitUntilDone:</span>NO];</span><br><span class="line">   [self <span class="string">performSelector:</span><span class="annotation">@selector</span>(selectorTest_2) <span class="string">onThread:</span>self.runLoopThread <span class="string">withObject:</span>nil <span class="string">waitUntilDone:</span>NO];</span><br><span class="line">   [self <span class="string">performSelector:</span><span class="annotation">@selector</span>(selectorTest_2) <span class="string">onThread:</span>self.runLoopThread <span class="string">withObject:</span>nil <span class="string">waitUntilDone:</span>NO];</span><br></pre></td></tr></table></figure>
-<p>实际上得到的结果和上面是一样的，然而当我将他们的waitUntilDone参数都设置为YES之后，我们可以看到不一样的地方：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Thread</span> Enter</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopEntry</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">fuck</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopExit</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopEntry</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">fuck_1</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopExit</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopEntry</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">fuck_2</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopExit</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopEntry</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">fuck_2</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopExit</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopEntry</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeTimers</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeSources</span><br><span class="line">Current <span class="keyword">thread</span> Run <span class="keyword">Loop</span> activity: kCFRunLoopBeforeWaiting</span><br></pre></td></tr></table></figure>
-<p>你可以看到每一个performSelector操作都单独执行了一个runloop，从苹果的文档中我们可以找到这个方法的定义：</p>
-<blockquote>
-<ul>
-<li>performSelector:onThread:withObject:waitUntilDone:</li>
-<li>performSelector:onThread:withObject:waitUntilDone:modes:</li>
-</ul>
-<p>Performs the specified selector on any thread for which you have an NSThread object. These methods give you the option of blocking the current thread until the selector is performed.</p>
-</blockquote>
-<p>也就是说，waitUntilDone意味着这个操作是否会在当前线程阻塞其他的输入源，如果等于True，则每一次runloop循环只会处理这一个selector的调用，如果为False，则队列中后面等待着的selector调用都会在同一次runloop循环中执行。至于上文的执行了两个runloop循环的现象，我猜测应该是当runloop从休眠模式被唤醒的时候，当前循环执行完唤醒的操作后就会立即结束，释放掉之前可能累积下来的内存，然后开始新的循环，将队列中的其他输入逐个放进runloop循环中执行。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="u5148_u6765_u8BF4_u4E00_u4E2A_u5F88_u7B80_u5355_u7684_u5B9E_u4F8B"><a href="#u5148]]>
-    </summary>
-    
-      <category term="NSThread" scheme="http://sergiochan.github.io/tags/NSThread/"/>
-    
-      <category term="iOS" scheme="http://sergiochan.github.io/tags/iOS/"/>
-    
-      <category term="runloop" scheme="http://sergiochan.github.io/tags/runloop/"/>
-    
-      <category term="iOS菜鸟心得" scheme="http://sergiochan.github.io/categories/iOS%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
     
   </entry>
   
