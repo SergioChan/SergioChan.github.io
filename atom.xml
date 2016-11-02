@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-10-24T14:29:43.000Z</updated>
+  <updated>2016-11-02T11:08:22.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,223 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Multi-Touch Bar UI 开发入门指南]]></title>
+    <link href="http://sergiochan.github.io/2016/11/02/Multi-Touch-Bar-UI-%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://sergiochan.github.io/2016/11/02/Multi-Touch-Bar-UI-开发入门指南/</id>
+    <published>2016-11-02T11:03:05.000Z</published>
+    <updated>2016-11-02T11:08:22.000Z</updated>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="u5927_u81F4"><a href="#u5927_u81F4" class="headerlink" title="大致"></a>大致</h3><p>当你学会如何在你的 NSViewController 中用代码去初始化 Multi-Touch Bar 之后，我们就需要开始了解如何深入的开发 Touch Bar 上的 UI 了。根据 Apple 内部的一个说法就是 Multi-Touch Bar 实际上是运行了一个 watchOS 来管理它的视图和逻辑，所以与此同时我们也可以看到苹果官方为 Multi-Touch Bar 提供的一套 UI 控件，总共包含下面这些控件，第一个就是 Touch Bar。</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/58181fbf140db.jpg" alt=""></p>
+<ul>
+<li>Touch Bar Fixed Space</li>
+<li>Touch Bar Flexible Space</li>
+</ul>
+<p>这两个是用于在 UI 上用来填充的空间，Touch Bar 默认的 UI 是从左到右，默认左右就是挨着的，如果你需要将两个按钮什么的分开一些，定义他们之间的间隔，你需要在他们中间塞 Space。</p>
+<ul>
+<li>Touch Bar Popover</li>
+</ul>
+<ul>
+<li>Touch Bar Group</li>
+</ul>
+<p>/// BarItem 的集合，可以一起受到约束和用户的 Customization。</p>
+<ul>
+<li>Touch Bar Other Items Proxy</li>
+</ul>
+<p>/// 后面详细描述，这是和 Responder Chain 相关的一个控件，可以让响应链下层的 Touch Bar 和上层的 Touch Bar 一起显示。</p>
+<ul>
+<li>Touch Bar Scrubber</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/581837cc4601b.png" alt="https://ooo.0o0.ooo/2016/11/01/581837cc4601b.png"></p>
+<p>/// 这是一个放进 NSCustomTouchBarItem 的 NSScrubber 对象。</p>
+<ul>
+<li>Touch Bar Color Picker</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/5818386c45463.png" alt=""></p>
+<p>/// 一个 NSColorPickerTouchBarItem 对象。</p>
+<ul>
+<li>Touch Bar Character Picker</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/581838cf69274.png" alt=""></p>
+<p>/// 一个  NSCandidateListTouchBarItem 对象。</p>
+<ul>
+<li>Touch Bar Sharing Service Picker</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/5818393054d89.png" alt=""></p>
+<p>/// 一个 NSSharingServicePickerTouchBarItem 对象。</p>
+<p>这里的 Scrubber，Color Picker 和 Character Picker 这些控件就会有些陌生了，虽然看过苹果发布会的同学们对他们应该也陌生不到哪里去。这几个控件在当时发布会都有展示。分别是滑动图片或文字选择器，颜色选择器，Emoji 表情选择器以及分享选择器，他们都有自己相应的 Delegate 来处理事件。</p>
+<ul>
+<li>Touch Bar Label</li>
+<li>Touch Bar Button</li>
+<li>Touch Bar Slider</li>
+<li>Touch Bar Segmented Control</li>
+<li>Touch Bar View</li>
+</ul>
+<p>最后的五项对于大家都比较好理解，都是一些 AppKit 中的控件在 Touch Bar 中的移植，对于事件的响应和 AppKit 做法相同。</p>
+<blockquote>
+<p>当你的 macOS 应用中包含了一些自带 Touch Bar 的控件的时候，例如 NSTextField，如果你没有自定义你的 Touch Bar，那么在 Touch Bar 上也会显示相应的控件。这是预设好的。</p>
+</blockquote>
+<h3 id="NSTouchBar"><a href="#NSTouchBar" class="headerlink" title="NSTouchBar"></a>NSTouchBar</h3><p>你可以将 NSTouchBar 看成是一个 NSTouchBarItem 的数组。在运行的时候，对于不同的 NSResponder 对应的 Touch Bar 和这些 Touch Bar 所对应的 BarItem，都是用 Identifier 来标识的，尽量使用 reverse-DNS 方式的 Identifier，例如 <code>com.company-name.app-name.alphanumeric-ID</code>。</p>
+<blockquote>
+<p>这里插一句，为了接下来的说明：由于现在并没有见到过新的 MBP 真机，尚不清楚 Touch Bar 提供给用户的 Customization 是什么样的机制，不过大概也就和 Finder 的自定义类似？按照官方文档来说，应该是用户在运行的时候可以选择显示或删除哪些 BarItem 或者修改 BarItem 的排列顺序，这大概也就是为什么 Touch Bar 的 UI 是始终向左靠齐的吧。</p>
+</blockquote>
+<p>NSTouchBar 自身有一个 Identifier： <strong>customizationIdentifier</strong>，这是在运行时允许用户自定义 UI 的标识，如果不设置，用户就无法通过系统来自定义 Touch Bar 的 UI。</p>
+<p><strong>customizationAllowedItemIdentifiers</strong>，一个数组，在这里面存放的 Identifier 对应的 BarItem 是允许在运行时被用户修改样式的。</p>
+<p><strong>customizationRequiredItemIdentifiers</strong>，这个数组里面存放的是不能被移除，一定会加载的 BarItem 对应的 Identifier。</p>
+<p><strong>defaultItemIdentifiers</strong>，这是 Touch Bar 默认显示的全部 BarItem，这个参数是<strong>必须</strong>被初始化的。在这里面声明的 Identifier 随后就会在 <code>-itemForIdentifier:</code> 这个 Delegate 方法中初始化成 BarItem。给予 BarItem 的 Identifier 必须保持<strong>全局唯一</strong>，系统有另外四个预留的 Identifier：</p>
+<ul>
+<li>NSTouchBarItemIdentifierFixedSpaceSmall</li>
+<li>NSTouchBarItemIdentifierFixedSpaceLarge</li>
+<li>NSTouchBarItemIdentifierFlexibleSpace</li>
+<li>NSTouchBarItemIdentifierOtherItemsProxy</li>
+</ul>
+<p>另外，NSTouchBar 还有一个只读的属性 <strong>itemIdentifiers</strong>，这个数组里包含的是运行时当前显示的 BarItem 对应的 Identifier，无论用户在运行的时候对 Touch Bar 做了何种的 Customization，你都可以通过这个属性获得当前的状态。</p>
+<h4 id="u5982_u4F55_u8BA9_u4E00_u4E2A_BarItem__u5728_Touch_Bar__u4E0A_u5C45_u4E2D_u663E_u793A_uFF1F"><a href="#u5982_u4F55_u8BA9_u4E00_u4E2A_BarItem__u5728_Touch_Bar__u4E0A_u5C45_u4E2D_u663E_u793A_uFF1F" class="headerlink" title="如何让一个 BarItem 在 Touch Bar 上居中显示？"></a>如何让一个 BarItem 在 Touch Bar 上居中显示？</h4><p><strong>principalItemIdentifier</strong> 这个属性所对应的 BarItem 会在 Touch Bar <strong>居中</strong>，是所谓的最高优先级的 Item，如果有多层 Touch Bar 存在，也只会有最上层的 principalItem 显示出来。这里，官方文档中特别提到：</p>
+<blockquote>
+<p>Do not hard-code spacing in an attempt to ensure an item is centered. If you want a group of items to appear centered in the Touch Bar, designate the group NSTouchBarItem as the principal item.</p>
+<p>不要尝试通过添加 Space 的方法来让一个 Item 居中，如果你需要让一组 Item 居中，你可以用一个 BarItem Group 将他们包起来然后将整个 Group 设置为居中。</p>
+</blockquote>
+<h4 id="NSTouchBarDelegate"><a href="#NSTouchBarDelegate" class="headerlink" title="NSTouchBarDelegate"></a>NSTouchBarDelegate</h4><p><strong>delegate</strong>，NSTouchBarDelegate 只有一个方法，那就是  </p>
+<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(nullable <span class="variable">NSTouchBarItem</span> *)</span>touchBar:<span class="params">(<span class="variable">NSTouchBar</span> *)</span>touchBar makeItemForIdentifier:<span class="params">(<span class="variable">NSTouchBarItemIdentifier</span>)</span>identifier;</span></span><br></pre></td></tr></table></figure>
+<p>这个方法就是初始化所有 BarItem 的地方。一般来说写法就是根据 Identifier 来初始化对应的 BarItem，像这样</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="tag">if</span> ([identifier <span class="attribute">isEqualToString</span>:@<span class="string">"..."</span>])</span><br><span class="line">&#123; </span><br><span class="line">	...</span><br><span class="line">	<span class="tag">return</span> <span class="tag">BarItem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Layout__26amp_3B_Nesting"><a href="#Layout__26amp_3B_Nesting" class="headerlink" title="Layout &amp; Nesting"></a>Layout &amp; Nesting</h3><p>由于用户可以自定义需要显示的 Touch Bar 宽度，你定义好的 Touch Bar 宽度是可变的。所以苹果的建议是<strong>在设计的时候不要按照确定的宽度来设计，而植入一些动态布局的方</strong>案。如果你需要更宽的宽度，你可以使用 Popover，scrubber 或者 scroll view。</p>
+<p>在 Layout 的时候，响应链上层的 Touch Bar 是可以包含下层的 Touch Bar 的，上面在综述的时候提到过的 <strong>Other Items Proxy</strong> 就是用来实现这个功能的。只要你在初始化 Touch Bar 的时候为它的 defaultIdentifiers 加上 NSTouchBarItemIdentifierOtherItemsProxy，他就会在运行时<strong>需要的时候在这个 Identifier 所在的位置</strong>包含上来自下层的合适的 Touch Bar。这个<strong>需要的时候</strong>指的是下层的 NSResponder 调用 becomeFirstResponder 的时候。例如有一个 ViewController 自身带有一个 Touch Bar，而这个 ViewController 中带有一个 NSTextView，那么当点击这个 NSTextview ，也就是<strong>响应链下层 NSResponder 调用 becomeFirstResponder</strong> 的时候，Touch Bar 显示的是：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/5818435fa4fdd.png" alt=""></p>
+<p>而如果焦点从 TexView 失去，则恢复成 ViewController 这一层的 Touch Bar：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/58184323610b8.png" alt=""></p>
+<p>如果一个 Touch Bar 没有植入 NSTouchBarItemIdentifierOtherItemsProxy ，那么如果在响应链更底层出现了一个可以加载的 Touch Bar，那么上层的 Touch Bar 都会被隐藏。哦，并且 NSTouchBar 的 visible 属性是可以 KVO 的。</p>
+<h4 id="Responder_Chain_Search"><a href="#Responder_Chain_Search" class="headerlink" title="Responder Chain Search"></a>Responder Chain Search</h4><p>所以 Touch Bar UI 的加载顺序和 UIView 的响应链类似，都是穿过整个响应链，从最底层开始向上寻找，如果遇到了 otherItemsProxy ， 则会将两者合并起来之后继续往上遍历，直到找到最上层，生成一个最后加载出来的 Touch Bar。</p>
+<blockquote>
+<p>Touch bars 的加载是通过查找指定的遵循了 NSTouchBarProvider Protocol 的组件来完成的。按照从响应链上层往下的顺序依次是：</p>
+<ul>
+<li>the application delegate</li>
+<li>the application object itself</li>
+<li>the main window’s window controller</li>
+<li>the main window’s delegate</li>
+<li>the main window itself</li>
+<li>the main window’s first responder</li>
+<li>the key window’s window controller</li>
+<li>the key window’s delegate</li>
+<li>the key window itself</li>
+<li>the key window’s first responder</li>
+</ul>
+<p>如果上面这些对象是 NSResponder 或者 NSResponder 的子类，以该对象为起点的响应链也会被包括进来。例如 AppDelegate 原本是 NSObject，但是<a href="http://stackoverflow.com/questions/6893221/why-does-appdelegate-inherit-from-uiresponder" target="_blank" rel="external">在 iOS 上 AppDelegate 就是继承于 UIResponder</a> ，这是因为这样 AppDelegate 就可以成为整个响应链的最上层了。因此<strong>如果我们将 AppDelegate 改为继承于 NSResponder</strong> ，那么在 AppDelegate 层也可以加上一层 Touch Bar。 </p>
+<p>例如在一个一般结构的应用中，这个响应链的查找顺序是这样的：</p>
+<ul>
+<li>Application delegate</li>
+<li>Application</li>
+<li>key window controller</li>
+<li>key window delegate</li>
+<li>key window</li>
+<li>view controller (closest to root of window)</li>
+<li>view (closest to root of window)</li>
+<li>intermediate view controllers and views</li>
+<li>key window’s first responder’s view controller</li>
+<li>key window’s first responder</li>
+</ul>
+</blockquote>
+<h4 id="Customization_Boundary"><a href="#Customization_Boundary" class="headerlink" title="Customization Boundary"></a>Customization Boundary</h4><p>那么对于最后显示的 Touch Bar 来说，每个 Touch Bar 的 Customization 属性依然管用。如果是 A Bar包含了 B Bar，那么对于 B Bar 的 Customization 是不能超出 B Bar 的范围的。例如有：</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">bar.defaultItemIdentifiers =<span class="annotation">@[<span class="constant">IdentifierA</span>,<span class="constant">IdentifierB</span>, <span class="constant">NSTouchBarItemIdentifierOtherItemsProxy</span>,<span class="constant">IdentifierC</span>]</span>;</span><br></pre></td></tr></table></figure>
+<p>这个 Bar 假设为 A Bar，在他的下层有一个 B Bar，那么在 AB 同时显示的时候，如果对 B Bar 的 Item 进行 Customization，那么是不能移动 IdentifierA，IdentifierB 和 IdentifierC 的位置的。</p>
+<h4 id="Visual_Priority"><a href="#Visual_Priority" class="headerlink" title="Visual Priority"></a>Visual Priority</h4><p><strong>视图优先级</strong>。由于你所开发的 Touch Bar 在运行的时候有可能被用户修改宽度，因此如果你有一排 BarItem，他们会从右往左依次被挤掉，这时候如果右边有一些重要的 BarItem 存在，你就需要为不同的 BarItem 设置不同的视图优先级，这样即使宽度变化，在重新 Layout 的时候也会按照定义好的视图优先级排列 BarItem。</p>
+<p>系统提供了三种默认的枚举类型视图优先级，分别为 NSTouchBarItemPriorityHigh， NSTouchBarItemPriorityNormal 和 NSTouchBarItemPriorityLow，对应了 1000，0 和 -1000 的 float 类型的值，因此你也可以直接为 BarItem 设置 float 类型的优先级。</p>
+<h3 id="u7528_Storyboard__u6765_u5B9A_u4E49_u4F60_u7684_Multi-Touch_Bar"><a href="#u7528_Storyboard__u6765_u5B9A_u4E49_u4F60_u7684_Multi-Touch_Bar" class="headerlink" title="用 Storyboard 来定义你的 Multi-Touch Bar"></a>用 Storyboard 来定义你的 Multi-Touch Bar</h3><p>讲了这么多，用代码生成 Touch Bar 多累啊，我们来看看如何用 Storyboard 来创建吧。</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/581844c5bc04f.jpg" alt=""></p>
+<p>方法很简单，直接往你的 ViewController 里面从右下角拖一个 Touch Bar 过来就行了。然后往里面添加控件，对于不同的控件，Delegate，Datasource 和控件的触发事件，都是用 Control-Drag 的方法将引用加到你的 .m 文件里去。</p>
+<h3 id="u5404_u79CD_u63A7_u4EF6_u7684_u5177_u4F53_u7528_u6CD5"><a href="#u5404_u79CD_u63A7_u4EF6_u7684_u5177_u4F53_u7528_u6CD5" class="headerlink" title="各种控件的具体用法"></a>各种控件的具体用法</h3><p>接下来该是一个个来讲控件了，也是大家在之后的开发中最实用的部分啦。</p>
+<h4 id="NSColorPickerTouchBarItem"><a href="#NSColorPickerTouchBarItem" class="headerlink" title="NSColorPickerTouchBarItem"></a>NSColorPickerTouchBarItem</h4><p>colorPicker 有三种初始化方法：</p>
+<ul>
+<li>colorPickerWithIdentifier</li>
+<li>textColorPickerWithIdentifier</li>
+<li>strokeColorPickerWithIdentifier</li>
+</ul>
+<p>这三种方法的区别其实就是在按钮显示的图标上，一个是常规的颜色选择器，第二个代表的是字体颜色选择器，第三种初始化代表的是边框颜色选择器。初始化之后的逻辑都是一样的：</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line">colorPickerItem.<span class="keyword">target</span> = self;</span><br><span class="line">colorPickerItem.action = <span class="annotation">@selector</span>(ColorAction:);</span><br></pre></td></tr></table></figure>
+<p>然后在 <code>ColorAction</code> 这个方法中获得选择到的颜色：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">((<span class="tag">NSColorPickerTouchBarItem</span> *)<span class="tag">sender</span>)<span class="class">.color</span></span><br></pre></td></tr></table></figure>
+<p><strong>@property colorList</strong></p>
+<p>你也可以通过修改 <strong>colorList</strong> 这个属性来自定义 Color Picker 能够选取的颜色列表。如果不设置这个属性，则默认显示的是系统的取色盘，各种颜色都有：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819676729847.png" alt=""></p>
+<p>当给了一个 list 之后：</p>
+<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line"><span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> = [[<span class="name">NSColorList</span> <span class="atom">alloc</span>] <span class="atom">init</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">redColor</span>] <span class="atom">forKey</span>:@<span class="string">"Red"</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">greenColor</span>] <span class="atom">forKey</span>:@<span class="string">"Green"</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">blueColor</span>] <span class="atom">forKey</span>:@<span class="string">"Blue"</span>];</span><br></pre></td></tr></table></figure>
+<p>显示的就是这样：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/58196802031d6.png" alt=""></p>
+<h4 id="NSSliderTouchBarItem"><a href="#NSSliderTouchBarItem" class="headerlink" title="NSSliderTouchBarItem"></a>NSSliderTouchBarItem</h4><p>初始化：</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">sliderTouchBarItem.slider.minValue = 0.0f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.maxValue = 100.0f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.continuous = YES<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.target = self<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.action = @selector(sliderChanged:)<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.label = @"Slider"<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.customizationLabel = @"Slider"<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这里面的 action 会在 slider 的值每一次发生改变的时候调用。</p>
+<p>值得一提的是 SliderItem 还提供了两个 AccessoryView 的自定义空间，左右各一个，分别叫做 <strong>minimumValueAccessory</strong> 和 <strong>maximumValueAccessory</strong>，可以用 NSImage 来初始化他们：</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSSliderAccessory</span> *minSliderAccessory = [<span class="built_in">NSSliderAccessory</span> accessoryWithImage:image];</span><br></pre></td></tr></table></figure>
+<p>其他的自定义都是围绕着 NSSlider 做的了。</p>
+<h4 id="NSScrubber"><a href="#NSScrubber" class="headerlink" title="NSScrubber"></a>NSScrubber</h4><p>这是一个为了 Touch Bar 而全新创建的控件，在发布会上有着重的展示。他需要单独的添加到一个 TouchBarItem 里去：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">scrubber = [[NSScrubber alloc] initWithFrame:NSMakeRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">310</span>, <span class="number">30</span>)];</span><br><span class="line"><span class="comment">// Height should be 30 </span></span><br><span class="line">scrubber.delegate = self;   </span><br><span class="line">scrubber.dataSource = self;</span><br></pre></td></tr></table></figure>
+<p>NSScrubber 类似 UICollectionView ，也是有基于 ItemView 的复用机制的，你可以继承 NSScrubberItemView 来写你自己需要的 CustomItemView。然后在初始化之后需要为 ItemView 加上一个复用的标识：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">[scrubber registerClass:[NSScrubberItemView <span class="class"><span class="keyword">class</span>] <span class="title">forItemIdentifier</span>:<span class="typename">ScrubberItemIdentifier];</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>@property showsAdditionalContentIndicators</strong> </p>
+<p>代表的是当左右滑动还有更多内容的时候，在左右侧会显示一块渐变的蒙层，用来表示滑动还有更多内容，你可以选择是否显示。</p>
+<p><strong>@property selectedIndex</strong> </p>
+<p>即当前选中的 ItemView 的 index，可以直接设置。</p>
+<p><strong>@property showsArrowButtons</strong> </p>
+<p>代表的是是否显示左右移动的箭头按钮，如果显示的话你也可以点击左右箭头的按钮来滑动列表。</p>
+<p><strong>@property backgroundColor</strong> </p>
+<p>NSScrubber 的背景颜色，显示在内容之后，如果 <strong>backgroundView</strong> 为空才会显示，同时也是只有 NSScrubberTextItemView 类型的 ItemView 才会显示出后面的背景颜色。</p>
+<p><strong>@property DataSource</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">NSInteger</span>)numberOfItemsForScrubber:(<span class="built_in">NSScrubber</span> *)scrubber</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSScrubberItemView</span> *)scrubber:(<span class="built_in">NSScrubber</span> *)scrubber viewForItemAtIndex:(<span class="built_in">NSInteger</span>)index</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">NSScrubberItemVie</span> *itemView = [scrubber makeItemWithIdentifier:ScrubberItemIdentifier owner:<span class="literal">nil</span>];</span><br><span class="line">	<span class="keyword">return</span> itemView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据源加载比较简单，一个给 Item 的总数，另一个给 ItemView 就行，上面给出了最简单的示例。</p>
+<p><strong>@property Delegate</strong></p>
+<p>NSScrubber 有好几个 Delegate 可以调用，也都比较好理解，一般来说实现第一个选中回调就足够了：</p>
+<ul>
+<li>didSelectItemAtIndex:(NSInteger)selectedIndex </li>
+<li>didHighlightItemAtIndex:(NSInteger)highlightedIndex </li>
+<li>didChangeVisibleRange:(NSRange)visibleRange</li>
+<li>didBeginInteractingWithScrubber:(NSScrubber *)scrubber</li>
+<li>didFinishInteractingWithScrubber:(NSScrubber *)scrubber</li>
+<li>didCancelInteractingWithScrubber:(NSScrubber *)scrubber</li>
+</ul>
+<p><strong>@property mode</strong></p>
+<p>这个代表的是 NSScrubber 的滑动模式，一共就两种，<strong>NSScrubberModeFree</strong> 和 <strong>NSScrubberModeFixed</strong>。</p>
+<p>Free 模式下的 Scrubber 可以自由的滑动，但是你必须在<strong>滑动之后再次单击 Item</strong> 来选中，而 Fixed 模式下的 Scrubber 是不能自由滑动的，但是对于 ItemView 的选中是<strong>跟随手指的拖动</strong>的，不需要让手指离开 Touch Bar 再次点击选中。对于宽度固定，或者不需要用户再滑出范围的 Scrubber 可以使用 Fixed 模式。</p>
+<p><strong>@property SelectionStyle</strong></p>
+<p>Scrubber 给选中样式提供了很方便的自定义属性，有 <strong>selectionBackgroundStyle</strong> 和 <strong>selectionOverlayStyle</strong>，同时也可以通过设置 <strong>floatsSelectionViews</strong> 为 YES 让选中 View 切换的时候可以加上从 A 点到 B 点流畅的移动动画，而不是从 A 点消失然后从 B 点出现这样的动画。</p>
+<p>selectionBackgroundStyle 和 selectionOverlayStyle 分别是选中的时候<strong>背景</strong>和<strong>表面蒙层</strong>的样式，只提供了 outlineOverlayStyle</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819b0f9959ad.png" alt=""></p>
+<p>和 roundedBackgroundStyle 两种默认样式：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819b17f754fb.png" alt=""></p>
+<p>当然，这个 SelectionStyle 也是高度自定义的，但是你需要继承两个视图的基类来实现：</p>
+<ol>
+<li>定义一个继承于 NSScrubberSelectionStyle 的 CustomStyle </li>
+<li>重载 <code>-(nullable __kindof NSScrubberSelectionView *)makeSelectionView</code> 这个方法</li>
+<li>定义一个继承于 NSScrubberSelectionView 的 CustomSelectionView</li>
+<li>自定义 CustomSelectionView 的样式</li>
+<li>在重载的方法中返回 CustomSelectionView</li>
+</ol>
+<p><strong>@property scrubberLayout</strong></p>
+<p>类似于 UICollectionView ，NSScrubber 的 layout 也是由 <strong>NSScrubberLayout</strong> 来控制的。系统提供了两种默认的 Layout，<strong>NSScrubberFlowLayout</strong> 和 <strong>NSScrubberProportionalLayout</strong>。前者可以通过 LayoutDelegate 来给出每一个 Item 所占的宽度，后者则不需要通过 delegate 而是直接将 Item 的宽度设置为 Scrubber 的可视区域按照 Item 的数量平分之后的宽度。你可以这样设置：</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">NSScrubberLayout *scrubberLayout<span class="comment">;</span></span><br><span class="line">scrubberLayout = [[NSScrubberFlowLayout alloc] init]<span class="comment">;</span></span><br><span class="line">// or:</span><br><span class="line">scrubberLayout = [[NSScrubberProportionalLayout alloc] init]<span class="comment">;</span></span><br><span class="line">scrubber.scrubberLayout = scrubberLayout<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>对于 NSScrubberFlowLayoutDelegate 你需要实现这一个方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">NSSize</span>)scrubber:(<span class="built_in">NSScrubber</span> *)scrubber layout:(<span class="built_in">NSScrubberFlowLayout</span> *)layout sizeForItemAtIndex:(<span class="built_in">NSInteger</span>)itemIndex</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">NSMakeSize</span>(width, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="NSSharingServicePickerTouchBarItem"><a href="#NSSharingServicePickerTouchBarItem" class="headerlink" title="NSSharingServicePickerTouchBarItem"></a>NSSharingServicePickerTouchBarItem</h4><p>NSSharingServicePickerTouchBarItem 的 delegate 只有一个委托方法需要实现：</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">- (<span class="constant">NSArray</span> *)<span class="symbol">itemsForSharingServicePickerTouchBarItem:</span>(<span class="constant">NSSharingServicePickerTouchBarItem</span> *)pickerTouchBarItem</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="annotation">@[...]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里返回的对象一定要是能够支持 NSPasteboardWriting 协议或者是继承于 NSItemProvider 的对象，例如文本，图片或者 NSURL，可以参考 <a href="https://developer.apple.com/reference/foundation/nsitemprovider?language=objc" target="_blank" rel="external">NSItemProvider 的官方文档</a>。然后就会在分享的时候传到分享的应用里去。</p>
+<h4 id="NSPopoverTouchBarItem"><a href="#NSPopoverTouchBarItem" class="headerlink" title="NSPopoverTouchBarItem"></a>NSPopoverTouchBarItem</h4><p>首先，我们来看如何自定义 Popover 在未点击状态下的显示 Button。</p>
+<ul>
+<li>collapsedRepresentation 如果不为空，则显示一个自定义的 NSView，如果为空，则加载不为空的下面两个属性</li>
+<li>collapsedRepresentationImage 给 Popover 的 button 添加一个 NSImage</li>
+<li>collapsedRepresentationLabel 给 Popover 的 button 添加一个 <strong>NSString</strong></li>
+</ul>
+<p>Popover 其实是在点击按钮之后弹出一个<strong>新的 Touch Bar</strong>，你需要再初始化一个新的 Touch Bar 并在同样的 Delegate 中返回对应的 BarItem，注意它和你之前的 Touch Bar 不是响应链上下层的关系，因此不会出现 Nesting 即上层的 Touch Bar 包含下层的 Touch Bar，而是完全覆盖了下面的 Touch Bar。如果你将新的 Touch Bar 赋值给了 <strong>pressAndHoldTouchBar</strong> 而不是 <strong>popoverTouchBar</strong>，你还可以实现按住按钮显示 Popover 且松开手指返回。</p>
+<h4 id="Touch_Bar_Image_Template"><a href="#Touch_Bar_Image_Template" class="headerlink" title="Touch Bar Image Template"></a>Touch Bar Image Template</h4><p>最后还要为大家提供一个便利，苹果为了支持 Touch Bar 的开发，同时也为了统一设计样式，在 NSImage 中添加了非常多 Button 的模板图片，由于提供的模板太多了，不一一列出，就把列表附上，如果有同学开发的时候有需要可以去 NSImage 的头文件里面找，如果系统模板有的话可以直接使用。</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819c14c90072.png" alt=""></p>
+<h3 id="u6700_u540E"><a href="#u6700_u540E" class="headerlink" title="最后"></a>最后</h3><p>Touch Bar 开发的新特性和坑肯定还有很多，现在新的 MBP 都还没发货，相信等更多的开发者开始真正开发上面的插件之后会有更丰富的经验和总结产生，我这篇博客也就是投石问路。然而，对 Touch Bar 十分感兴趣的我已经等不及开始研究它并且开始准备在上面做一些有意思的东西了！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="u5927_u81F4"><a href="#u5927_u81F4" class="headerlink" title="大致"></a>大致</h3><p>当你]]>
+    </summary>
+    
+      <category term="Cocoa" scheme="http://sergiochan.github.io/tags/Cocoa/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[ADB 两三事-残]]></title>
@@ -1008,44 +1225,6 @@
     </summary>
     
       <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[谈谈我对Hackathon的理解]]></title>
-    <link href="http://sergiochan.github.io/2015/12/19/%E8%B0%88%E8%B0%88%E6%88%91%E5%AF%B9Hackathon%E7%9A%84%E7%90%86%E8%A7%A3/"/>
-    <id>http://sergiochan.github.io/2015/12/19/谈谈我对Hackathon的理解/</id>
-    <published>2015-12-19T01:06:02.000Z</published>
-    <updated>2015-12-19T01:08:13.000Z</updated>
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="Hackathon__u662F_u4EC0_u4E48"><a href="#Hackathon__u662F_u4EC0_u4E48" class="headerlink" title="Hackathon 是什么"></a>Hackathon 是什么</h1><p>我们先要理解Hackathon这个词的起源。它起源于1999年，词语本身来自于Hack和Marathon的组合，意思就是一群程序员或者软件工程师相聚在一起，像马拉松一样不停的从起点跑到终点进行比赛。由于大部分Hackathon都是现场命题制，这就意味着所有程序员在一开始都是站在同一起跑线上的，所以Hackathon成为了每一个热爱挑战的程序员能够挑战自身各方面能力的机会。</p>
-<p>没错。我说的是，挑战。就如覃超大哥在SegmentFault的Hackathon开始的时候说的那样，hack精神就是Facebook最为推崇的理念，它的很多产品创新和突破都是来自于内部的Hackathon上迸发的灵感。所以应该不难理解，Hackathon的精神在于挑战自我和固有的事物、想法，从而去创造新的事物和新的想法。</p>
-<h1 id="u6211_u7684Hackathon_u7ECF_u5386"><a href="#u6211_u7684Hackathon_u7ECF_u5386" class="headerlink" title="我的Hackathon经历"></a>我的Hackathon经历</h1><p>先说说我的Hackathon经历吧。在接触Hackathon之前，我接触过很多创业团队，见过很多新的想法，但大部分都因为时间问题或者进度问题一拖再拖，亦或是这些想法并没有特别的打破人们固有的一些想法和思维模式。而我就已经乐衷于开拓自己的思维模式和范围，去接触更大的互联网世界。</p>
-<p>从创业和各种项目一路走来，我对软件工程的热爱逐渐在团队合作中被我自己培养了起来。对我来说，做一件事情，最重要的当然是这件事情是否有趣，是否值得我去热爱，其次就是能够和小伙伴一起去做这件事情，还记得两年前我刚开始走上这条道路的时候，我写到，“携两三靠谱好基友，凭一腔热血，青春年少，有什么做不到的。年轻就该气盛，才不负年华”。</p>
-<p>于是，当我第一次和小伙伴一起接触到Hackathon的时候，我就陷入了无比的狂热中。那是Dorahacks在北航举办的一次Hackathon，由于没有经验，我们也没有熬夜，只是晚上在QQ上相约一起写了一部分，第二天早上早早到地方开始调bug。一开始我们也通过头脑风暴想出了很多奇怪的创意，但是都被否定了，最后思宇在散步的时候想出了网页弹幕这个鬼点子。于是那也开启了我们每次Hackathon都一定会有的弹幕模式……其实写一个网页弹幕的Chrome插件花不了多少时间，加上leancloud即时通信和存储的集成，我们总共也没花几个小时，就将一个差不多通过了测试的版本放上台展示了。</p>
-<p>展示的时候，我扯了一大堆弹幕的起源和95后新兴人类的社交模式，扯了我从创业以来了解的各种互联网现状，然后啪的一展示，小伙伴们啪啪啪打了一堆弹幕上去，正好浏览的网页又特别想让人吐槽，所以大家都笑了，我们顺理成章拿了第一。</p>
-<p>后来我就总结出这么个道理，Hackathon，展示也是相当关键的一环，你要么让观众大笑，要么让观众大惊，如果观众一点反应都没有，那你就基本没有希望了。所以Hackathon，一定意义上并不是完全的在挑战一个人的思维能力，代码能力，团队合作能力之类的东西，更是在挑战和检验一个人的表达能力，简单地说，一个人的气场。对于一般的程序员来说，可能根本没有意识到在平时所谓气场和表达能力有什么重要性，但是，这也就意味着一个程序员将会永远在这种局限性之下成长。</p>
-<p>以上总结同样适用于我们接下来参加的一次大众中国的Hackathon。虽然这就是我将要说的商业大赛，但是最后拿了第一的团队，对于展示的把握相当的成熟，让我也学到了很多。我们什么奖也没有获得，但是我们脑洞大开的想让车与车之间通过弹幕的方式在公路上连接在一起。不知道为什么，也许我们和其他MBA或者博士们参加Hackathon的动机不一样吧，所以我们受到了相当的关注，这也让我感觉特别不自在和恼火。这本来就是大人们的一个游戏，他们只是对我们感到好奇罢了。</p>
-<p>挂羊头卖狗肉，是我对于很多这样的所谓Hackathon的商业创新大赛和外包大赛的总结。也许是各种企业主和策划方都觉得通过传统的比赛模式没有办法吸引到新时代的人才了，所以总是各种效仿，挂上Hackathon的名号。有一些比赛评委根本不看技术而看商业模式和商业分析，来自企业的一些Marketing的评委关注点是在如何让他们的企业赚更多的钱上，对于技术的创新性和效果并没有那么接受；而有一些比赛的评委对于自己出的题目已经有了相当明确的答案，却只是希望参加比赛的hacker能够按照他的期望把一个东西的原型做出来。</p>
-<p>是的，如果你想用广义的Hackathon定义来理解，你也许可以将他们也包含到Hackathon中，但是不可否认的是，这些比赛形式的本质是传统的，是抑制技术创新的。真正的Hackathon，应该是基于技术的创新和理念的创新，去解决一个实际的问题，从而让世界变得更美好。</p>
-<p>上周末的TC Hackathon，我想说我们最后退出了。在讨论了很久之后，对于某个企业提出的冰柜的题目，我们虽然觉得有很多能创新的点，但是当评委介绍完整个任务之后，我其实已经觉得没有多大希望了——评委对于项目有着明确的要求，甚至可以说他们应该已经花费了一些人力在这个项目上。整个题目是这个企业之前就已经提出的一个创业点，他们不希望自己投入研发成本去做这件事，而希望创业团队来帮他们实现。当没有什么好的创业团队来做这件事的时候，他们就把这件事情扔到一个Hackathon上，可以说，那些可怜的奖金如果换做外包的形式的话，数额只够一个人的所得。用廉价的奖金换来一个优质的外包方案，我相信对于每个企业都是一种好的选择。我也认识一些传统行业的人，他们告诉我，通过将项目外包给学校或者在学校内组织比赛的形式帮助他们完成一个项目的开发是他们很经常采用的手段。这个道理我想很多人都明白，但是我不希望外包比赛非得套上Hackathon的头套，玷污我心里对于技术创新的向往和渴望。</p>
-<p>最好的一次Hackathon是两周前的SegmentFault Hackathon。由于它本身是个开发者社区，而且这个Hackathon已经相当成熟，由他们自己举办，因此来自外界的干扰和污染特别小，评委也是来自于一线的新兴创业团队，并且都是一些注重技术和技术分享的公司。在这个比赛中，除了少量出现的偷偷用成品参加比赛的行为，包括零食，饮料的供应，都比TC的那次丰富和完善许多。而且采用的是现场公布题目的形式，题目的点也相当容易发散，不会提各种需求，这才让我感觉真真正正能出一些好东西。说实话，如果在Hackathon上还提一点两点三点好几点需求，那我就真的觉得和我平时做咨询，帮团队分析产品，做基础技术架构设计没有区别了。</p>
-<p>也许只有SegmentFault的Hackathon才配得上年轻开发者的节日1024吧。</p>
-<h1 id="Hackathon_u9700_u8981_u7684_u6280_u80FD"><a href="#Hackathon_u9700_u8981_u7684_u6280_u80FD" class="headerlink" title="Hackathon需要的技能"></a>Hackathon需要的技能</h1><p>对于我来说，我最害怕的就是止步不前，更害怕的是自己甘愿和其他90%的人一样陷于固有的事物和思维模式。我相信每一个接受过良好本科教育的大学毕业生在许多所谓的基础方式上都有着良好的基础，我们在校园里已经接受了足够的通识教育和专业基础教育，真正让每个人能够变得不同或者更好的，是在这个基础之上的思维模式。而Hackathon，既是对你的思维模式的磨炼，也是一种考验。</p>
-<p>参加Hackathon，你需要首先对这个比赛有足够的判断能力，他到底是个商业大赛，还是外包大赛，还是真的Hackathon？对于不同类型的“Hackathon”，你需要做不同的准备，虽然当你发现是前两者之后你可能已经对它失去兴趣了。下面是你需要的一些技能。</p>
-<h2 id="u4F60_u9700_u8981_u51DD_u805A_u4E00_u4E2A_u56E2_u961F_u3002"><a href="#u4F60_u9700_u8981_u51DD_u805A_u4E00_u4E2A_u56E2_u961F_u3002" class="headerlink" title="你需要凝聚一个团队。"></a>你需要凝聚一个团队。</h2><p>对于团队的凝聚力更大程度应该是通过事情，而不仅仅是所谓的个人魅力。事情有趣，事情酷炫，事情实实在在的解决问题，我想每一个有激情的人都会很主动的投入进来。所以你需要想清楚要做的事情应该是什么样的，是实际的，还是超出自己想象的，对做的事情需要有一个方向的把控，这才能够凝聚起一个团队。我始终坚信，共同的热爱才是团队一致向前的最好动力。</p>
-<h2 id="u4F60_u9700_u8981_u6311_u9009_u4F60_u7684_u56E2_u961F_u3002"><a href="#u4F60_u9700_u8981_u6311_u9009_u4F60_u7684_u56E2_u961F_u3002" class="headerlink" title="你需要挑选你的团队。"></a>你需要挑选你的团队。</h2><p>Hackathon不是刷上机题，你不是一个人在战斗。所以团队是最重要的部分。首先你需要保证你自己的技术栈足够宽，这里我说的不是什么web全栈框架，我说的技术栈是从前端，客户端，后端，数据库，服务器到建模，动画，设计，客户端的游戏开发，甚至还有视频制作这种技术如果最好都需要覆盖到。当然，对于一个人来说做到这些太困难了，所以这也就是你需要团队的原因。如果是偏商业大赛，即有比较明确的商业赞助和商业评委的参与，那么你还需要一到两个Marketing的小伙伴加入；如果是偏外包大赛，甚至纯技术的团队都可以胜任，但是有一个产品/交互会好很多；如果是纯Hackathon，组一个纯产品的小伙伴就没有特别大的意义了，那个时候，人人都可以是产品经理！</p>
-<p>团队人数方面，大部分Hackathon都限制在3~5人得范围内，最佳组合应该是能满足上述要求的4人组合。竞争力足够和5人团队匹敌，而5人团队也容易出现分歧，从而拖延本来就赶的进度。每一个决策都要尽量让每个队员都特别接受，并且有激情去做，因为Hackathon是在短时间内对每个人的精力和毅力的极大挑战，如果没有激情，那么你就会因为队员的疲惫而失去原本属于他的那份时间。</p>
-<h2 id="u4F60_u9700_u8981_u5B66_u4F1A_u4E0D_u4E00_u6837_u7684_u5934_u8111_u98CE_u66B4_u3002"><a href="#u4F60_u9700_u8981_u5B66_u4F1A_u4E0D_u4E00_u6837_u7684_u5934_u8111_u98CE_u66B4_u3002" class="headerlink" title="你需要学会不一样的头脑风暴。"></a>你需要学会不一样的头脑风暴。</h2><p>这里的意思是如果你用正常的头脑风暴方式去思考，那么别人会和你做着同样的事情，到达同一个点，并且开始做同一个想法。这直接就宣告你的努力白费了。所以，你需要学会不一样的头脑风暴方式，不是从题目里的字眼发散，而是尝试着跳出来，从各处散乱的灵感里找到几个和题目接近的主题，再从那些主题中发散。记住，你能想到的东西，90%以上别人都会想到，所以我们要做的是去想别人想不到的那些想法。</p>
-<h2 id="u70ED_u7231_u3002"><a href="#u70ED_u7231_u3002" class="headerlink" title="热爱。"></a>热爱。</h2><p>没有什么好说坚持和毅力什么的。那些都没有办法让你做到最好。只有热爱，像乔布斯说的那样，只有热爱能够让你真正把一件事情做好。所以在Hackathon的时候也一样，记住，一定要找到你热爱的东西，然后去完成它。如果找不到，就继续找，当然如果实在找不到，你可以选择随便找一个刚刚想出来的点子去实现。我相信4个人的思维火花碰撞，如果Hackathon足够纯净，你不可能找不到热爱的东西的。在Hackathon中，最切忌切忌的，就是凑合，为了做项目而去做项目。</p>
-<h2 id="u5C55_u793A_u7684_u65F6_u5019_uFF0C_u8C26_u865A_uFF0C_u4F46_u662F_u8BA9_u522B_u4EBA_u611F_u53D7_u3002"><a href="#u5C55_u793A_u7684_u65F6_u5019_uFF0C_u8C26_u865A_uFF0C_u4F46_u662F_u8BA9_u522B_u4EBA_u611F_u53D7_u3002" class="headerlink" title="展示的时候，谦虚，但是让别人感受。"></a>展示的时候，谦虚，但是让别人感受。</h2><p>展示也是相当重要的一部分，如我上文所提。当你在最后的展示的时候，你需要让所有人都能感受到你的热爱，感受到你们的想法和你们所实现的东西的激情，这时候就需要你的表达能力和感染力了。在台上不要害怕，保持谦虚是一种很好的驱赶恐慌感的方式。简单明了的让大家了解你的想法，并且通过demo的演示让大家感受到你的热爱。好的东西，才更需要一种好的途径进入每一个观众的内心。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h1 id="Hackathon__u662F_u4EC0_u4E48"><a href="#Hackathon__u662F_u4EC0_u4E48" class="heade]]>
-    </summary>
-    
-      <category term="Hackathon" scheme="http://sergiochan.github.io/tags/Hackathon/"/>
-    
-      <category term="Hacker" scheme="http://sergiochan.github.io/categories/Hacker/"/>
     
   </entry>
   

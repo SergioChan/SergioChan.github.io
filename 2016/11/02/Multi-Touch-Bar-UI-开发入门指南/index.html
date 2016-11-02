@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Multi-Touch Bar UI 开发入门指南 | Sergio Chan</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Multi-Touch Bar UI 开发入门指南 | Sergio Chan">
+    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Multi-Touch Bar UI 开发入门指南 | Sergio Chan">
+    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    
+    <meta name="author" content="Sergio Chan">
+    
+    <link rel="stylesheet" href="/css/vno.css" type="text/css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" type="text/css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://sergiochan.github.io/2016/11/02/Multi-Touch-Bar-UI-开发入门指南/"/>
+
+    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?030a47db2df6601bda0225610cd6c323";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/archives" title="" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/bio">Biography</a></li>
+            
+              <li class="navigation__item"><a href="/about">About</a></li>
+            
+              <li class="navigation__item"><a href="/portfolio">Portfolio</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" title="My Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/SergioChan" title="My Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/Sergio2Chan" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+<!-- Linkedin -->
+
+  <li class="navigation__item">
+    <a href="http://www.linkedin.com/in/sergiochan" title="Linkedin" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+
+
+
+  <li class="navigation__item">
+    <a href="mailto:cyh9211@icloud.com" title="Email" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-11-02T11:03:05.000Z" class="post-list__meta--date date">2016-11-02</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Cocoa/">Cocoa</a>
+</span>
+    </div>
+    <h1 class="post-title">Multi-Touch Bar UI 开发入门指南</h1>
+  </header>
+
+  <section class="post article-entry">
+    <script src="/assets/js/APlayer.min.js"> </script><h3 id="u5927_u81F4"><a href="#u5927_u81F4" class="headerlink" title="大致"></a>大致</h3><p>当你学会如何在你的 NSViewController 中用代码去初始化 Multi-Touch Bar 之后，我们就需要开始了解如何深入的开发 Touch Bar 上的 UI 了。根据 Apple 内部的一个说法就是 Multi-Touch Bar 实际上是运行了一个 watchOS 来管理它的视图和逻辑，所以与此同时我们也可以看到苹果官方为 Multi-Touch Bar 提供的一套 UI 控件，总共包含下面这些控件，第一个就是 Touch Bar。</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/58181fbf140db.jpg" alt=""></p>
+<ul>
+<li>Touch Bar Fixed Space</li>
+<li>Touch Bar Flexible Space</li>
+</ul>
+<p>这两个是用于在 UI 上用来填充的空间，Touch Bar 默认的 UI 是从左到右，默认左右就是挨着的，如果你需要将两个按钮什么的分开一些，定义他们之间的间隔，你需要在他们中间塞 Space。</p>
+<ul>
+<li>Touch Bar Popover</li>
+</ul>
+<ul>
+<li>Touch Bar Group</li>
+</ul>
+<p>/// BarItem 的集合，可以一起受到约束和用户的 Customization。</p>
+<ul>
+<li>Touch Bar Other Items Proxy</li>
+</ul>
+<p>/// 后面详细描述，这是和 Responder Chain 相关的一个控件，可以让响应链下层的 Touch Bar 和上层的 Touch Bar 一起显示。</p>
+<ul>
+<li>Touch Bar Scrubber</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/581837cc4601b.png" alt="https://ooo.0o0.ooo/2016/11/01/581837cc4601b.png"></p>
+<p>/// 这是一个放进 NSCustomTouchBarItem 的 NSScrubber 对象。</p>
+<ul>
+<li>Touch Bar Color Picker</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/5818386c45463.png" alt=""></p>
+<p>/// 一个 NSColorPickerTouchBarItem 对象。</p>
+<ul>
+<li>Touch Bar Character Picker</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/581838cf69274.png" alt=""></p>
+<p>/// 一个  NSCandidateListTouchBarItem 对象。</p>
+<ul>
+<li>Touch Bar Sharing Service Picker</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/5818393054d89.png" alt=""></p>
+<p>/// 一个 NSSharingServicePickerTouchBarItem 对象。</p>
+<p>这里的 Scrubber，Color Picker 和 Character Picker 这些控件就会有些陌生了，虽然看过苹果发布会的同学们对他们应该也陌生不到哪里去。这几个控件在当时发布会都有展示。分别是滑动图片或文字选择器，颜色选择器，Emoji 表情选择器以及分享选择器，他们都有自己相应的 Delegate 来处理事件。</p>
+<ul>
+<li>Touch Bar Label</li>
+<li>Touch Bar Button</li>
+<li>Touch Bar Slider</li>
+<li>Touch Bar Segmented Control</li>
+<li>Touch Bar View</li>
+</ul>
+<p>最后的五项对于大家都比较好理解，都是一些 AppKit 中的控件在 Touch Bar 中的移植，对于事件的响应和 AppKit 做法相同。</p>
+<blockquote>
+<p>当你的 macOS 应用中包含了一些自带 Touch Bar 的控件的时候，例如 NSTextField，如果你没有自定义你的 Touch Bar，那么在 Touch Bar 上也会显示相应的控件。这是预设好的。</p>
+</blockquote>
+<h3 id="NSTouchBar"><a href="#NSTouchBar" class="headerlink" title="NSTouchBar"></a>NSTouchBar</h3><p>你可以将 NSTouchBar 看成是一个 NSTouchBarItem 的数组。在运行的时候，对于不同的 NSResponder 对应的 Touch Bar 和这些 Touch Bar 所对应的 BarItem，都是用 Identifier 来标识的，尽量使用 reverse-DNS 方式的 Identifier，例如 <code>com.company-name.app-name.alphanumeric-ID</code>。</p>
+<blockquote>
+<p>这里插一句，为了接下来的说明：由于现在并没有见到过新的 MBP 真机，尚不清楚 Touch Bar 提供给用户的 Customization 是什么样的机制，不过大概也就和 Finder 的自定义类似？按照官方文档来说，应该是用户在运行的时候可以选择显示或删除哪些 BarItem 或者修改 BarItem 的排列顺序，这大概也就是为什么 Touch Bar 的 UI 是始终向左靠齐的吧。</p>
+</blockquote>
+<p>NSTouchBar 自身有一个 Identifier： <strong>customizationIdentifier</strong>，这是在运行时允许用户自定义 UI 的标识，如果不设置，用户就无法通过系统来自定义 Touch Bar 的 UI。</p>
+<p><strong>customizationAllowedItemIdentifiers</strong>，一个数组，在这里面存放的 Identifier 对应的 BarItem 是允许在运行时被用户修改样式的。</p>
+<p><strong>customizationRequiredItemIdentifiers</strong>，这个数组里面存放的是不能被移除，一定会加载的 BarItem 对应的 Identifier。</p>
+<p><strong>defaultItemIdentifiers</strong>，这是 Touch Bar 默认显示的全部 BarItem，这个参数是<strong>必须</strong>被初始化的。在这里面声明的 Identifier 随后就会在 <code>-itemForIdentifier:</code> 这个 Delegate 方法中初始化成 BarItem。给予 BarItem 的 Identifier 必须保持<strong>全局唯一</strong>，系统有另外四个预留的 Identifier：</p>
+<ul>
+<li>NSTouchBarItemIdentifierFixedSpaceSmall</li>
+<li>NSTouchBarItemIdentifierFixedSpaceLarge</li>
+<li>NSTouchBarItemIdentifierFlexibleSpace</li>
+<li>NSTouchBarItemIdentifierOtherItemsProxy</li>
+</ul>
+<p>另外，NSTouchBar 还有一个只读的属性 <strong>itemIdentifiers</strong>，这个数组里包含的是运行时当前显示的 BarItem 对应的 Identifier，无论用户在运行的时候对 Touch Bar 做了何种的 Customization，你都可以通过这个属性获得当前的状态。</p>
+<h4 id="u5982_u4F55_u8BA9_u4E00_u4E2A_BarItem__u5728_Touch_Bar__u4E0A_u5C45_u4E2D_u663E_u793A_uFF1F"><a href="#u5982_u4F55_u8BA9_u4E00_u4E2A_BarItem__u5728_Touch_Bar__u4E0A_u5C45_u4E2D_u663E_u793A_uFF1F" class="headerlink" title="如何让一个 BarItem 在 Touch Bar 上居中显示？"></a>如何让一个 BarItem 在 Touch Bar 上居中显示？</h4><p><strong>principalItemIdentifier</strong> 这个属性所对应的 BarItem 会在 Touch Bar <strong>居中</strong>，是所谓的最高优先级的 Item，如果有多层 Touch Bar 存在，也只会有最上层的 principalItem 显示出来。这里，官方文档中特别提到：</p>
+<blockquote>
+<p>Do not hard-code spacing in an attempt to ensure an item is centered. If you want a group of items to appear centered in the Touch Bar, designate the group NSTouchBarItem as the principal item.</p>
+<p>不要尝试通过添加 Space 的方法来让一个 Item 居中，如果你需要让一组 Item 居中，你可以用一个 BarItem Group 将他们包起来然后将整个 Group 设置为居中。</p>
+</blockquote>
+<h4 id="NSTouchBarDelegate"><a href="#NSTouchBarDelegate" class="headerlink" title="NSTouchBarDelegate"></a>NSTouchBarDelegate</h4><p><strong>delegate</strong>，NSTouchBarDelegate 只有一个方法，那就是  </p>
+<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(nullable <span class="variable">NSTouchBarItem</span> *)</span>touchBar:<span class="params">(<span class="variable">NSTouchBar</span> *)</span>touchBar makeItemForIdentifier:<span class="params">(<span class="variable">NSTouchBarItemIdentifier</span>)</span>identifier;</span></span><br></pre></td></tr></table></figure>
+<p>这个方法就是初始化所有 BarItem 的地方。一般来说写法就是根据 Identifier 来初始化对应的 BarItem，像这样</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="tag">if</span> ([identifier <span class="attribute">isEqualToString</span>:@<span class="string">"..."</span>])</span><br><span class="line">&#123; </span><br><span class="line">	...</span><br><span class="line">	<span class="tag">return</span> <span class="tag">BarItem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Layout__26amp_3B_Nesting"><a href="#Layout__26amp_3B_Nesting" class="headerlink" title="Layout &amp; Nesting"></a>Layout &amp; Nesting</h3><p>由于用户可以自定义需要显示的 Touch Bar 宽度，你定义好的 Touch Bar 宽度是可变的。所以苹果的建议是<strong>在设计的时候不要按照确定的宽度来设计，而植入一些动态布局的方</strong>案。如果你需要更宽的宽度，你可以使用 Popover，scrubber 或者 scroll view。</p>
+<p>在 Layout 的时候，响应链上层的 Touch Bar 是可以包含下层的 Touch Bar 的，上面在综述的时候提到过的 <strong>Other Items Proxy</strong> 就是用来实现这个功能的。只要你在初始化 Touch Bar 的时候为它的 defaultIdentifiers 加上 NSTouchBarItemIdentifierOtherItemsProxy，他就会在运行时<strong>需要的时候在这个 Identifier 所在的位置</strong>包含上来自下层的合适的 Touch Bar。这个<strong>需要的时候</strong>指的是下层的 NSResponder 调用 becomeFirstResponder 的时候。例如有一个 ViewController 自身带有一个 Touch Bar，而这个 ViewController 中带有一个 NSTextView，那么当点击这个 NSTextview ，也就是<strong>响应链下层 NSResponder 调用 becomeFirstResponder</strong> 的时候，Touch Bar 显示的是：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/5818435fa4fdd.png" alt=""></p>
+<p>而如果焦点从 TexView 失去，则恢复成 ViewController 这一层的 Touch Bar：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/58184323610b8.png" alt=""></p>
+<p>如果一个 Touch Bar 没有植入 NSTouchBarItemIdentifierOtherItemsProxy ，那么如果在响应链更底层出现了一个可以加载的 Touch Bar，那么上层的 Touch Bar 都会被隐藏。哦，并且 NSTouchBar 的 visible 属性是可以 KVO 的。</p>
+<h4 id="Responder_Chain_Search"><a href="#Responder_Chain_Search" class="headerlink" title="Responder Chain Search"></a>Responder Chain Search</h4><p>所以 Touch Bar UI 的加载顺序和 UIView 的响应链类似，都是穿过整个响应链，从最底层开始向上寻找，如果遇到了 otherItemsProxy ， 则会将两者合并起来之后继续往上遍历，直到找到最上层，生成一个最后加载出来的 Touch Bar。</p>
+<blockquote>
+<p>Touch bars 的加载是通过查找指定的遵循了 NSTouchBarProvider Protocol 的组件来完成的。按照从响应链上层往下的顺序依次是：</p>
+<ul>
+<li>the application delegate</li>
+<li>the application object itself</li>
+<li>the main window’s window controller</li>
+<li>the main window’s delegate</li>
+<li>the main window itself</li>
+<li>the main window’s first responder</li>
+<li>the key window’s window controller</li>
+<li>the key window’s delegate</li>
+<li>the key window itself</li>
+<li>the key window’s first responder</li>
+</ul>
+<p>如果上面这些对象是 NSResponder 或者 NSResponder 的子类，以该对象为起点的响应链也会被包括进来。例如 AppDelegate 原本是 NSObject，但是<a href="http://stackoverflow.com/questions/6893221/why-does-appdelegate-inherit-from-uiresponder" target="_blank" rel="external">在 iOS 上 AppDelegate 就是继承于 UIResponder</a> ，这是因为这样 AppDelegate 就可以成为整个响应链的最上层了。因此<strong>如果我们将 AppDelegate 改为继承于 NSResponder</strong> ，那么在 AppDelegate 层也可以加上一层 Touch Bar。 </p>
+<p>例如在一个一般结构的应用中，这个响应链的查找顺序是这样的：</p>
+<ul>
+<li>Application delegate</li>
+<li>Application</li>
+<li>key window controller</li>
+<li>key window delegate</li>
+<li>key window</li>
+<li>view controller (closest to root of window)</li>
+<li>view (closest to root of window)</li>
+<li>intermediate view controllers and views</li>
+<li>key window’s first responder’s view controller</li>
+<li>key window’s first responder</li>
+</ul>
+</blockquote>
+<h4 id="Customization_Boundary"><a href="#Customization_Boundary" class="headerlink" title="Customization Boundary"></a>Customization Boundary</h4><p>那么对于最后显示的 Touch Bar 来说，每个 Touch Bar 的 Customization 属性依然管用。如果是 A Bar包含了 B Bar，那么对于 B Bar 的 Customization 是不能超出 B Bar 的范围的。例如有：</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">bar.defaultItemIdentifiers =<span class="annotation">@[<span class="constant">IdentifierA</span>,<span class="constant">IdentifierB</span>, <span class="constant">NSTouchBarItemIdentifierOtherItemsProxy</span>,<span class="constant">IdentifierC</span>]</span>;</span><br></pre></td></tr></table></figure>
+<p>这个 Bar 假设为 A Bar，在他的下层有一个 B Bar，那么在 AB 同时显示的时候，如果对 B Bar 的 Item 进行 Customization，那么是不能移动 IdentifierA，IdentifierB 和 IdentifierC 的位置的。</p>
+<h4 id="Visual_Priority"><a href="#Visual_Priority" class="headerlink" title="Visual Priority"></a>Visual Priority</h4><p><strong>视图优先级</strong>。由于你所开发的 Touch Bar 在运行的时候有可能被用户修改宽度，因此如果你有一排 BarItem，他们会从右往左依次被挤掉，这时候如果右边有一些重要的 BarItem 存在，你就需要为不同的 BarItem 设置不同的视图优先级，这样即使宽度变化，在重新 Layout 的时候也会按照定义好的视图优先级排列 BarItem。</p>
+<p>系统提供了三种默认的枚举类型视图优先级，分别为 NSTouchBarItemPriorityHigh， NSTouchBarItemPriorityNormal 和 NSTouchBarItemPriorityLow，对应了 1000，0 和 -1000 的 float 类型的值，因此你也可以直接为 BarItem 设置 float 类型的优先级。</p>
+<h3 id="u7528_Storyboard__u6765_u5B9A_u4E49_u4F60_u7684_Multi-Touch_Bar"><a href="#u7528_Storyboard__u6765_u5B9A_u4E49_u4F60_u7684_Multi-Touch_Bar" class="headerlink" title="用 Storyboard 来定义你的 Multi-Touch Bar"></a>用 Storyboard 来定义你的 Multi-Touch Bar</h3><p>讲了这么多，用代码生成 Touch Bar 多累啊，我们来看看如何用 Storyboard 来创建吧。</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/01/581844c5bc04f.jpg" alt=""></p>
+<p>方法很简单，直接往你的 ViewController 里面从右下角拖一个 Touch Bar 过来就行了。然后往里面添加控件，对于不同的控件，Delegate，Datasource 和控件的触发事件，都是用 Control-Drag 的方法将引用加到你的 .m 文件里去。</p>
+<h3 id="u5404_u79CD_u63A7_u4EF6_u7684_u5177_u4F53_u7528_u6CD5"><a href="#u5404_u79CD_u63A7_u4EF6_u7684_u5177_u4F53_u7528_u6CD5" class="headerlink" title="各种控件的具体用法"></a>各种控件的具体用法</h3><p>接下来该是一个个来讲控件了，也是大家在之后的开发中最实用的部分啦。</p>
+<h4 id="NSColorPickerTouchBarItem"><a href="#NSColorPickerTouchBarItem" class="headerlink" title="NSColorPickerTouchBarItem"></a>NSColorPickerTouchBarItem</h4><p>colorPicker 有三种初始化方法：</p>
+<ul>
+<li>colorPickerWithIdentifier</li>
+<li>textColorPickerWithIdentifier</li>
+<li>strokeColorPickerWithIdentifier</li>
+</ul>
+<p>这三种方法的区别其实就是在按钮显示的图标上，一个是常规的颜色选择器，第二个代表的是字体颜色选择器，第三种初始化代表的是边框颜色选择器。初始化之后的逻辑都是一样的：</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line">colorPickerItem.<span class="keyword">target</span> = self;</span><br><span class="line">colorPickerItem.action = <span class="annotation">@selector</span>(ColorAction:);</span><br></pre></td></tr></table></figure>
+<p>然后在 <code>ColorAction</code> 这个方法中获得选择到的颜色：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">((<span class="tag">NSColorPickerTouchBarItem</span> *)<span class="tag">sender</span>)<span class="class">.color</span></span><br></pre></td></tr></table></figure>
+<p><strong>@property colorList</strong></p>
+<p>你也可以通过修改 <strong>colorList</strong> 这个属性来自定义 Color Picker 能够选取的颜色列表。如果不设置这个属性，则默认显示的是系统的取色盘，各种颜色都有：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819676729847.png" alt=""></p>
+<p>当给了一个 list 之后：</p>
+<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line"><span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> = [[<span class="name">NSColorList</span> <span class="atom">alloc</span>] <span class="atom">init</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">redColor</span>] <span class="atom">forKey</span>:@<span class="string">"Red"</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">greenColor</span>] <span class="atom">forKey</span>:@<span class="string">"Green"</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">blueColor</span>] <span class="atom">forKey</span>:@<span class="string">"Blue"</span>];</span><br></pre></td></tr></table></figure>
+<p>显示的就是这样：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/58196802031d6.png" alt=""></p>
+<h4 id="NSSliderTouchBarItem"><a href="#NSSliderTouchBarItem" class="headerlink" title="NSSliderTouchBarItem"></a>NSSliderTouchBarItem</h4><p>初始化：</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">sliderTouchBarItem.slider.minValue = 0.0f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.maxValue = 100.0f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.continuous = YES<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.target = self<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.action = @selector(sliderChanged:)<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.label = @"Slider"<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.customizationLabel = @"Slider"<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这里面的 action 会在 slider 的值每一次发生改变的时候调用。</p>
+<p>值得一提的是 SliderItem 还提供了两个 AccessoryView 的自定义空间，左右各一个，分别叫做 <strong>minimumValueAccessory</strong> 和 <strong>maximumValueAccessory</strong>，可以用 NSImage 来初始化他们：</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSSliderAccessory</span> *minSliderAccessory = [<span class="built_in">NSSliderAccessory</span> accessoryWithImage:image];</span><br></pre></td></tr></table></figure>
+<p>其他的自定义都是围绕着 NSSlider 做的了。</p>
+<h4 id="NSScrubber"><a href="#NSScrubber" class="headerlink" title="NSScrubber"></a>NSScrubber</h4><p>这是一个为了 Touch Bar 而全新创建的控件，在发布会上有着重的展示。他需要单独的添加到一个 TouchBarItem 里去：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">scrubber = [[NSScrubber alloc] initWithFrame:NSMakeRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">310</span>, <span class="number">30</span>)];</span><br><span class="line"><span class="comment">// Height should be 30 </span></span><br><span class="line">scrubber.delegate = self;   </span><br><span class="line">scrubber.dataSource = self;</span><br></pre></td></tr></table></figure>
+<p>NSScrubber 类似 UICollectionView ，也是有基于 ItemView 的复用机制的，你可以继承 NSScrubberItemView 来写你自己需要的 CustomItemView。然后在初始化之后需要为 ItemView 加上一个复用的标识：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">[scrubber registerClass:[NSScrubberItemView <span class="class"><span class="keyword">class</span>] <span class="title">forItemIdentifier</span>:<span class="typename">ScrubberItemIdentifier];</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>@property showsAdditionalContentIndicators</strong> </p>
+<p>代表的是当左右滑动还有更多内容的时候，在左右侧会显示一块渐变的蒙层，用来表示滑动还有更多内容，你可以选择是否显示。</p>
+<p><strong>@property selectedIndex</strong> </p>
+<p>即当前选中的 ItemView 的 index，可以直接设置。</p>
+<p><strong>@property showsArrowButtons</strong> </p>
+<p>代表的是是否显示左右移动的箭头按钮，如果显示的话你也可以点击左右箭头的按钮来滑动列表。</p>
+<p><strong>@property backgroundColor</strong> </p>
+<p>NSScrubber 的背景颜色，显示在内容之后，如果 <strong>backgroundView</strong> 为空才会显示，同时也是只有 NSScrubberTextItemView 类型的 ItemView 才会显示出后面的背景颜色。</p>
+<p><strong>@property DataSource</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">NSInteger</span>)numberOfItemsForScrubber:(<span class="built_in">NSScrubber</span> *)scrubber</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSScrubberItemView</span> *)scrubber:(<span class="built_in">NSScrubber</span> *)scrubber viewForItemAtIndex:(<span class="built_in">NSInteger</span>)index</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">NSScrubberItemVie</span> *itemView = [scrubber makeItemWithIdentifier:ScrubberItemIdentifier owner:<span class="literal">nil</span>];</span><br><span class="line">	<span class="keyword">return</span> itemView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据源加载比较简单，一个给 Item 的总数，另一个给 ItemView 就行，上面给出了最简单的示例。</p>
+<p><strong>@property Delegate</strong></p>
+<p>NSScrubber 有好几个 Delegate 可以调用，也都比较好理解，一般来说实现第一个选中回调就足够了：</p>
+<ul>
+<li>didSelectItemAtIndex:(NSInteger)selectedIndex </li>
+<li>didHighlightItemAtIndex:(NSInteger)highlightedIndex </li>
+<li>didChangeVisibleRange:(NSRange)visibleRange</li>
+<li>didBeginInteractingWithScrubber:(NSScrubber *)scrubber</li>
+<li>didFinishInteractingWithScrubber:(NSScrubber *)scrubber</li>
+<li>didCancelInteractingWithScrubber:(NSScrubber *)scrubber</li>
+</ul>
+<p><strong>@property mode</strong></p>
+<p>这个代表的是 NSScrubber 的滑动模式，一共就两种，<strong>NSScrubberModeFree</strong> 和 <strong>NSScrubberModeFixed</strong>。</p>
+<p>Free 模式下的 Scrubber 可以自由的滑动，但是你必须在<strong>滑动之后再次单击 Item</strong> 来选中，而 Fixed 模式下的 Scrubber 是不能自由滑动的，但是对于 ItemView 的选中是<strong>跟随手指的拖动</strong>的，不需要让手指离开 Touch Bar 再次点击选中。对于宽度固定，或者不需要用户再滑出范围的 Scrubber 可以使用 Fixed 模式。</p>
+<p><strong>@property SelectionStyle</strong></p>
+<p>Scrubber 给选中样式提供了很方便的自定义属性，有 <strong>selectionBackgroundStyle</strong> 和 <strong>selectionOverlayStyle</strong>，同时也可以通过设置 <strong>floatsSelectionViews</strong> 为 YES 让选中 View 切换的时候可以加上从 A 点到 B 点流畅的移动动画，而不是从 A 点消失然后从 B 点出现这样的动画。</p>
+<p>selectionBackgroundStyle 和 selectionOverlayStyle 分别是选中的时候<strong>背景</strong>和<strong>表面蒙层</strong>的样式，只提供了 outlineOverlayStyle</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819b0f9959ad.png" alt=""></p>
+<p>和 roundedBackgroundStyle 两种默认样式：</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819b17f754fb.png" alt=""></p>
+<p>当然，这个 SelectionStyle 也是高度自定义的，但是你需要继承两个视图的基类来实现：</p>
+<ol>
+<li>定义一个继承于 NSScrubberSelectionStyle 的 CustomStyle </li>
+<li>重载 <code>-(nullable __kindof NSScrubberSelectionView *)makeSelectionView</code> 这个方法</li>
+<li>定义一个继承于 NSScrubberSelectionView 的 CustomSelectionView</li>
+<li>自定义 CustomSelectionView 的样式</li>
+<li>在重载的方法中返回 CustomSelectionView</li>
+</ol>
+<p><strong>@property scrubberLayout</strong></p>
+<p>类似于 UICollectionView ，NSScrubber 的 layout 也是由 <strong>NSScrubberLayout</strong> 来控制的。系统提供了两种默认的 Layout，<strong>NSScrubberFlowLayout</strong> 和 <strong>NSScrubberProportionalLayout</strong>。前者可以通过 LayoutDelegate 来给出每一个 Item 所占的宽度，后者则不需要通过 delegate 而是直接将 Item 的宽度设置为 Scrubber 的可视区域按照 Item 的数量平分之后的宽度。你可以这样设置：</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">NSScrubberLayout *scrubberLayout<span class="comment">;</span></span><br><span class="line">scrubberLayout = [[NSScrubberFlowLayout alloc] init]<span class="comment">;</span></span><br><span class="line">// or:</span><br><span class="line">scrubberLayout = [[NSScrubberProportionalLayout alloc] init]<span class="comment">;</span></span><br><span class="line">scrubber.scrubberLayout = scrubberLayout<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>对于 NSScrubberFlowLayoutDelegate 你需要实现这一个方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">NSSize</span>)scrubber:(<span class="built_in">NSScrubber</span> *)scrubber layout:(<span class="built_in">NSScrubberFlowLayout</span> *)layout sizeForItemAtIndex:(<span class="built_in">NSInteger</span>)itemIndex</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">NSMakeSize</span>(width, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="NSSharingServicePickerTouchBarItem"><a href="#NSSharingServicePickerTouchBarItem" class="headerlink" title="NSSharingServicePickerTouchBarItem"></a>NSSharingServicePickerTouchBarItem</h4><p>NSSharingServicePickerTouchBarItem 的 delegate 只有一个委托方法需要实现：</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">- (<span class="constant">NSArray</span> *)<span class="symbol">itemsForSharingServicePickerTouchBarItem:</span>(<span class="constant">NSSharingServicePickerTouchBarItem</span> *)pickerTouchBarItem</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="annotation">@[...]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里返回的对象一定要是能够支持 NSPasteboardWriting 协议或者是继承于 NSItemProvider 的对象，例如文本，图片或者 NSURL，可以参考 <a href="https://developer.apple.com/reference/foundation/nsitemprovider?language=objc" target="_blank" rel="external">NSItemProvider 的官方文档</a>。然后就会在分享的时候传到分享的应用里去。</p>
+<h4 id="NSPopoverTouchBarItem"><a href="#NSPopoverTouchBarItem" class="headerlink" title="NSPopoverTouchBarItem"></a>NSPopoverTouchBarItem</h4><p>首先，我们来看如何自定义 Popover 在未点击状态下的显示 Button。</p>
+<ul>
+<li>collapsedRepresentation 如果不为空，则显示一个自定义的 NSView，如果为空，则加载不为空的下面两个属性</li>
+<li>collapsedRepresentationImage 给 Popover 的 button 添加一个 NSImage</li>
+<li>collapsedRepresentationLabel 给 Popover 的 button 添加一个 <strong>NSString</strong></li>
+</ul>
+<p>Popover 其实是在点击按钮之后弹出一个<strong>新的 Touch Bar</strong>，你需要再初始化一个新的 Touch Bar 并在同样的 Delegate 中返回对应的 BarItem，注意它和你之前的 Touch Bar 不是响应链上下层的关系，因此不会出现 Nesting 即上层的 Touch Bar 包含下层的 Touch Bar，而是完全覆盖了下面的 Touch Bar。如果你将新的 Touch Bar 赋值给了 <strong>pressAndHoldTouchBar</strong> 而不是 <strong>popoverTouchBar</strong>，你还可以实现按住按钮显示 Popover 且松开手指返回。</p>
+<h4 id="Touch_Bar_Image_Template"><a href="#Touch_Bar_Image_Template" class="headerlink" title="Touch Bar Image Template"></a>Touch Bar Image Template</h4><p>最后还要为大家提供一个便利，苹果为了支持 Touch Bar 的开发，同时也为了统一设计样式，在 NSImage 中添加了非常多 Button 的模板图片，由于提供的模板太多了，不一一列出，就把列表附上，如果有同学开发的时候有需要可以去 NSImage 的头文件里面找，如果系统模板有的话可以直接使用。</p>
+<p><img src="https://ooo.0o0.ooo/2016/11/02/5819c14c90072.png" alt=""></p>
+<h3 id="u6700_u540E"><a href="#u6700_u540E" class="headerlink" title="最后"></a>最后</h3><p>Touch Bar 开发的新特性和坑肯定还有很多，现在新的 MBP 都还没发货，相信等更多的开发者开始真正开发上面的插件之后会有更丰富的经验和总结产生，我这篇博客也就是投石问路。然而，对 Touch Bar 十分感兴趣的我已经等不及开始研究它并且开始准备在上面做一些有意思的东西了！</p>
+
+  </section>
+
+</article>
+
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sergiochan.github.io/2016/11/02/Multi-Touch-Bar-UI-开发入门指南/" data-title="Multi-Touch Bar UI 开发入门指南" data-url="http://sergiochan.github.io/2016/11/02/Multi-Touch-Bar-UI-开发入门指南/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sergiochan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+
+     
+</body>
+</html>
