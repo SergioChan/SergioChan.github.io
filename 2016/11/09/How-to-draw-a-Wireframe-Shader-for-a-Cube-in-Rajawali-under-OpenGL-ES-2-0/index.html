@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>How to draw a Wireframe Shader for a Cube in Rajawali under OpenGL ES 2.0 | Sergio Chan</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="How to draw a Wireframe Shader for a Cube in Rajawali under OpenGL ES 2.0 | Sergio Chan">
+    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to draw a Wireframe Shader for a Cube in Rajawali under OpenGL ES 2.0 | Sergio Chan">
+    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    
+    <meta name="author" content="Sergio Chan">
+    
+    <link rel="stylesheet" href="/css/vno.css" type="text/css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" type="text/css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://sergiochan.github.io/2016/11/09/How-to-draw-a-Wireframe-Shader-for-a-Cube-in-Rajawali-under-OpenGL-ES-2-0/"/>
+
+    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?030a47db2df6601bda0225610cd6c323";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/archives" title="" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/bio">Biography</a></li>
+            
+              <li class="navigation__item"><a href="/about">About</a></li>
+            
+              <li class="navigation__item"><a href="/portfolio">Portfolio</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" title="My Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/SergioChan" title="My Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/Sergio2Chan" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+<!-- Linkedin -->
+
+  <li class="navigation__item">
+    <a href="http://www.linkedin.com/in/sergiochan" title="Linkedin" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+
+
+
+  <li class="navigation__item">
+    <a href="mailto:cyh9211@icloud.com" title="Email" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-11-09T09:41:34.000Z" class="post-list__meta--date date">2016-11-09</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/GLSL/">GLSL</a>, <a class="tag-link" href="/tags/OpenGL-ES/">OpenGL ES</a>, <a class="tag-link" href="/tags/Shader/">Shader</a>, <a class="tag-link" href="/tags/Wireframe/">Wireframe</a>
+</span>
+    </div>
+    <h1 class="post-title">How to draw a Wireframe Shader for a Cube in Rajawali under OpenGL ES 2.0</h1>
+  </header>
+
+  <section class="post article-entry">
+    <script src="/assets/js/APlayer.min.js"> </script><blockquote>
+<p>PS. This will be my first blog totally written in english.</p>
+</blockquote>
+<p><img src="https://ooo.0o0.ooo/2016/11/09/58227c9f45765.png" alt=""></p>
+<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><blockquote>
+<p><strong>Environment:</strong> </p>
+<p>GLSL ES Version 100</p>
+<p>OpenGL ES Version 2.0</p>
+<p>Android 6.0</p>
+<p>Android OpenGL ES 2.0/3.0 Engine <a href="https://github.com/Rajawali/Rajawali" target="_blank" rel="external">Rajawali</a></p>
+</blockquote>
+<h2 id="First_Discuss"><a href="#First_Discuss" class="headerlink" title="First Discuss"></a>First Discuss</h2><p>There are several ways to draw a wireframe for a cube in Rajawali engine. We can use </p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="tag">cube</span><span class="class">.setDrawingMode</span>(<span class="tag">GLES20</span><span class="class">.GL_LINE_STRIP</span>);</span><br></pre></td></tr></table></figure>
+<p>to tell the cube to draw in wireframe mode. But because a Cube, or we can say, every Polygons or 3D Objects in OpenGL are formed by lots of dots, lines and triangles, setting drawing mode will only show you such images like below : </p>
+<p><img src="https://ooo.0o0.ooo/2016/11/09/5822d63584db6.png" alt=""></p>
+<p>And, when you set DrawingMode to GL_LINE_STRIP, your custom vertex or fragment shader won’t work as usual. So you will see a cube full of lines, doesn’t it look messy for you?</p>
+<p>In order to draw wireframe using fragment shader, we can simply use following fragement shader :</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">precision mediump <span class="keyword">float</span>;</span><br><span class="line"></span><br><span class="line">varying vec2 vTextureCoord;</span><br><span class="line">varying vec4 vColor;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        vec4 newColor = vec4(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">        <span class="keyword">float</span> x = min(vTextureCoord.s, <span class="number">1.0</span> - vTextureCoord.s);</span><br><span class="line">        <span class="keyword">float</span> y = min(vTextureCoord.t, <span class="number">1.0</span> - vTextureCoord.t);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">float</span> line_width = <span class="number">0.01</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (x &lt; line_width) &#123;</span><br><span class="line">            newColor.g = <span class="number">1.0</span>;</span><br><span class="line">            newColor.r = <span class="number">1.0</span>;</span><br><span class="line">            newColor.b = <span class="number">1.0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (y &lt; line_width) &#123;</span><br><span class="line">            newColor.g = <span class="number">1.0</span>;</span><br><span class="line">            newColor.r = <span class="number">1.0</span>;</span><br><span class="line">            newColor.b = <span class="number">1.0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        gl_FragColor = newColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>However, there is still a problem here. While using this shader, if you make your cube scale in whichever direction, this drawing ‘Line’ will always scale along with the cube. Obviously it’s because the 0.01 we set here is a relative value. But the <code>vTextureCoord</code> we can get here which was passed by our vertex shader is only a <code>vec2</code> vector represented a 2D coordinate on this mesh, which can only range from (0.0 , 0.0) to (1.0 , 1.0). This means <code>vTextureCoord</code> can only represent a relative coordinate, which doesn’t help us at all.</p>
+<p>So, here we have to use the help from vertex shader. In vertex shader, we could get some <code>attribute</code> variables that are somehow useful. In OpenGL ES, we have three kinds of type specifiers: <strong>uniform</strong>, <strong>attribute</strong> and <strong>varying</strong>. Uniform variables are used for transmitting datas from CPU to GPU, the usage is as below :</p>
+<ul>
+<li>Uniform variables are binded in your shader class in CPU and GPU so you have to subclass the Shader Base Class and override some methods here. First declare an int handle for binding location  and the variables that hold your data along with the variable name in your shader (glsl) file.</li>
+</ul>
+<figure class="highlight processing"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">private</span> <span class="keyword">String</span> uMyDataName = <span class="string">"uMyData"</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">int</span> muMyDataHandle;</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">float</span> MyData;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Remember to set the default value for your data when initializing.</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyShader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	MyData = <span class="number">1.0f</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Override setLocations method to get uniform variable location from programHandle.</li>
+</ul>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setLocations</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> programHandle)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.setLocations(programHandle);</span><br><span class="line">	muMyDataHandle = getUniformLocation(programHandle, uMyDataName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Override applyParams method to apply every change of your uniform variable, also you can call <code>glUniform1f</code> method directly to pass the value into shader.</li>
+</ul>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">applyParams</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.applyParams();</span><br><span class="line">	GLES20.glUniform1f(muMyDataHandle, MyData);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>In your shader (glsl) file, add your new variable and call this variable wherever you want.</li>
+</ul>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line">uniform <span class="keyword">float</span> uMyData;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// get uMyData here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>When you want to change the value of <code>uMyData</code> , just change  the value of <code>MyShader.MyData</code>.</li>
+</ul>
+<p>Attribute variables can only be used in vertex shaders. In Rajawali, you can call <code>addAttribute</code> to directly add custom attribute and use <code>GLES20.glVertexAttribPointer</code> to set value for the attribute variable handler. Here we have several attribute variables as below :</p>
+<ul>
+<li>aPosition</li>
+<li>aTextureCoord</li>
+<li>aNormal</li>
+<li>aVertexColor</li>
+</ul>
+<p>Among them, <strong>aPosition</strong> is the most useful variable for us, it represents the vector from (0,0,0) for current vertex in model projection. <strong>aTextureCoord</strong> is the source of <strong>vTextureCoord</strong> in fragment shader. As you can see, <strong>vTextureCoord</strong> has a type specifier ‘<strong>varying</strong>‘, it’s used for transmitting variables from vertex shader to fragment shader. Here it’s involved with some concept of the <strong>pipline</strong> procedure for OpenGL, what we need to know is that we could declare <strong>‘varying float A’</strong> both in vertex shader and fragment shader at the same time, while write in vertex shader and read in fragment shader.</p>
+<h3 id="Let_u2019s_begin_21"><a href="#Let_u2019s_begin_21" class="headerlink" title="Let’s begin!"></a>Let’s begin!</h3><p>So, here, in order to solve the scaling problem mentioned above, we declare three scale value for x, y and z :</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">uniform</span> <span class="keyword">float</span> uScaleZ;</span><br><span class="line"><span class="keyword">uniform</span> <span class="keyword">float</span> uScaleX;</span><br><span class="line"><span class="keyword">uniform</span> <span class="keyword">float</span> uScaleY;</span><br><span class="line"></span><br><span class="line"><span class="comment">// We should get current width from CPU</span></span><br><span class="line"><span class="keyword">uniform</span> <span class="keyword">float</span> uWidth;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pass everything above to fragment shader</span></span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vScaleZ;</span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vScaleX;</span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vScaleY;</span><br><span class="line"></span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vWidth;</span><br></pre></td></tr></table></figure>
+<p>And make the vertex scale in vertex shader by changing its position :</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">vec3 directionVec = vec3(aPosition.x,aPosition.y,aPosition.z)<span class="comment">;</span></span><br><span class="line">vec4 timeVec = vec4(directionVec, 1.0)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">// Scale each axis</span><br><span class="line">timeVec.x = directionVec.x * uScaleX<span class="comment">;</span></span><br><span class="line">timeVec.y = directionVec.y * uScaleY<span class="comment">;</span></span><br><span class="line">timeVec.z = directionVec.z * uScaleZ<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">vec4 newPosition = uMVPMatrix * timeVec<span class="comment">;</span></span><br><span class="line">gl_Position = newPosition<span class="comment">;</span></span><br><span class="line">vTextureCoord = aTextureCoord<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>In fact, because we are going to draw colors on mesh in fragment shader, we should pass all the variables about scaling and position from vertex shader to fragment shader. So we have to add a <code>vec3</code> :</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">varying</span> <span class="keyword">vec3</span> vTimeVec;</span><br></pre></td></tr></table></figure>
+<p>And in <code>main()</code> add :</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">vec3 tmpVec = vec3(timeVec.x,timeVec.y,timeVec.z)<span class="comment">;</span></span><br><span class="line">vTimeVec = tmpVec<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Next_2C_what_should_we_do_in_fragment_shader_3F"><a href="#Next_2C_what_should_we_do_in_fragment_shader_3F" class="headerlink" title="Next, what should we do in fragment shader?"></a>Next, what should we do in fragment shader?</h3><p>First, declare everything we need to get from vertex shader :</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">varying</span> <span class="keyword">vec2</span> vTextureCoord;</span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">vec4</span> vColor;</span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">vec3</span> vTimeVec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vScaleZ;</span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vScaleX;</span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vScaleY;</span><br><span class="line"></span><br><span class="line"><span class="keyword">varying</span> <span class="keyword">float</span> vWidth;</span><br></pre></td></tr></table></figure>
+<p>The most important step here is that when we set width for line, fragment shader should exactly split it into two parts which are drawn on different meshes. It’s easy to understand, 1/2 for left side and the other 1/2 for the right side.</p>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line">const float <span class="literal">GT</span> = <span class="number">1.0</span>;</span><br><span class="line">const float <span class="literal">LT</span> = <span class="number">0.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="literal">void</span> main() &#123;</span><br><span class="line">    vec4 newCol<span class="subst">or</span> = vec4(<span class="number">0.0</span>,<span class="number">0.0</span>,<span class="number">0.0</span>,<span class="number">1.0</span>);</span><br><span class="line">    float lineWidth = <span class="number">0.004</span>;</span><br><span class="line"></span><br><span class="line">    float leftX = - (vWidth * vScaleX / <span class="number">2.0</span>) + lineWidth;</span><br><span class="line">    float rightX = (vWidth * vScaleX / <span class="number">2.0</span>) - lineWidth / <span class="number">2.0</span>;</span><br><span class="line">    </span><br><span class="line">    float bottomY = - (vWidth * vScaleY / <span class="number">2.0</span>) + lineWidth;</span><br><span class="line">    float topY = (vWidth * vScaleY / <span class="number">2.0</span>) - lineWidth / <span class="number">2.0</span>;</span><br><span class="line"></span><br><span class="line">    float backZ = - (vWidth * vScaleZ / <span class="number">2.0</span>) + lineWidth;</span><br><span class="line">    float frontZ = (vWidth * vScaleZ / <span class="number">2.0</span>) - lineWidth / <span class="number">2.0</span>;</span><br><span class="line"></span><br><span class="line">    float <span class="literal">rX</span> = smoothstep(leftX,rightX,vTimeVec<span class="built_in">.</span>x);</span><br><span class="line">    float rZ = smoothstep(backZ,frontZ,vTimeVec<span class="built_in">.</span>z);</span><br><span class="line">    float rY = smoothstep(bottomY,topY,vTimeVec<span class="built_in">.</span>y);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">GT</span> <span class="subst">&amp;&amp;</span> rY == <span class="literal">GT</span>) <span class="subst">||</span></span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">GT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">GT</span>) <span class="subst">||</span></span><br><span class="line">    (rY == <span class="literal">GT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">GT</span>) <span class="subst">||</span></span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">LT</span> <span class="subst">&amp;&amp;</span> rY == <span class="literal">LT</span>) <span class="subst">||</span></span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">LT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">LT</span>) <span class="subst">||</span></span><br><span class="line">    (rY == <span class="literal">LT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">LT</span>) <span class="subst">||</span></span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">GT</span> <span class="subst">&amp;&amp;</span> rY == <span class="literal">LT</span>) <span class="subst">||</span></span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">GT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">LT</span>) <span class="subst">||</span></span><br><span class="line">    (rY == <span class="literal">GT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">LT</span>) <span class="subst">||</span></span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">LT</span> <span class="subst">&amp;&amp;</span> rY == <span class="literal">GT</span>) <span class="subst">||</span></span><br><span class="line">    (<span class="literal">rX</span> == <span class="literal">LT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">GT</span>) <span class="subst">||</span></span><br><span class="line">    (rY == <span class="literal">LT</span> <span class="subst">&amp;&amp;</span> rZ == <span class="literal">GT</span>))&#123;</span><br><span class="line">    	<span class="comment">// Set your custom line color here</span></span><br><span class="line">         newCol<span class="subst">or</span><span class="built_in">.</span>g = <span class="number">0.659</span>;</span><br><span class="line">         newCol<span class="subst">or</span><span class="built_in">.</span>r = <span class="number">0.976</span>;</span><br><span class="line">         newCol<span class="subst">or</span><span class="built_in">.</span>b = <span class="number">0.192</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    gl_FragCol<span class="subst">or</span> = newCol<span class="subst">or</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Some_more_tricks_with_scaling"><a href="#Some_more_tricks_with_scaling" class="headerlink" title="Some more tricks with scaling"></a>Some more tricks with scaling</h3><p><img src="https://ooo.0o0.ooo/2016/11/09/5822e8cb5bcc5.png" alt=""></p>
+<p>As you can see from the image above, the 0 point for y and z axis of the model projection is in the middle of the cube. It’s hard to modify a cube’s anchor point here because there is no concept of anchor point here. But when we scale our cube, we may want it to scale based on one of its surfaces. How can we do that? I used method below to implement a demo for bottom-based and top-based scaling :</p>
+<ul>
+<li>In vertex shader, change the shader script here :</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// uScaleMode :</span></span><br><span class="line"><span class="comment">// 1: top based</span></span><br><span class="line"><span class="comment">// 2: bottom based</span></span><br><span class="line"></span><br><span class="line">timeVec.x = directionVec.x * uScaleX;</span><br><span class="line">timeVec.y = directionVec.y * uScaleY * <span class="number">2.0</span>;</span><br><span class="line">timeVec.z = directionVec.z * uScaleZ;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> (uScaleMode == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (timeVec.y &lt; <span class="number">0.0</span>) &#123;</span><br><span class="line">        timeVec.y = <span class="number">0.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (timeVec.y &gt; <span class="number">0.0</span>) &#123;</span><br><span class="line">        timeVec.y = <span class="number">0.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>In fragment shader :</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="title">float</span> bottomY;</span><br><span class="line"><span class="title">float</span> topY;</span><br><span class="line"></span><br><span class="line"><span class="title">if</span> (vScaleMode == <span class="number">1</span>.<span class="number">0</span>) &#123;</span><br><span class="line">    <span class="title">bottomY</span> = lineWidth;</span><br><span class="line">    <span class="title">topY</span> = vWidth * vScaleY - lineWidth / <span class="number">2</span>.<span class="number">0</span>;</span><br><span class="line">&#125; <span class="title">else</span> &#123;</span><br><span class="line">    <span class="title">bottomY</span> =  - vWidth * vScaleY + lineWidth;</span><br><span class="line">    <span class="title">topY</span> = - lineWidth / <span class="number">2</span>.<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="How_to_rorate_using_MVPMatrix__3F"><a href="#How_to_rorate_using_MVPMatrix__3F" class="headerlink" title="How to rorate using MVPMatrix ?"></a>How to rorate using MVPMatrix ?</h3><p>Here is a discussion on <a href="http://stackoverflow.com/questions/15837177/using-matrix-rotate-in-opengl-es-2-0" target="_blank" rel="external">stackoverflow</a>.</p>
+<p>In Rajawali, we can also use MVPMatrix to rotate the object. Although Rajawali provides us method like <code>material.setMVPMatrix(mvpMatrix);</code> to set MVPMatrix, I found it not working correctly. The matrix cannot be correctly passed into vertex shader. So I add another uniform variable here, named it <code>uCMVPMatrix</code>.</p>
+<p>In our custom Renderer which is a subclass of <code>RajawaliRenderer</code>,  add these variables :</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> Matrix4 mvpMatrix;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span>[] mvpMatrixValue = <span class="keyword">new</span> <span class="keyword">double</span>[<span class="number">16</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> final <span class="keyword">double</span>[] mModelMatrix = <span class="keyword">new</span> <span class="keyword">double</span>[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span>[] mTempMatrix = <span class="keyword">new</span> <span class="keyword">double</span>[<span class="number">16</span>];</span><br></pre></td></tr></table></figure>
+<p>When you finished initialization of your cube, get the MVPMatrix from it directly using :</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">cube = new Cube(...)<span class="comment">;</span></span><br><span class="line">mvpMatrix = cube.getModelViewProjectionMatrix()<span class="comment">;</span></span><br><span class="line">mvpMatrixValue = mvpMatrix.getDoubleValues()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>Then, in <code>onRender</code>, doing Matrix calculation to rotate the cube :</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">@<span class="function">Override</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRender</span><span class="params">(final <span class="keyword">long</span> elapsedTime, final <span class="keyword">double</span> deltaTime)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	Matrix.setIdentityM(mModelMatrix, <span class="number">0</span>); <span class="comment">// initialize to identity matrix</span></span><br><span class="line">    <span class="keyword">long</span> time = SystemClock.uptimeMillis() % <span class="number">4000L</span>;</span><br><span class="line">    <span class="keyword">float</span> mAngle = <span class="number">0.090f</span> * ((<span class="keyword">int</span>) time);</span><br><span class="line">    Matrix.setRotateM(mModelMatrix, <span class="number">0</span>, mAngle, <span class="number">0</span>, <span class="number">1.0f</span>, <span class="number">0.0</span>);</span><br><span class="line">    </span><br><span class="line">    mTempMatrix = mvpMatrixValue.clone();</span><br><span class="line">    Matrix.multiplyMM(mvpMatrixValue, <span class="number">0</span>, mTempMatrix, <span class="number">0</span>, mModelMatrix, <span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    mvpMatrix = mvpMatrix.setAll(mvpMatrixValue);</span><br><span class="line">    vertShader.CMVPMatrix = mvpMatrix.getFloatValues();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In our custom vertex shader, add a uniform handle for this <code>uCMVPMatrix</code> and send value to it :</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> muCMVPMatrixHandle;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">float</span>[] CMVPMatrix;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setLocations</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> programHandle)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.setLocations(programHandle);</span><br><span class="line">    ...</span><br><span class="line">    muCMVPMatrixHandle = getUniformLocation(programHandle, uCMVPMatrixName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">applyParams</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.applyParams();</span><br><span class="line">    ...</span><br><span class="line">    GLES20.glUniformMatrix4fv(muCMVPMatrixHandle, <span class="number">1</span>, <span class="keyword">false</span>, CMVPMatrix, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Thus, rotation using Matrix should be easy in Rajawali !</p>
+
+  </section>
+
+</article>
+
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sergiochan.github.io/2016/11/09/How-to-draw-a-Wireframe-Shader-for-a-Cube-in-Rajawali-under-OpenGL-ES-2-0/" data-title="How to draw a Wireframe Shader for a Cube in Rajawali under OpenGL ES 2.0" data-url="http://sergiochan.github.io/2016/11/09/How-to-draw-a-Wireframe-Shader-for-a-Cube-in-Rajawali-under-OpenGL-ES-2-0/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sergiochan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+
+     
+</body>
+</html>
