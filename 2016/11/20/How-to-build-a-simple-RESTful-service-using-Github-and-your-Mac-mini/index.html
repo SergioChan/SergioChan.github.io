@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>How to build a simple RESTful service using Github and your Mac mini | Sergio Chan</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="How to build a simple RESTful service using Github and your Mac mini | Sergio Chan">
+    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to build a simple RESTful service using Github and your Mac mini | Sergio Chan">
+    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+
+    
+    <meta name="author" content="Sergio Chan">
+    
+    <link rel="stylesheet" href="/css/vno.css" type="text/css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" type="text/css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://sergiochan.github.io/2016/11/20/How-to-build-a-simple-RESTful-service-using-Github-and-your-Mac-mini/"/>
+
+    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?030a47db2df6601bda0225610cd6c323";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/archives" title="" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/bio">Biography</a></li>
+            
+              <li class="navigation__item"><a href="/about">About</a></li>
+            
+              <li class="navigation__item"><a href="/portfolio">Portfolio</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" title="My Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/SergioChan" title="My Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/Sergio2Chan" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+<!-- Linkedin -->
+
+  <li class="navigation__item">
+    <a href="http://www.linkedin.com/in/sergiochan" title="Linkedin" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+
+
+
+  <li class="navigation__item">
+    <a href="mailto:cyh9211@icloud.com" title="Email" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-11-20T04:00:57.000Z" class="post-list__meta--date date">2016-11-20</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/NONSENSE/">NONSENSE</a>
+</span>
+    </div>
+    <h1 class="post-title">How to build a simple RESTful service using Github and your Mac mini</h1>
+  </header>
+
+  <section class="post article-entry">
+    <script src="/assets/js/APlayer.min.js"> </script><h2 id="Recent_Work"><a href="#Recent_Work" class="headerlink" title="Recent Work"></a>Recent Work</h2><p><a href="https://earthquick.github.io/" target="_blank" rel="external">EarthQuick</a> </p>
+<p><img src="https://ooo.0o0.ooo/2016/11/19/582fcb8440a7f.png" alt=""></p>
+<h2 id="Point_Of_Interests"><a href="#Point_Of_Interests" class="headerlink" title="Point Of Interests"></a>Point Of Interests</h2><p>I built this service through Github repo, having not used any cloud server, cloud database or even a single domain name. And I can assume that some day, some one may write a blog which telling us how to build a fully-functional backend service through Github .. :-) It may cost some time and work on both client and server side, maybe SDK or something, while simple write operation can be wrapped into simple Git operation, and use HTTPS to transmit operation to server or something ..</p>
+<p>Ok, back to reality, what I gonna make is just a small and simple data fetching RESTful API: you can retrieve well formatted data from various different source with different format. Well, I run a script periodly on my <strong>useless</strong> Mac mini to execute the Python extractor and data processor every Five minutes in order to make sure the data update in time, then through <strong>git commit &amp; push</strong> operation upload the constructed data to Github. Yes, every piece of data you get from this API is pre-processed on my Mac mini, and what you get is kind of a image of the data. So this is it - render locally, access remotely. (If you are willing to do more work on client side, it’s possible)</p>
+<h3 id="How_to_use_launchctl_run_your_script_periodly_on_macOS"><a href="#How_to_use_launchctl_run_your_script_periodly_on_macOS" class="headerlink" title="How to use launchctl run your script periodly on macOS"></a>How to use launchctl run your script periodly on macOS</h3><ul>
+<li>Create your Shell script <strong>xx.sh</strong> in your work directory <strong>/Users/xxx</strong></li>
+<li>Change permission of your script <strong>sudo chmod 777 xx.sh</strong></li>
+<li>There are five destinations for you <code>launch.plist</code> file :</li>
+</ul>
+<p>​    <strong>~/Library/LaunchAgents</strong>  per-user agents provided by specific user</p>
+<p>​    <strong>/Library/LaunchAgents</strong> per-user agents provided by the administrator </p>
+<p>​    <strong>/Library/LaunchDeamons</strong> Deamons provided by the administrator</p>
+<p>​    <strong>/System/Library/LaunchDeamons</strong> per-user agents provided by OSX</p>
+<p>​    <strong>/System/Library/LaunchDeamons</strong> Deamons provided by OSX</p>
+<p>In which <code>agents</code> means application or script will only be running when specific user has logged in. When <code>agents</code> is provided by superior users, it means no matter user A or user B has logged in, this script will always be executed by this superior users. On the contrary, <code>deamons</code> means scripts can also be executed even when system has not been logged in. Here, the provider means you have to set the permission of the  <code>plist</code> file in these directory to support <strong>only</strong> the specific user group can operate. For example, if you place your <code>plist</code> file in <strong>/Library/LaunchDeamons</strong>, you should </p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">sudo chmod <span class="number">600</span> sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Detailed description of parameters in <code>launchd.plist</code> can be found <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man5/launchd.plist.5.html" target="_blank" rel="external">here</a></li>
+<li>Finshed <code>plist</code> file according to the documents, for example :</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">plist</span> <span class="attribute">version</span>=<span class="value">"1.0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dict</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">key</span>&gt;</span>Label<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">string</span>&gt;</span>sergio.chan.cron.plist<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>ProgramArguments<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">array</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">string</span>&gt;</span>/Users/xx/xx.sh<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">array</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>RunAtLoad<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">true</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>StartInterval<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">integer</span>&gt;</span>300<span class="tag">&lt;/<span class="title">integer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>StandardOutPath<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">string</span>&gt;</span>/../../Log.log<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>StandardErrorPath<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">string</span>&gt;</span>/../../Error.err<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Using <code>launchctl</code> command to control the script</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">launchctl load   /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl unload /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl start  /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl stop   /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl list</span><br></pre></td></tr></table></figure>
+<p>Notice that whenever you make any changes to the <code>plist</code> file, you should run <code>unload</code> first, then <code>load</code> again to make the changes effective. Rememer to enter <strong>full path</strong> of your <code>plist</code> file to guarantee the executed file is correct.</p>
+<h2 id="EarthQuick_on_macOS"><a href="#EarthQuick_on_macOS" class="headerlink" title="EarthQuick on macOS"></a>EarthQuick on macOS</h2><p>Will come out sooooon.</p>
+
+  </section>
+
+</article>
+
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sergiochan.github.io/2016/11/20/How-to-build-a-simple-RESTful-service-using-Github-and-your-Mac-mini/" data-title="How to build a simple RESTful service using Github and your Mac mini" data-url="http://sergiochan.github.io/2016/11/20/How-to-build-a-simple-RESTful-service-using-Github-and-your-Mac-mini/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sergiochan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+
+     
+</body>
+</html>

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-11-11T14:28:24.000Z</updated>
+  <updated>2016-11-20T15:22:44.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[How to build a simple RESTful service using Github and your Mac mini]]></title>
+    <link href="http://sergiochan.github.io/2016/11/20/How-to-build-a-simple-RESTful-service-using-Github-and-your-Mac-mini/"/>
+    <id>http://sergiochan.github.io/2016/11/20/How-to-build-a-simple-RESTful-service-using-Github-and-your-Mac-mini/</id>
+    <published>2016-11-20T04:00:57.000Z</published>
+    <updated>2016-11-20T15:22:44.000Z</updated>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="Recent_Work"><a href="#Recent_Work" class="headerlink" title="Recent Work"></a>Recent Work</h2><p><a href="https://earthquick.github.io/" target="_blank" rel="external">EarthQuick</a> </p>
+<p><img src="https://ooo.0o0.ooo/2016/11/19/582fcb8440a7f.png" alt=""></p>
+<h2 id="Point_Of_Interests"><a href="#Point_Of_Interests" class="headerlink" title="Point Of Interests"></a>Point Of Interests</h2><p>I built this service through Github repo, having not used any cloud server, cloud database or even a single domain name. And I can assume that some day, some one may write a blog which telling us how to build a fully-functional backend service through Github .. :-) It may cost some time and work on both client and server side, maybe SDK or something, while simple write operation can be wrapped into simple Git operation, and use HTTPS to transmit operation to server or something ..</p>
+<p>Ok, back to reality, what I gonna make is just a small and simple data fetching RESTful API: you can retrieve well formatted data from various different source with different format. Well, I run a script periodly on my <strong>useless</strong> Mac mini to execute the Python extractor and data processor every Five minutes in order to make sure the data update in time, then through <strong>git commit &amp; push</strong> operation upload the constructed data to Github. Yes, every piece of data you get from this API is pre-processed on my Mac mini, and what you get is kind of a image of the data. So this is it - render locally, access remotely. (If you are willing to do more work on client side, it’s possible)</p>
+<h3 id="How_to_use_launchctl_run_your_script_periodly_on_macOS"><a href="#How_to_use_launchctl_run_your_script_periodly_on_macOS" class="headerlink" title="How to use launchctl run your script periodly on macOS"></a>How to use launchctl run your script periodly on macOS</h3><ul>
+<li>Create your Shell script <strong>xx.sh</strong> in your work directory <strong>/Users/xxx</strong></li>
+<li>Change permission of your script <strong>sudo chmod 777 xx.sh</strong></li>
+<li>There are five destinations for you <code>launch.plist</code> file :</li>
+</ul>
+<p>​    <strong>~/Library/LaunchAgents</strong>  per-user agents provided by specific user</p>
+<p>​    <strong>/Library/LaunchAgents</strong> per-user agents provided by the administrator </p>
+<p>​    <strong>/Library/LaunchDeamons</strong> Deamons provided by the administrator</p>
+<p>​    <strong>/System/Library/LaunchDeamons</strong> per-user agents provided by OSX</p>
+<p>​    <strong>/System/Library/LaunchDeamons</strong> Deamons provided by OSX</p>
+<p>In which <code>agents</code> means application or script will only be running when specific user has logged in. When <code>agents</code> is provided by superior users, it means no matter user A or user B has logged in, this script will always be executed by this superior users. On the contrary, <code>deamons</code> means scripts can also be executed even when system has not been logged in. Here, the provider means you have to set the permission of the  <code>plist</code> file in these directory to support <strong>only</strong> the specific user group can operate. For example, if you place your <code>plist</code> file in <strong>/Library/LaunchDeamons</strong>, you should </p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">sudo chmod <span class="number">600</span> sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Detailed description of parameters in <code>launchd.plist</code> can be found <a href="https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man5/launchd.plist.5.html" target="_blank" rel="external">here</a></li>
+<li>Finshed <code>plist</code> file according to the documents, for example :</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">plist</span> <span class="attribute">version</span>=<span class="value">"1.0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dict</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">key</span>&gt;</span>Label<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">string</span>&gt;</span>sergio.chan.cron.plist<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>ProgramArguments<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">array</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">string</span>&gt;</span>/Users/xx/xx.sh<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">array</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>RunAtLoad<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">true</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>StartInterval<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">integer</span>&gt;</span>300<span class="tag">&lt;/<span class="title">integer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>StandardOutPath<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">string</span>&gt;</span>/../../Log.log<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>StandardErrorPath<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">string</span>&gt;</span>/../../Error.err<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Using <code>launchctl</code> command to control the script</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">launchctl load   /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl unload /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl start  /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl stop   /Library/LaunchDeamons/sergio<span class="class">.chan</span><span class="class">.cron</span><span class="class">.plist</span></span><br><span class="line">launchctl list</span><br></pre></td></tr></table></figure>
+<p>Notice that whenever you make any changes to the <code>plist</code> file, you should run <code>unload</code> first, then <code>load</code> again to make the changes effective. Rememer to enter <strong>full path</strong> of your <code>plist</code> file to guarantee the executed file is correct.</p>
+<h2 id="EarthQuick_on_macOS"><a href="#EarthQuick_on_macOS" class="headerlink" title="EarthQuick on macOS"></a>EarthQuick on macOS</h2><p>Will come out sooooon.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="Recent_Work"><a href="#Recent_Work" class="headerlink" title="Recent Work"></a>Rec]]>
+    </summary>
+    
+      <category term="NONSENSE" scheme="http://sergiochan.github.io/tags/NONSENSE/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[关于 EarthQuick - My new side project]]></title>
@@ -1298,27 +1340,6 @@
       <category term="weak" scheme="http://sergiochan.github.io/tags/weak/"/>
     
       <category term="iOS菜鸟心得" scheme="http://sergiochan.github.io/categories/iOS%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[无题-20160120]]></title>
-    <link href="http://sergiochan.github.io/2016/01/20/%E6%97%A0%E9%A2%98-20160120/"/>
-    <id>http://sergiochan.github.io/2016/01/20/无题-20160120/</id>
-    <published>2016-01-20T09:05:04.000Z</published>
-    <updated>2016-01-20T09:17:22.000Z</updated>
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>忽然发现拿再多第一，再多人认可你，这个世界还是那么大，还是总会有那么些人，无法满足他们那种居高临下，那种自以为占据所有主动地屌逼感，反而会让他们更加的想要刁难你和鄙视你。如果不是一路人的话，就不会是相互吸引，而只是相互排斥。</p>
-<p>最近各种遇见和感受到。<br>But whatever, 你走你的路，有那么多人支持你，再说了，未来你想要的世界是依靠和你相似，相吸引的这群人一起来创造的，而且你也不断在证明这一点，那么那些所谓的其他人，是吧。</p>
-<p>最近准备重新开始读三国演义。觉得团队管理和自己未来的处世方式在里面都有很多可以借鉴的。</p>
-<p>例如 纵使你有十万大军，没有一个赵子龙，你一样被人家单骑救阿斗。</p>
-<p>很感谢，很感激，自己一路走来，凝聚在我周围或者对我特别在乎，特别认可的基友们。我和你们一起去创造了太多不可能的事情。<br>确实，拿第一第二第三，又有毛用，即使把全国全世界的Hackathon第一都拿遍了，该鄙视我的人还是鄙视我，该认可我的人还是认可我，这些并不能改变什么，相反，所有的事情，我能够去享受每一次的过程，和志同道合的这些基友们一起为了同一个目标热爱和奋斗，这才是我为什么走下去的原因。  </p>
-<p>那些鄙视我，不珍惜我的人，请等着被打脸吧。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>忽然发现拿再多第一，再多人认可你，这个世界还是那么大，还是总会有那么些人，无法满足他们那种居高临下，那种自以为占据所有主动地屌逼感，反而会让他们更加的想要刁难你和鄙视你。如果]]>
-    </summary>
-    
-      <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
     
   </entry>
   
