@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Born hacker, Full-stack Developer]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sergiochan.github.io/"/>
-  <updated>2016-11-20T15:22:44.000Z</updated>
+  <updated>2016-11-30T02:19:22.000Z</updated>
   <id>http://sergiochan.github.io/</id>
   
   <author>
@@ -13,6 +13,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[坑 - 2016.11.30]]></title>
+    <link href="http://sergiochan.github.io/2016/11/30/%E5%9D%91-2016-11-30/"/>
+    <id>http://sergiochan.github.io/2016/11/30/坑-2016-11-30/</id>
+    <published>2016-11-30T02:18:29.000Z</published>
+    <updated>2016-11-30T02:19:22.000Z</updated>
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>今天发布会，忙了几个月的新产品终于要发布了。应该今晚<a href="https://www.raventech.com/" target="_blank" rel="external">官网</a>就会上线了。</p>
+<p>最近几天都在 iOS 安卓和 Unity 切来切去的写，头大的和一锅粥一样。遇到了两个问题比较坑：</p>
+<h2 id="Unity__u97F3_u7BB1_u566A_u97F3_u95EE_u9898"><a href="#Unity__u97F3_u7BB1_u566A_u97F3_u95EE_u9898" class="headerlink" title="Unity 音箱噪音问题"></a>Unity 音箱噪音问题</h2><p>只要 Unity 运行，Android 外接的音箱在默认场景就会有一丝丝奇怪电磁干扰的声音。Unity 当中没有任何 Audio Source，我试着把所有 Camera 上的 Audio Listener 都禁用了，还是不行。</p>
+<p>在 Unity Forum 上发现了一个<a href="http://answers.unity3d.com/answers/1278290/view.html" target="_blank" rel="external">相同问题</a>，但是一年了并没有人解决。恩，如果你看到了一个回答那是我刚回答的……最后试了几种方法，主要都是去修改 Project Setting 里面的 Audio Setting，除了 <strong>Disable Unity Audio</strong> 可以解决这个奇怪的噪音问题，别无他法，还好 Unity 并不负责播放声音。</p>
+<p>更蹊跷的是插上耳机就听不到这个噪音 = = 猜测可能是音箱有类似放大器的部分，将原本非常微弱的由 Unity 产生的声音放大了之后变成了听到的噪音。</p>
+<p>坑。</p>
+<h2 id="u5B89_u5353_u542F_u52A8_u84DD_u7259_u670D_u52A1_u7684_u95EE_u9898"><a href="#u5B89_u5353_u542F_u52A8_u84DD_u7259_u670D_u52A1_u7684_u95EE_u9898" class="headerlink" title="安卓启动蓝牙服务的问题"></a>安卓启动蓝牙服务的问题</h2><p>用安卓 BluetoothBLE 和 iOS 的 CoreBluetooth 连接，iOS 做外设，安卓做主机。BLE 取消了 2.0 时代的蓝牙 Socket 连接方式，改成了现在的<strong>根据特征值读取，写入和订阅</strong>的这种传输数据方式。用框架开发并不困难，问题就出在当应用在开机自启动的时候，可能在创建 BluetoothManager 的时候，系统蓝牙服务尚未初始化成功，因此就会报错，而你也不知道要什么时候才能去初始化。</p>
+<p>因此在这里你需要加一个 BroadCastReceiver 来监听系统蓝牙服务状态变化的通知，然后根据通知来决定初始化的时机，而不是在你应用启动的时候就去初始化。</p>
+<p>在应用或服务 create 的时候注册 Receiver :</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">IntentFilter filter1 = new IntentFilter<span class="list">(<span class="keyword">BluetoothAdapter</span>.ACTION_STATE_CHANGED)</span><span class="comment">;</span></span><br><span class="line">registerReceiver<span class="list">(<span class="keyword">mBroadcastReceiver</span>, filter1)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>声明 Receiver :</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> BroadcastReceiver mBroadcastReceiver = <span class="keyword">new</span> BroadcastReceiver() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">final</span> String action = intent.getAction();</span><br><span class="line">            <span class="keyword">if</span> (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);</span><br><span class="line">                <span class="keyword">switch</span> (state) &#123;</span><br><span class="line">                    <span class="keyword">case</span> BluetoothAdapter.STATE_OFF:</span><br><span class="line">                        Log.d(<span class="string">"FUCK"</span>,<span class="string">"STATE_OFF"</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> BluetoothAdapter.STATE_TURNING_OFF:</span><br><span class="line">                        Log.d(<span class="string">"FUCK"</span>,<span class="string">"STATE_TURNING_OFF"</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> BluetoothAdapter.STATE_ON:</span><br><span class="line">                        Log.d(<span class="string">"FUCK"</span>,<span class="string">"STATE_ON"</span>);</span><br><span class="line">                        <span class="comment">// 如果蓝牙服务中途重启，这里需要关闭之前的 Manager 所附带的所有连接</span></span><br><span class="line">                        <span class="keyword">if</span> (bleManager != <span class="keyword">null</span>) close();</span><br><span class="line">                        bleManager = BleManager.getInstance();</span><br><span class="line">                        bleManager.init(BleController.<span class="keyword">this</span>);</span><br><span class="line">                        close();</span><br><span class="line">                        scanAndConnect();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> BluetoothAdapter.STATE_TURNING_ON:</span><br><span class="line">                        Log.d(<span class="string">"FUCK"</span>,<span class="string">"STATE_TURNING_ON"</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在你的应用或服务 Destroy 的时候注销这个 Receiver :</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">unregisterReceiver<span class="list">(<span class="keyword">mBroadcastReceiver</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>完事，不得不说 BLE 的连接还是很稳定的。</p>
+<p>记得最早看安卓和 iOS 蓝牙连接的时候看到了知乎<a href="https://www.zhihu.com/question/23246210" target="_blank" rel="external">这篇回答</a>，看来整理一下代码也可以去好好回答一下了🌚 都没几个有用的回答。</p>
+<p>坑。</p>
+<h2 id="u95F2_u626F"><a href="#u95F2_u626F" class="headerlink" title="闲扯"></a>闲扯</h2><p>恩。周末终于强逼自己撸完了 <a href="http://sergiochan.xyz/Popularity/" target="_blank" rel="external">Popularity Widget for GitHub</a> ， 还在审核中，这是一个可以统计你过往五个月每天的新增 star 变化趋势，其实是可以细化到每一个 star 你的用户和对应的仓库的，后面版本慢慢会更新，也可以统计到（虽然没有有效历史数据）过往四周的 follower 变化趋势。对于想要运营或维护，或者只是了解一下自己在 GitHub 上的人气值的朋友们应该挺有用。</p>
+<p>还有给 <a href="https://earthquick.github.io/" target="_blank" rel="external">EarthQuick</a> 在 GitHub 搭的后端 = = 因为拿 Mac mini 做服务端处理数据存到 GitHub 的仓库作为 RESTful API 访问竟然还被人喷了，不太明白现在 GitHub 早都去掉了连续提交成就之后还在关心小绿块的人的心态……最主要的是，我哪有时间和钱（妈个鸡别和我提钱）单独去搞个服务器维护啊 word 哥。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>今天发布会，忙了几个月的新产品终于要发布了。应该今晚<a href="https://www.raventech.com/" target="_blank" rel="ext]]>
+    </summary>
+    
+      <category term="NONSENSE" scheme="http://sergiochan.github.io/tags/NONSENSE/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[How to build a simple RESTful service using Github and your Mac mini]]></title>
@@ -1288,58 +1322,6 @@
     </summary>
     
       <category term="闲言碎语" scheme="http://sergiochan.github.io/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[三件小事]]></title>
-    <link href="http://sergiochan.github.io/2016/01/27/%E4%B8%89%E4%BB%B6%E5%B0%8F%E4%BA%8B/"/>
-    <id>http://sergiochan.github.io/2016/01/27/三件小事/</id>
-    <published>2016-01-27T13:36:18.000Z</published>
-    <updated>2016-08-25T01:50:57.000Z</updated>
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。<br>一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来觉得大概是看的那些博客本身就讲的含糊不清吧。所以我就用我最直白的语言和解释来说明一下我对于id和NSObject的一些小见解。一开始直接就是跟着代码写的，所以非常的直接。<br>第二个是weak和assign的小事，为什么delegate需要声明weak而不是assign。<br>第三个是关于这个<code>NS_DESIGNATED_INITIALIZER</code>宏的解释。</p>
-<blockquote>
-<p>示例工程在<a href="https://github.com/SergioChan/id-NSObjectDemo" target="_blank" rel="external">这里</a>。</p>
-</blockquote>
-<h2 id="id_2C_NSObject__u90A3_u4E9B_u4E8B"><a href="#id_2C_NSObject__u90A3_u4E9B_u4E8B" class="headerlink" title="id, NSObject 那些事"></a>id, NSObject 那些事</h2><p>这里讲的关于id和NSObject的内容，最好打开你的Xcode，打开demo工程，然后就能看到一系列编译的警告。跟着警告往下看你就会对于id和NSObject的区别更加的理解了。</p>
-<p>这里你可以看到，test是一个指向UIImage对象的id指针，你可以向他发送length消息。<br>然而如果他不是一个对象指针，而是一个对象，那么你向他发送length消息的话，在编译的时候编译器会无法编译，原因在下面有提到。<br>​<br><figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">id test = <span class="comment">[<span class="comment">[UIImage alloc]</span> init]</span>;</span><br><span class="line"><span class="comment">[test length]</span>;</span><br><span class="line"></span><br><span class="line">NSObject *test1 = <span class="comment">[<span class="comment">[UIImage alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test1 length]</span>;</span><br></pre></td></tr></table></figure></p>
-<p>这里你可以看到，如果引入了TestObject的头文件，对于任意id类型的对象指针，你就可以向他发送TestObject能够响应的消息了。<br>无论这个id类型指针指向的对象是不是TestObject类型，编译器并不关心这个，也无法知道。<br>然而对于NSObject，他仍然不能响应这个fuck方法，因为向一个对象发送消息的时候，编译器会在对象声明类型的方法表中去判断这个对象是否能够响应这个消息，而不是根据实际分配的对象类型。</p>
-<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">id test3 = <span class="comment">[<span class="comment">[UIImage alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test3 fuck]</span>;</span><br><span class="line"></span><br><span class="line">NSObject *test2 = <span class="comment">[<span class="comment">[TestObject alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test2 fuck]</span>;</span><br></pre></td></tr></table></figure>
-<p>所以其实NSObject很少手动声明，如果要声明具体的对象，则最好声明具体的类型，或者id动态类型。<br>id之所以为动态类型，在于它所指向的对象类型是在运行时才确定的，因此使用起来更加的方便。<br>NSObject 只能响应自己的一些简单的方法，例如 copy，hash之类。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">test</span>2 <span class="built_in">hash</span>];</span><br></pre></td></tr></table></figure>
-<p>下面解释了为什么delegate要用id声明而不是用NSObject</p>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="keyword">id</span>&lt;TestDelegate&gt; delegate;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">NSObject</span>&lt;TestDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure>
-<p>大部分delegate在实现的时候都需要像下面这个来调用，根据上文所说，因为delegate的方法表其实是运行时才能知道的，在编译时编译器是无法识别的，所以这种调用方式也就不能成立，因此delegate要用第一种id的声明方式来声明：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">NSObject *<span class="built_in">test</span>4 = [[TestObject alloc]init];</span><br><span class="line"><span class="keyword">if</span>([<span class="built_in">test</span>4 respondsToSelector:@selector(fuck)])</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="built_in">test</span>4 fuck];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">id <span class="built_in">test</span>5 = [[TestObject alloc]init];</span><br><span class="line"><span class="keyword">if</span>([<span class="built_in">test</span>5 respondsToSelector:@selector(fuck)])</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="built_in">test</span>5 fuck];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当然如果id所指向的对象在运行时无法响应fuck方法，运行时就会报错。<br>可以这么说吧： <strong>NSObject声明的对象类型在编译时确定，id声明的对象类型在运行时确定</strong>，因此在消息发送上会有一些区别。</p>
-<h2 id="weak_2C_assign__u90A3_u4E9B_u4E8B"><a href="#weak_2C_assign__u90A3_u4E9B_u4E8B" class="headerlink" title="weak, assign 那些事"></a>weak, assign 那些事</h2><p>这个问题起源于这两种声明delegate的方式：</p>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span>  &lt;fuckDelegate&gt; delegate; </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">id</span>  &lt;fuckDelegate&gt; delegate;</span><br></pre></td></tr></table></figure>
-<p>首先第一种声明方式在我们的日常使用中十分的常见，可能都已经成为一种习惯了。但是例如已经被废弃的 <code>@property(nonatomic, assign) id&lt; UISearchDisplayDelegate &gt; delegate</code>，虽然在iOS8之后被废弃，然而它说明delegate也可以用第二种声明方式。</p>
-<p>区别就在于weak和assign声明的属性虽然都是不会引起引用计数的增加，但是还是有很大不同。<a href="http://www.cocoachina.com/ios/20150605/11990.html" target="_blank" rel="external">weak的实现</a>决定了在属性的主人释放的时候，weak指针所对应的对象也会一起被释放，然而assign不会，因此这里有产生一个野delegate指针的风险。除非是在MRC的环境下，手动对delegate置为nil。这会需要额外的操作，因此后来系统的实现渐渐的也转向weak了。</p>
-<p>参考<a href="http://stackoverflow.com/questions/9428500/whats-the-difference-between-weak-and-assign-in-delegate-property-declaratio" target="_blank" rel="external">这里</a>。</p>
-<h2 id="NS_DESIGNATED_INITIALIZER"><a href="#NS_DESIGNATED_INITIALIZER" class="headerlink" title="NS_DESIGNATED_INITIALIZER"></a>NS_DESIGNATED_INITIALIZER</h2><p>第一次看到这个的时候，心里想的是 “WTF 这是什么鬼”。</p>
-<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="pp">-<span class="params">(instancetype)</span>initWithName:<span class="params">(<span class="variable">NSString</span> *)</span>name NS_DESIGNATED_INITIALIZER;</span><br><span class="line">-<span class="params">(instancetype)</span>init;</span></span><br></pre></td></tr></table></figure>
-<p>这时候看看Swift就明白了 =。= 这是objc为了配合Swift的特性而诞生的一个附加宏。Swift中有designated和convenience两种初始化方法，它要求我们初始化出来的实例对象尽量是属性完整的，即使使用了convenience的初始化方法，也会要求在这个初始化方法中调用同类的designated的初始化方法完成完整的初始化。</p>
-<p>像这样：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">- (instancetype)<span class="keyword">init</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">self</span> initWithName:@<span class="string">"fuck"</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithName:(<span class="type">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> <span class="keyword">init</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>所以这只是一个Swift的特性的objc版本，也是为了更好的和Swift配合开发而加上的。</p>
-<p>参考<a href="http://stackoverflow.com/questions/26185239/ios-designated-initializers-using-ns-designated-initializer" target="_blank" rel="external">这里</a>。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>事情是这样的。<br>江南皮革厂倒闭了。于是最近有这三件小事一直困扰着我。<br>一个是id和NSObject的解释，看过很多博客，但是却一直没有一个深刻的理解，现在醒悟过来]]>
-    </summary>
-    
-      <category term="NSObject" scheme="http://sergiochan.github.io/tags/NSObject/"/>
-    
-      <category term="NS_DESIGNATED_INITIALIZER" scheme="http://sergiochan.github.io/tags/NS-DESIGNATED-INITIALIZER/"/>
-    
-      <category term="assign" scheme="http://sergiochan.github.io/tags/assign/"/>
-    
-      <category term="id" scheme="http://sergiochan.github.io/tags/id/"/>
-    
-      <category term="weak" scheme="http://sergiochan.github.io/tags/weak/"/>
-    
-      <category term="iOS菜鸟心得" scheme="http://sergiochan.github.io/categories/iOS%E8%8F%9C%E9%B8%9F%E5%BF%83%E5%BE%97/"/>
     
   </entry>
   
