@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="做 Custom Keyboard 的时候遇到的几个问题 | Sergio Chan">
-    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="twitter:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="做 Custom Keyboard 的时候遇到的几个问题 | Sergio Chan">
-    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta property="og:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     
     <meta name="author" content="Sergio Chan">
@@ -66,10 +66,10 @@
         <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
         
-        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        <span class="panel-cover__subtitle panel-subtitle">Full Stack, Born hacker, Professional Manager</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world.<br/> Founded Hackathon team hACKbUSTER.<em></a></p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -183,13 +183,13 @@
   <section class="post article-entry">
     <script src="/assets/js/APlayer.min.js"> </script><p>最近又在搞个大新闻。记录了以下几个问题和窍门。</p>
 <h2 id="Customize_your_keyboard_height"><a href="#Customize_your_keyboard_height" class="headerlink" title="Customize your keyboard height"></a>Customize your keyboard height</h2><p>在 <strong>ViewDidLoad</strong> 加入这段代码，在任意位置修改这个 constraint 的值然后调用 <strong>updateViewConstraint</strong> :</p>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> _expandedHeight = <span class="number">300</span>;</span><br><span class="line">_heightConstraint = [<span class="built_in">NSLayoutConstraint</span> constraintWithItem: <span class="keyword">self</span><span class="variable">.view</span></span><br><span class="line">                             attribute: <span class="built_in">NSLayoutAttributeHeight</span></span><br><span class="line">                             relatedBy: <span class="built_in">NSLayoutRelationEqual</span></span><br><span class="line">                                toItem: <span class="literal">nil</span></span><br><span class="line">                             attribute: <span class="built_in">NSLayoutAttributeNotAnAttribute</span></span><br><span class="line">                            multiplier: <span class="number">0.0</span></span><br><span class="line">                              constant: _expandedHeight];</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.view</span> addConstraint: _heightConstraint];</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> _expandedHeight = <span class="number">300</span>;</span><br><span class="line">_heightConstraint = [<span class="built_in">NSLayoutConstraint</span> constraintWithItem: <span class="keyword">self</span>.view</span><br><span class="line">                             attribute: <span class="built_in">NSLayoutAttributeHeight</span></span><br><span class="line">                             relatedBy: <span class="built_in">NSLayoutRelationEqual</span></span><br><span class="line">                                toItem: <span class="literal">nil</span></span><br><span class="line">                             attribute: <span class="built_in">NSLayoutAttributeNotAnAttribute</span></span><br><span class="line">                            multiplier: <span class="number">0.0</span></span><br><span class="line">                              constant: _expandedHeight];</span><br><span class="line">[<span class="keyword">self</span>.view addConstraint: _heightConstraint];</span><br></pre></td></tr></table></figure>
 <h2 id="Network_Access_and_other_accesses"><a href="#Network_Access_and_other_accesses" class="headerlink" title="Network Access and other accesses"></a>Network Access and other accesses</h2><p>一般情况下 Keyboard Extension 是没有访问网络的权限的，因为键盘是比较涉及用户隐私的插件，虽然其实真正能获得的信息很少的 =。= 都被沙盒保护起来了。但是毕竟能获得用户输入的文本信息，有可能你就是个坏人来收集用户输入的用户名密码什么的，对吧。所以需要在取得用户信任的基础上，让用户手动去设置里为键盘插件打开 <strong>完全访问</strong> ，你的插件才可以访问网络，位置信息这些。</p>
 <p>在获得权限之前，任何对网络的访问都会报一大串错误，找不到 DNS，服务未启动什么的。你只需要在 <strong>info.plist</strong> 中设置 <strong>NSExtensionAttributes</strong> 中的 <strong>RequestsOpenAccess</strong> 为 YES， 用户就可以在设置页面中找到打开完全访问的开关了。</p>
 <h2 id="OpenURL_in_Keyboard_Extension"><a href="#OpenURL_in_Keyboard_Extension" class="headerlink" title="OpenURL in Keyboard Extension"></a>OpenURL in Keyboard Extension</h2><p>由于 <strong>[UIApplication sharedApplication]</strong> 在 Extension 中不可用，openURL 只能通过 <strong>extensionContext</strong> :</p>
 <figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">[self.extensionContext <span class="string">openURL:</span><span class="string">completionHandler:</span>];</span><br></pre></td></tr></table></figure>
 <p>然而尴尬的是在 Today Extension 中是可以用的，在 Keyboard Extension 中却没有用。于是找到了下面这个更新的解决方案，直接通过 <strong>responder chain</strong> 找到 UIApplication = =</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">UIResponder* responder = self;</span><br><span class="line"><span class="keyword">while</span> ((responder = [responder nextResponder]) != nil) &#123;</span><br><span class="line">    <span class="keyword">if</span> ([responder <span class="string">respondsToSelector:</span><span class="annotation">@selector</span>(<span class="string">openURL:</span>)] == YES) &#123;</span><br><span class="line">        [responder <span class="string">performSelector:</span><span class="annotation">@selector</span>(<span class="string">openURL:</span>)</span><br><span class="line"><span class="label">                        withObject:</span>[NSURL <span class="string">URLWithString:</span>@<span class="string">"sergio.chan.xxx://"</span>]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">UIResponder* responder = self;</span><br><span class="line"><span class="keyword">while</span> ((responder = [responder nextResponder]) != nil) &#123;</span><br><span class="line">    <span class="keyword">if</span> ([responder <span class="string">respondsToSelector:</span><span class="meta">@selector</span>(<span class="string">openURL:</span>)] == YES) &#123;</span><br><span class="line">        [responder <span class="string">performSelector:</span><span class="meta">@selector</span>(<span class="string">openURL:</span>)</span><br><span class="line"><span class="symbol">                        withObject:</span>[NSURL <span class="string">URLWithString:</span>@<span class="string">"sergio.chan.xxx://"</span>]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </section>
 
@@ -222,7 +222,7 @@
         本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
     </span>
     <span class="footer__copyright">
-        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+        &copy; 2014 - 2018 本站由 <a href="/">@Sergio Chan</a> 创建,
     </span>
 </footer>
 

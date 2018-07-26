@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Multi-Touch Bar UI 开发入门指南 | Sergio Chan">
-    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="twitter:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Multi-Touch Bar UI 开发入门指南 | Sergio Chan">
-    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta property="og:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     
     <meta name="author" content="Sergio Chan">
@@ -66,10 +66,10 @@
         <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
         
-        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        <span class="panel-cover__subtitle panel-subtitle">Full Stack, Born hacker, Professional Manager</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world.<br/> Founded Hackathon team hACKbUSTER.<em></a></p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -252,9 +252,9 @@
 <p>不要尝试通过添加 Space 的方法来让一个 Item 居中，如果你需要让一组 Item 居中，你可以用一个 BarItem Group 将他们包起来然后将整个 Group 设置为居中。</p>
 </blockquote>
 <h4 id="NSTouchBarDelegate"><a href="#NSTouchBarDelegate" class="headerlink" title="NSTouchBarDelegate"></a>NSTouchBarDelegate</h4><p><strong>delegate</strong>，NSTouchBarDelegate 只有一个方法，那就是  </p>
-<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(nullable <span class="variable">NSTouchBarItem</span> *)</span>touchBar:<span class="params">(<span class="variable">NSTouchBar</span> *)</span>touchBar makeItemForIdentifier:<span class="params">(<span class="variable">NSTouchBarItemIdentifier</span>)</span>identifier;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">NSTouchBarItem</span> *)touchBar:(<span class="built_in">NSTouchBar</span> *)touchBar makeItemForIdentifier:(<span class="built_in">NSTouchBarItemIdentifier</span>)identifier;</span><br></pre></td></tr></table></figure>
 <p>这个方法就是初始化所有 BarItem 的地方。一般来说写法就是根据 Identifier 来初始化对应的 BarItem，像这样</p>
-<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="tag">if</span> ([identifier <span class="attribute">isEqualToString</span>:@<span class="string">"..."</span>])</span><br><span class="line">&#123; </span><br><span class="line">	...</span><br><span class="line">	<span class="tag">return</span> <span class="tag">BarItem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> ([identifier <span class="string">isEqualToString:</span>@<span class="string">"..."</span>])</span><br><span class="line">&#123; </span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">return</span> BarItem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Layout__26amp_3B_Nesting"><a href="#Layout__26amp_3B_Nesting" class="headerlink" title="Layout &amp; Nesting"></a>Layout &amp; Nesting</h3><p>由于用户可以自定义需要显示的 Touch Bar 宽度，你定义好的 Touch Bar 宽度是可变的。所以苹果的建议是<strong>在设计的时候不要按照确定的宽度来设计，而植入一些动态布局的方</strong>案。如果你需要更宽的宽度，你可以使用 Popover，scrubber 或者 scroll view。</p>
 <p>在 Layout 的时候，响应链上层的 Touch Bar 是可以包含下层的 Touch Bar 的，上面在综述的时候提到过的 <strong>Other Items Proxy</strong> 就是用来实现这个功能的。只要你在初始化 Touch Bar 的时候为它的 defaultIdentifiers 加上 NSTouchBarItemIdentifierOtherItemsProxy，他就会在运行时<strong>需要的时候在这个 Identifier 所在的位置</strong>包含上来自下层的合适的 Touch Bar。这个<strong>需要的时候</strong>指的是下层的 NSResponder 调用 becomeFirstResponder 的时候。例如有一个 ViewController 自身带有一个 Touch Bar，而这个 ViewController 中带有一个 NSTextView，那么当点击这个 NSTextview ，也就是<strong>响应链下层 NSResponder 调用 becomeFirstResponder</strong> 的时候，Touch Bar 显示的是：</p>
 <p><img src="https://ooo.0o0.ooo/2016/11/01/5818435fa4fdd.png" alt=""></p>
@@ -292,7 +292,7 @@
 </ul>
 </blockquote>
 <h4 id="Customization_Boundary"><a href="#Customization_Boundary" class="headerlink" title="Customization Boundary"></a>Customization Boundary</h4><p>那么对于最后显示的 Touch Bar 来说，每个 Touch Bar 的 Customization 属性依然管用。如果是 A Bar包含了 B Bar，那么对于 B Bar 的 Customization 是不能超出 B Bar 的范围的。例如有：</p>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">bar.defaultItemIdentifiers =<span class="annotation">@[<span class="constant">IdentifierA</span>,<span class="constant">IdentifierB</span>, <span class="constant">NSTouchBarItemIdentifierOtherItemsProxy</span>,<span class="constant">IdentifierC</span>]</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">bar.defaultItemIdentifiers </span>=@[IdentifierA,IdentifierB, NSTouchBarItemIdentifierOtherItemsProxy,IdentifierC]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>这个 Bar 假设为 A Bar，在他的下层有一个 B Bar，那么在 AB 同时显示的时候，如果对 B Bar 的 Item 进行 Customization，那么是不能移动 IdentifierA，IdentifierB 和 IdentifierC 的位置的。</p>
 <h4 id="Visual_Priority"><a href="#Visual_Priority" class="headerlink" title="Visual Priority"></a>Visual Priority</h4><p><strong>视图优先级</strong>。由于你所开发的 Touch Bar 在运行的时候有可能被用户修改宽度，因此如果你有一排 BarItem，他们会从右往左依次被挤掉，这时候如果右边有一些重要的 BarItem 存在，你就需要为不同的 BarItem 设置不同的视图优先级，这样即使宽度变化，在重新 Layout 的时候也会按照定义好的视图优先级排列 BarItem。</p>
 <p>系统提供了三种默认的枚举类型视图优先级，分别为 NSTouchBarItemPriorityHigh， NSTouchBarItemPriorityNormal 和 NSTouchBarItemPriorityLow，对应了 1000，0 和 -1000 的 float 类型的值，因此你也可以直接为 BarItem 设置 float 类型的优先级。</p>
@@ -307,26 +307,26 @@
 <li>strokeColorPickerWithIdentifier</li>
 </ul>
 <p>这三种方法的区别其实就是在按钮显示的图标上，一个是常规的颜色选择器，第二个代表的是字体颜色选择器，第三种初始化代表的是边框颜色选择器。初始化之后的逻辑都是一样的：</p>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line">colorPickerItem.<span class="keyword">target</span> = self;</span><br><span class="line">colorPickerItem.action = <span class="annotation">@selector</span>(ColorAction:);</span><br></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line">colorPickerItem.<span class="keyword">target</span> = self;</span><br><span class="line">colorPickerItem.action = <span class="meta">@selector</span>(ColorAction:);</span><br></pre></td></tr></table></figure>
 <p>然后在 <code>ColorAction</code> 这个方法中获得选择到的颜色：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">((<span class="tag">NSColorPickerTouchBarItem</span> *)<span class="tag">sender</span>)<span class="class">.color</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">((<span class="selector-tag">NSColorPickerTouchBarItem</span> *)<span class="selector-tag">sender</span>)<span class="selector-class">.color</span></span><br></pre></td></tr></table></figure>
 <p><strong>@property colorList</strong></p>
 <p>你也可以通过修改 <strong>colorList</strong> 这个属性来自定义 Color Picker 能够选取的颜色列表。如果不设置这个属性，则默认显示的是系统的取色盘，各种颜色都有：</p>
 <p><img src="https://ooo.0o0.ooo/2016/11/02/5819676729847.png" alt=""></p>
 <p>当给了一个 list 之后：</p>
-<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line"><span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> = [[<span class="name">NSColorList</span> <span class="atom">alloc</span>] <span class="atom">init</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">redColor</span>] <span class="atom">forKey</span>:@<span class="string">"Red"</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">greenColor</span>] <span class="atom">forKey</span>:@<span class="string">"Green"</span>];</span><br><span class="line">[<span class="atom">colorPickerItem</span>.<span class="atom">colorList</span> <span class="atom">setColor</span>:[<span class="name">NSColor</span> <span class="atom">blueColor</span>] <span class="atom">forKey</span>:@<span class="string">"Blue"</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">colorPickerItem.colorList = [[<span class="symbol">NSColorList</span> alloc] init];</span><br><span class="line">[colorPickerItem.colorList setColor:[<span class="symbol">NSColor</span> redColor] forKey:@<span class="string">"Red"</span>];</span><br><span class="line">[colorPickerItem.colorList setColor:[<span class="symbol">NSColor</span> greenColor] forKey:@<span class="string">"Green"</span>];</span><br><span class="line">[colorPickerItem.colorList setColor:[<span class="symbol">NSColor</span> blueColor] forKey:@<span class="string">"Blue"</span>];</span><br></pre></td></tr></table></figure>
 <p>显示的就是这样：</p>
 <p><img src="https://ooo.0o0.ooo/2016/11/02/58196802031d6.png" alt=""></p>
 <h4 id="NSSliderTouchBarItem"><a href="#NSSliderTouchBarItem" class="headerlink" title="NSSliderTouchBarItem"></a>NSSliderTouchBarItem</h4><p>初始化：</p>
-<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">sliderTouchBarItem.slider.minValue = 0.0f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.maxValue = 100.0f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.continuous = YES<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.target = self<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.action = @selector(sliderChanged:)<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.label = @"Slider"<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.customizationLabel = @"Slider"<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">sliderTouchBarItem.slider.minValue = <span class="number">0</span>.<span class="number">0</span>f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.maxValue = <span class="number">100</span>.<span class="number">0</span>f<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.slider.continuous = YES<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.target = self<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.action = @selector(sliderChanged:)<span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.label = @<span class="string">"Slider"</span><span class="comment">;</span></span><br><span class="line">sliderTouchBarItem.customizationLabel = @<span class="string">"Slider"</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>这里面的 action 会在 slider 的值每一次发生改变的时候调用。</p>
 <p>值得一提的是 SliderItem 还提供了两个 AccessoryView 的自定义空间，左右各一个，分别叫做 <strong>minimumValueAccessory</strong> 和 <strong>maximumValueAccessory</strong>，可以用 NSImage 来初始化他们：</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSSliderAccessory</span> *minSliderAccessory = [<span class="built_in">NSSliderAccessory</span> accessoryWithImage:image];</span><br></pre></td></tr></table></figure>
 <p>其他的自定义都是围绕着 NSSlider 做的了。</p>
 <h4 id="NSScrubber"><a href="#NSScrubber" class="headerlink" title="NSScrubber"></a>NSScrubber</h4><p>这是一个为了 Touch Bar 而全新创建的控件，在发布会上有着重的展示。他需要单独的添加到一个 TouchBarItem 里去：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">scrubber = [[NSScrubber alloc] initWithFrame:NSMakeRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">310</span>, <span class="number">30</span>)];</span><br><span class="line"><span class="comment">// Height should be 30 </span></span><br><span class="line">scrubber.delegate = self;   </span><br><span class="line">scrubber.dataSource = self;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">scrubber = [[<span class="built_in">NSScrubber</span> alloc] initWithFrame:<span class="built_in">NSMakeRect</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">310</span>, <span class="number">30</span>)];</span><br><span class="line"><span class="comment">// Height should be 30 </span></span><br><span class="line">scrubber.delegate = <span class="keyword">self</span>;   </span><br><span class="line">scrubber.dataSource = <span class="keyword">self</span>;</span><br></pre></td></tr></table></figure>
 <p>NSScrubber 类似 UICollectionView ，也是有基于 ItemView 的复用机制的，你可以继承 NSScrubberItemView 来写你自己需要的 CustomItemView。然后在初始化之后需要为 ItemView 加上一个复用的标识：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">[scrubber registerClass:[NSScrubberItemView <span class="class"><span class="keyword">class</span>] <span class="title">forItemIdentifier</span>:<span class="typename">ScrubberItemIdentifier];</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line">[<span class="name">scrubber</span> registerClass:[<span class="name">NSScrubberItemView</span> class] forItemIdentifier:ScrubberItemIdentifier]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p><strong>@property showsAdditionalContentIndicators</strong> </p>
 <p>代表的是当左右滑动还有更多内容的时候，在左右侧会显示一块渐变的蒙层，用来表示滑动还有更多内容，你可以选择是否显示。</p>
 <p><strong>@property selectedIndex</strong> </p>
@@ -367,11 +367,11 @@
 </ol>
 <p><strong>@property scrubberLayout</strong></p>
 <p>类似于 UICollectionView ，NSScrubber 的 layout 也是由 <strong>NSScrubberLayout</strong> 来控制的。系统提供了两种默认的 Layout，<strong>NSScrubberFlowLayout</strong> 和 <strong>NSScrubberProportionalLayout</strong>。前者可以通过 LayoutDelegate 来给出每一个 Item 所占的宽度，后者则不需要通过 delegate 而是直接将 Item 的宽度设置为 Scrubber 的可视区域按照 Item 的数量平分之后的宽度。你可以这样设置：</p>
-<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">NSScrubberLayout *scrubberLayout<span class="comment">;</span></span><br><span class="line">scrubberLayout = [[NSScrubberFlowLayout alloc] init]<span class="comment">;</span></span><br><span class="line">// or:</span><br><span class="line">scrubberLayout = [[NSScrubberProportionalLayout alloc] init]<span class="comment">;</span></span><br><span class="line">scrubber.scrubberLayout = scrubberLayout<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">NSScrubberLayout *scrubberLayout;</span><br><span class="line">scrubberLayout = <span class="comment">[<span class="comment">[NSScrubberFlowLayout alloc]</span> init]</span>;</span><br><span class="line">// or:</span><br><span class="line">scrubberLayout = <span class="comment">[<span class="comment">[NSScrubberProportionalLayout alloc]</span> init]</span>;</span><br><span class="line">scrubber.scrubberLayout = scrubberLayout;</span><br></pre></td></tr></table></figure>
 <p>对于 NSScrubberFlowLayoutDelegate 你需要实现这一个方法：</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">NSSize</span>)scrubber:(<span class="built_in">NSScrubber</span> *)scrubber layout:(<span class="built_in">NSScrubberFlowLayout</span> *)layout sizeForItemAtIndex:(<span class="built_in">NSInteger</span>)itemIndex</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">NSMakeSize</span>(width, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="NSSharingServicePickerTouchBarItem"><a href="#NSSharingServicePickerTouchBarItem" class="headerlink" title="NSSharingServicePickerTouchBarItem"></a>NSSharingServicePickerTouchBarItem</h4><p>NSSharingServicePickerTouchBarItem 的 delegate 只有一个委托方法需要实现：</p>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">- (<span class="constant">NSArray</span> *)<span class="symbol">itemsForSharingServicePickerTouchBarItem:</span>(<span class="constant">NSSharingServicePickerTouchBarItem</span> *)pickerTouchBarItem</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="annotation">@[...]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">-</span> (NSArray *)<span class="selector-tag">itemsForSharingServicePickerTouchBarItem</span><span class="selector-pseudo">:(NSSharingServicePickerTouchBarItem</span> *)<span class="selector-tag">pickerTouchBarItem</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="selector-tag">return</span> @<span class="selector-attr">[...]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在这里返回的对象一定要是能够支持 NSPasteboardWriting 协议或者是继承于 NSItemProvider 的对象，例如文本，图片或者 NSURL，可以参考 <a href="https://developer.apple.com/reference/foundation/nsitemprovider?language=objc" target="_blank" rel="external">NSItemProvider 的官方文档</a>。然后就会在分享的时候传到分享的应用里去。</p>
 <h4 id="NSPopoverTouchBarItem"><a href="#NSPopoverTouchBarItem" class="headerlink" title="NSPopoverTouchBarItem"></a>NSPopoverTouchBarItem</h4><p>首先，我们来看如何自定义 Popover 在未点击状态下的显示 Button。</p>
 <ul>
@@ -415,7 +415,7 @@
         本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
     </span>
     <span class="footer__copyright">
-        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+        &copy; 2014 - 2018 本站由 <a href="/">@Sergio Chan</a> 创建,
     </span>
 </footer>
 

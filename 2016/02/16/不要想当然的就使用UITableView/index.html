@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="不要想当然的使用UITableView | Sergio Chan">
-    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="twitter:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="不要想当然的使用UITableView | Sergio Chan">
-    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta property="og:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     
     <meta name="author" content="Sergio Chan">
@@ -66,10 +66,10 @@
         <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
         
-        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        <span class="panel-cover__subtitle panel-subtitle">Full Stack, Born hacker, Professional Manager</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world.<br/> Founded Hackathon team hACKbUSTER.<em></a></p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -191,7 +191,7 @@
 <p>以上这两个实例场景在基本的带一定社交功能的应用中都会普遍出现。大部分开发者对第一个场景的解决办法都是写在同一个控制器中，当然，这里也和一些产品经理对于需求顺序和需求提前预测的忽视有关。一些情况里都是先实现了好友列表然后才要加入手机联系人列表，这样，在基本结构类似的情况下，为了节约迭代工作成本，在同一个控制器中修改代码无可厚非。我们可以简单的对TableView的数据源进行区分，对TableView的delegate回调进行判断，从而将两套TableView的逻辑写在一个控制器中，实现高聚合。然而，在第一个场景里并不明显的弊端，会在我描述的这个第二个场景里丑恶毕露。在考虑复用TableView的时候，<strong>你需要考虑高聚合的性价比</strong>，如果到了一定规模或者复杂度的时候，高聚合反而会给结构带来破坏，这时候高聚合的性价比非常低，在实际项目中对于产品结构的稳定性和将来的迭代性就会开始不断的产生负面的影响。</p>
 <p>在第二个场景下，我见过这些用法：用枚举来标识当前TableView的类型，在所有数据源和Delegate回调的地方加上判断；给TableView加Tag；在Cell中加判断来区分不同的显示和不同的操作响应；甚至用进入个人主页的时候传入的userID来作为不同入口的判断。这些用法听起来虽然是低效一些，但是好像没什么大的问题，因为实际上每次TableView的加载和事件回调都可以被正常响应。然而我想总结的是这么一种习惯问题：当一个控制器被你不断的以这种形式往上加代码，几套逻辑被强制塞到同一个控制器中，这就像那个靠泥土和石头垒了七层楼的哥们一样，当你再视图往上添加一些重要的，新的东西的时候，他可能就全盘崩溃了，甚至让你不知道从何下手。</p>
 <p>在实际项目中，你永远想象不到随着需求的增加，这些东西可能被怎么样的复用，而每一次复用，即使是很微小的不同，也是在破坏着代码的拓展性。你看看下面这个TableView是怎么被复用的就会知道了。</p>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">typedef <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    <span class="constant">DataSourceTypeAllContacts</span> = <span class="number">0</span>,          </span><br><span class="line">    <span class="constant">DataSourceTypeAllGroup</span>,                 </span><br><span class="line">    <span class="constant">DataSourceTypeFriendContacts</span>,           </span><br><span class="line">    <span class="constant">DataSourceTypeAddGroupContacts</span>,         </span><br><span class="line">    <span class="constant">DataSourceTypeAllContactsSearch</span>,        </span><br><span class="line">    <span class="constant">DataSourceTypeAllGroupSearch</span>,           </span><br><span class="line">    <span class="constant">DataSourceTypeFriendContactsSearch</span>,     </span><br><span class="line">    <span class="constant">DataSourceTypeAddGroupContactsSearch</span>,   </span><br><span class="line">&#125;<span class="constant">DataSourceType</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">typedef <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    DataSourceTypeAllContacts = <span class="number">0</span>,          </span><br><span class="line">    DataSourceTypeAllGroup,                 </span><br><span class="line">    DataSourceTypeFriendContacts,           </span><br><span class="line">    DataSourceTypeAddGroupContacts,         </span><br><span class="line">    DataSourceTypeAllContactsSearch,        </span><br><span class="line">    DataSourceTypeAllGroupSearch,           </span><br><span class="line">    DataSourceTypeFriendContactsSearch,     </span><br><span class="line">    DataSourceTypeAddGroupContactsSearch,   </span><br><span class="line">&#125;DataSourceType;</span><br></pre></td></tr></table></figure>
 <p>这只是一个简单的联系人列表，但是在实际项目中，他被以这种简单低效的形式复用了8次，这就使你的代码变得越来越难以维护，每一次加载都加入了大量的判断，对于团队的其他成员，接手或者在你的代码基础上添加功能都会变得极其蛋疼。</p>
 <p>在实际项目开发中，你需要将你的代码<strong>可读性，可维护性，可拓展性</strong>放在首位，而不是想着如何用最少代码去实现一个功能。当然，如果在保证了这三件事情的基础上还能够用最少的代码，那大概就是真大神了。但是对于更大多数的开发者来说，你需要将这三件事情放在第一位。</p>
 <p>对于上面的这个复用了8次的TableView来说，还是有可能的优化空间的。例如，当数据源的类型一致，只是获取的方法不同，例如获取群组成员列表和好友列表，TableView的数据源数组中的数据类型是一样的，那么这个时候只要在加载数据的时候做个区分，而不用再TableView加载数据源的时候做区分。这里的意思是，在Cell的结构可以复用的情况下，Cell也可以复用，将TableView的一些复用逻辑转移到Cell中去。当然，如果Cell结构差异很大，或者你需要用xib来定义Cell的布局，那对于Cell的复用就要更加的小心。</p>
@@ -260,7 +260,7 @@
         本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
     </span>
     <span class="footer__copyright">
-        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+        &copy; 2014 - 2018 本站由 <a href="/">@Sergio Chan</a> 创建,
     </span>
 </footer>
 

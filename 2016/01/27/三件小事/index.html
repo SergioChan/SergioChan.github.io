@@ -12,15 +12,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta name="description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="三件小事 | Sergio Chan">
-    <meta name="twitter:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta name="twitter:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="三件小事 | Sergio Chan">
-    <meta property="og:description" content="Crazy fan of Hackathons all around the world. &lt;br/&gt; Currently works for &lt;em&gt;&lt;strong&gt;RavenLab Team&lt;/strong&gt;&lt;/em&gt; &lt;a href=&quot;http://www.raventech.com&quot; style=&quot;text-decoration:underline;&quot;&gt;@RavenTech.Inc&lt;/a&gt;">
+    <meta property="og:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
 
     
     <meta name="author" content="Sergio Chan">
@@ -66,10 +66,10 @@
         <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
         
-        <span class="panel-cover__subtitle panel-subtitle">Born hacker, Full-stack Developer</span>
+        <span class="panel-cover__subtitle panel-subtitle">Full Stack, Born hacker, Professional Manager</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">Crazy fan of Hackathons all around the world. <br/> Currently works for <em><strong>RavenLab Team</strong></em> <a href="http://www.raventech.com" style="text-decoration:underline;">@RavenTech.Inc</a>.</p>
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world.<br/> Founded Hackathon team hACKbUSTER.<em></a></p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -190,11 +190,11 @@
 <p>这里你可以看到，如果引入了TestObject的头文件，对于任意id类型的对象指针，你就可以向他发送TestObject能够响应的消息了。<br>无论这个id类型指针指向的对象是不是TestObject类型，编译器并不关心这个，也无法知道。<br>然而对于NSObject，他仍然不能响应这个fuck方法，因为向一个对象发送消息的时候，编译器会在对象声明类型的方法表中去判断这个对象是否能够响应这个消息，而不是根据实际分配的对象类型。</p>
 <figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">id test3 = <span class="comment">[<span class="comment">[UIImage alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test3 fuck]</span>;</span><br><span class="line"></span><br><span class="line">NSObject *test2 = <span class="comment">[<span class="comment">[TestObject alloc]</span>init]</span>;</span><br><span class="line"><span class="comment">[test2 fuck]</span>;</span><br></pre></td></tr></table></figure>
 <p>所以其实NSObject很少手动声明，如果要声明具体的对象，则最好声明具体的类型，或者id动态类型。<br>id之所以为动态类型，在于它所指向的对象类型是在运行时才确定的，因此使用起来更加的方便。<br>NSObject 只能响应自己的一些简单的方法，例如 copy，hash之类。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[<span class="built_in">test</span>2 <span class="built_in">hash</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[test2 hash]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>下面解释了为什么delegate要用id声明而不是用NSObject</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="keyword">id</span>&lt;TestDelegate&gt; delegate;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">NSObject</span>&lt;TestDelegate&gt; *delegate;</span><br></pre></td></tr></table></figure>
 <p>大部分delegate在实现的时候都需要像下面这个来调用，根据上文所说，因为delegate的方法表其实是运行时才能知道的，在编译时编译器是无法识别的，所以这种调用方式也就不能成立，因此delegate要用第一种id的声明方式来声明：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">NSObject *<span class="built_in">test</span>4 = [[TestObject alloc]init];</span><br><span class="line"><span class="keyword">if</span>([<span class="built_in">test</span>4 respondsToSelector:@selector(fuck)])</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="built_in">test</span>4 fuck];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">id <span class="built_in">test</span>5 = [[TestObject alloc]init];</span><br><span class="line"><span class="keyword">if</span>([<span class="built_in">test</span>5 respondsToSelector:@selector(fuck)])</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="built_in">test</span>5 fuck];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">NSObject *test4 = <span class="comment">[<span class="comment">[TestObject alloc]</span>init]</span>;</span><br><span class="line">if(<span class="comment">[test4 respondsToSelector:@selector(fuck)]</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">[test4 fuck]</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">id test5 = <span class="comment">[<span class="comment">[TestObject alloc]</span>init]</span>;</span><br><span class="line">if(<span class="comment">[test5 respondsToSelector:@selector(fuck)]</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">[test5 fuck]</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当然如果id所指向的对象在运行时无法响应fuck方法，运行时就会报错。<br>可以这么说吧： <strong>NSObject声明的对象类型在编译时确定，id声明的对象类型在运行时确定</strong>，因此在消息发送上会有一些区别。</p>
 <h2 id="weak_2C_assign__u90A3_u4E9B_u4E8B"><a href="#weak_2C_assign__u90A3_u4E9B_u4E8B" class="headerlink" title="weak, assign 那些事"></a>weak, assign 那些事</h2><p>这个问题起源于这两种声明delegate的方式：</p>
 <figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span>  &lt;fuckDelegate&gt; delegate; </span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">id</span>  &lt;fuckDelegate&gt; delegate;</span><br></pre></td></tr></table></figure>
@@ -202,10 +202,10 @@
 <p>区别就在于weak和assign声明的属性虽然都是不会引起引用计数的增加，但是还是有很大不同。<a href="http://www.cocoachina.com/ios/20150605/11990.html" target="_blank" rel="external">weak的实现</a>决定了在属性的主人释放的时候，weak指针所对应的对象也会一起被释放，然而assign不会，因此这里有产生一个野delegate指针的风险。除非是在MRC的环境下，手动对delegate置为nil。这会需要额外的操作，因此后来系统的实现渐渐的也转向weak了。</p>
 <p>参考<a href="http://stackoverflow.com/questions/9428500/whats-the-difference-between-weak-and-assign-in-delegate-property-declaratio" target="_blank" rel="external">这里</a>。</p>
 <h2 id="NS_DESIGNATED_INITIALIZER"><a href="#NS_DESIGNATED_INITIALIZER" class="headerlink" title="NS_DESIGNATED_INITIALIZER"></a>NS_DESIGNATED_INITIALIZER</h2><p>第一次看到这个的时候，心里想的是 “WTF 这是什么鬼”。</p>
-<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="pp">-<span class="params">(instancetype)</span>initWithName:<span class="params">(<span class="variable">NSString</span> *)</span>name NS_DESIGNATED_INITIALIZER;</span><br><span class="line">-<span class="params">(instancetype)</span>init;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">-(instance<span class="keyword">type</span>)initWithName:(<span class="type">NSString</span> *)name <span class="type">NS_DESIGNATED_INITIALIZER</span>;</span><br><span class="line">-(instance<span class="keyword">type</span>)init;</span><br></pre></td></tr></table></figure>
 <p>这时候看看Swift就明白了 =。= 这是objc为了配合Swift的特性而诞生的一个附加宏。Swift中有designated和convenience两种初始化方法，它要求我们初始化出来的实例对象尽量是属性完整的，即使使用了convenience的初始化方法，也会要求在这个初始化方法中调用同类的designated的初始化方法完成完整的初始化。</p>
 <p>像这样：</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">- (instancetype)<span class="keyword">init</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">self</span> initWithName:@<span class="string">"fuck"</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithName:(<span class="type">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> <span class="keyword">init</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">instancetype</span>)init</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">self</span> initWithName:<span class="string">@"fuck"</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithName:(<span class="built_in">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所以这只是一个Swift的特性的objc版本，也是为了更好的和Swift配合开发而加上的。</p>
 <p>参考<a href="http://stackoverflow.com/questions/26185239/ios-designated-initializers-using-ns-designated-initializer" target="_blank" rel="external">这里</a>。</p>
 
@@ -240,7 +240,7 @@
         本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
     </span>
     <span class="footer__copyright">
-        &copy; 2014 - 2016 本站由 <a href="/">@Sergio Chan</a> 创建,
+        &copy; 2014 - 2018 本站由 <a href="/">@Sergio Chan</a> 创建,
     </span>
 </footer>
 

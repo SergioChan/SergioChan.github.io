@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>如何创建自己的以太坊私有链（1）CentOS + Geth | Sergio Chan</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="如何创建自己的以太坊私有链（1）CentOS + Geth | Sergio Chan">
+    <meta name="twitter:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="如何创建自己的以太坊私有链（1）CentOS + Geth | Sergio Chan">
+    <meta property="og:description" content="Professional Hacker and Manager. &lt;br/&gt; Founded Hackathon team hACKbUSTER.&lt;em&gt;&lt;/a&gt;.">
+
+    
+    <meta name="author" content="Sergio Chan">
+    
+    <link rel="stylesheet" href="/css/vno.css" type="text/css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" type="text/css">
+
+    
+    <link rel="icon" href="/favicon.ico">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://sergiochan.github.io/2018/07/25/如何创建自己的以太坊私有链（1）CentOS-Geth/"/>
+
+    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?030a47db2df6601bda0225610cd6c323";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+<body class="home-template no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Sergio Chan 的主页"><img src="https://avatars2.githubusercontent.com/u/10103766?v=3&amp;s=460" width="80" alt="Sergio Chan logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Sergio Chan">Sergio Chan</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">Full Stack, Born hacker, Professional Manager</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">Crazy fan of Hackathons all around the world.<br/> Founded Hackathon team hACKbUSTER.<em></a></p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/archives" title="" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/bio">Biography</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/3089081773/profile?topnav=1&amp;wvr=6" title="My Weibo" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/SergioChan" title="My Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/Sergio2Chan" title="Twitter" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+
+<li class="navigation__item">
+  <a href="https://dribbble.com/SergioChan" title="Dribbble" target="_blank">
+    <i class='social fa fa-dribbble'></i>
+    <span class="label">Dribbble</span>
+  </a>
+</li>
+
+<!-- Linkedin -->
+
+  <li class="navigation__item">
+    <a href="http://www.linkedin.com/in/sergiochan" title="Linkedin" target="_blank">
+      <i class='social fa fa-linkedin'></i>
+      <span class="label">Linkedin</span>
+    </a>
+  </li>
+
+
+
+
+  <li class="navigation__item">
+    <a href="mailto:cyh9211@icloud.com" title="Email" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-slate"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-07-25T13:47:19.000Z" class="post-list__meta--date date">2018-07-25</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Ethereum/">Ethereum</a>
+</span>
+    </div>
+    <h1 class="post-title">如何创建自己的以太坊私有链（1）CentOS + Geth</h1>
+  </header>
+
+  <section class="post article-entry">
+    <script src="/assets/js/APlayer.min.js"> </script><p>这两天根据网上能搜到的所有的教程和文档，试着搭建了一个以太坊私有链 + iOS 钱包 / 应用的客户端，踩了一些坑，一来要找到这些坑的解决办法比较曲折，二来这类教程的同质化太强，我就着重记录一下这些坑的原因和解决办法吧，帮助看到的人可以吸取一些经验。</p>
+<h3 id="u51C6_u5907_u5DE5_u4F5C"><a href="#u51C6_u5907_u5DE5_u4F5C" class="headerlink" title="准备工作"></a>准备工作</h3><p>Ethereum 客户端目前有几种语言的实现是开源的（这里只列出几个最主要的，其他的可以在 Ethereum 的<a href="https://github.com/ethereum/wiki/wiki/Clients,-tools,-dapp-browsers,-wallets-and-other-projects" target="_blank" rel="external">官方 wiki</a> 上找到）：</p>
+<ul>
+<li><a href="https://github.com/ethereum/go-ethereum" target="_blank" rel="external">go-ethereum（GETH）</a>，这也是目前比较容易上手且普遍流行的实现，对应的工具和文档都比较齐全</li>
+<li><a href="https://github.com/ethereum/pyethapp" target="_blank" rel="external">pyethapp</a>，基于 <a href="https://github.com/ethereum/pyethereum" target="_blank" rel="external">py-ethereum</a>，但是目前已经停止继续维护，基于 py-ethereum 有了新的 py-evm，并且推出了基于 <a href="https://github.com/ethereum/py-evm" target="_blank" rel="external">py-evm</a> 的新的客户端 Trinity</li>
+<li><a href="https://github.com/paritytech/parity" target="_blank" rel="external">Parity</a>（Rust）</li>
+<li><a href="https://github.com/ethereum/cpp-ethereum" target="_blank" rel="external">cpp-ethereum</a>（C++）</li>
+</ul>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><p>各个平台的安装过程可以见以太坊官方的<a href="https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum" target="_blank" rel="external">各平台安装指引</a>。以 CentOS 为例，安装过程其实并不复杂。</p>
+<p>首先确保 cmake, gcc, wget 这些基本的组件都已经安装完毕。然后是安装 golang 环境：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install golang</span><br></pre></td></tr></table></figure>
+<p>安装完 golang 环境后，可以 wget 下载 github 上最新版本的 release 包，查看地址<a href="https://github.com/ethereum/go-ethereum/releases" target="_blank" rel="external">在这</a>。例如我就是下载的最新的 1.8.12 的包。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://github.com/ethereum/go-ethereum/archive/v1.8.12.zip</span><br></pre></td></tr></table></figure>
+<p>下载完之后解压，解压后进入目录下运行 make。成功后即编译完成。geth 的可执行文件在 build/bin 下。切换到这个目录就可以在命令行调用 geth 命令了。</p>
+<h3 id="u521B_u4E16_u533A_u5757_u7684_u7B80_u5355_u914D_u7F6E_u4EE5_u53CA_u9700_u8981_u6CE8_u610F_u7684_u4E00_u4E2A_u5751"><a href="#u521B_u4E16_u533A_u5757_u7684_u7B80_u5355_u914D_u7F6E_u4EE5_u53CA_u9700_u8981_u6CE8_u610F_u7684_u4E00_u4E2A_u5751" class="headerlink" title="创世区块的简单配置以及需要注意的一个坑"></a>创世区块的简单配置以及需要注意的一个坑</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"config"</span>: &#123;</span><br><span class="line">    	<span class="attr">"chainId"</span>: <span class="number">10</span>,</span><br><span class="line">    	<span class="attr">"homesteadBlock"</span>: <span class="number">0</span>,</span><br><span class="line">    	<span class="attr">"eip150Block"</span>: <span class="number">0</span>,</span><br><span class="line">    	<span class="attr">"eip150Hash"</span>: <span class="string">"0x0000000000000000000000000000000000000000000000000000000000000000"</span>,</span><br><span class="line">    	<span class="attr">"eip155Block"</span>: <span class="number">0</span>,</span><br><span class="line">    	<span class="attr">"eip158Block"</span>: <span class="number">0</span>,</span><br><span class="line">    	<span class="attr">"byzantiumBlock"</span>: <span class="number">0</span>,</span><br><span class="line">  	&#125;</span><br><span class="line">    <span class="string">"nonce"</span>: <span class="string">"0×0000000000000042"</span>,</span><br><span class="line">    <span class="attr">"mixhash"</span>: <span class="string">"0×0000000000000000000000000000000000000000000000000000000000000000"</span>,</span><br><span class="line">    <span class="attr">"difficulty"</span>: <span class="string">"0×4000"</span>,</span><br><span class="line">    <span class="attr">"alloc"</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">"coinbase"</span>: <span class="string">"0×0000000000000000000000000000000000000000"</span>,</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="string">"0×00"</span>,</span><br><span class="line">    <span class="attr">"parentHash"</span>: <span class="string">"0×0000000000000000000000000000000000000000000000000000000000000000"</span>,</span><br><span class="line">    <span class="attr">"extraData"</span>: <span class="string">"GenesisBlock"</span>,</span><br><span class="line">    <span class="attr">"gasLimit"</span>: <span class="string">"0xffffffff"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在启动链之前首先要初始化创世区块，创世区块的几个基本参数的说明在网上比较好找，在这就不详细展开了。如果需要预先分配好几个账户及其对应的 balance，可以在 alloc 里面声明。</p>
+<p>一个巨大的坑在于 <code>chainID</code> 的设置，如果设置为 0 则会在之后产生任何事务的时候报错 <code>invlid sender</code>，并且<strong>这里的 <code>chainID</code> 必须和命令行启动客户端的时候指定的 <code>networkID</code> 一致</strong>，这两者实际上是一个东西。如果不一致，也会导致后面再发送事务的时候验证失败。</p>
+<p>为了在本地启动两个节点并相互连接，我们需要初始化两次创世节点到两份不同的数据目录下。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./geth --datadir ~/chain2/ init init.json</span><br><span class="line">./geth --datadir ~/chain/ init init.json</span><br></pre></td></tr></table></figure>
+<h3 id="Command_Line__u8FD0_u884C_u53C2_u6570_u89E3_u6790"><a href="#Command_Line__u8FD0_u884C_u53C2_u6570_u89E3_u6790" class="headerlink" title="Command Line 运行参数解析"></a>Command Line 运行参数解析</h3><p>官方的完整参数说明<a href="https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options" target="_blank" rel="external">在这</a>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./geth --port "30303" --rpc --rpccorsdomain "*" --datadir "~/chain" --rpcaddr "0.0.0.0" --rpcport "8545" --rpcapi "db,eth,net,web3,admin,personal,txpool" --networkid 10 --verbosity 3 --syncmode full --gasprice 0 -gcmode archive console</span><br><span class="line">./geth --port "30304" --rpc --rpccorsdomain "*" --datadir "~/chain2" --rpcaddr "0.0.0.0" --rpcport "8546" --rpcapi "db,eth,net,web3,admin,personal,txpool" --networkid 10 --verbosity 3 --syncmode full --gasprice 0 -gcmode archive console</span><br></pre></td></tr></table></figure>
+<p>分别在不同的 terminal 窗口下运行这两条命令。注意最后的 console 参数可以替换为 &amp;，即不进入交互式的命令界面。</p>
+<p><code>--rpc</code> 钱包和应用与链的交互都是通过 JSON RPC 来完成的，因此在这里需要明确 rpc 服务器的地址、端口以及开放调用的 api 命名空间。这里如果希望 rpc 服务器可以被外网访问的话，需要指定 ip 为 <code>0.0.0.0</code>，内网访问的话就指定内网 ip，本地访问的话实际上指定 <code>127.0.0.1</code>即可，这样可以避免被不知名的其他节点不停地尝试连接。rpc 的 api 可以参考<a href="https://github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank" rel="external">这里</a>，如果是开发网页或 native 的应用的话可以直接使用包装好的 web3 库来调用。</p>
+<p><code>—networkid</code>这里需要和创世区块里定义的 chainID 一致。</p>
+<p><code>—verbosity</code>这是日志输出的等级，3 是到 INFO，4 是到 DEBUG，一般情况 3 就足够了，DEBUG 模式下日志刷新的太快，命令行交互基本没法使用。</p>
+<p><code>—syncmode</code>节点之间同步区块和事务的模式，在节点数少的情况下，尽量选择完整同步，避免因为不同步而产生冲突从而导致一些已经被认为发生的事务给丢弃了。</p>
+<blockquote>
+<p>P.S 中间我还另外尝试了一下 iOS 上的 Geth 库，如果你的节点希望能被 iOS 或 Android 上的客户端（不是钱包或应用，是客户端）连接，这里需要将同步模式去掉，加上 —lightserver xxx 的参数，因为目前实现在移动平台上的节点客户端都是 light 版本的，因此连接的链节点也需要相应的配置这个参数。</p>
+</blockquote>
+<p><code>—gcmode</code>这个参数设置的问题见<a href="https://ethereum.stackexchange.com/questions/39922/ethereum-private-chain-resets-back-to-block-0-when-restarted" target="_blank" rel="external">这里</a>，我也遇到了同样的问题，退出命令行重启客户端，有的时候就发现刚才发生的 transaction 都被回滚了，这是因为默认情况下最近的 128 个区块都是存在内存中的，命令行结束了这个进程，这部分内存也就丢了，因此需要改成 <code>archive</code>，会将所有的区块存下来，避免中止客户端进程影响区块的数据。</p>
+<h3 id="Geth__u57FA_u672C_u4EA4_u4E92_u64CD_u4F5C"><a href="#Geth__u57FA_u672C_u4EA4_u4E92_u64CD_u4F5C" class="headerlink" title="Geth 基本交互操作"></a>Geth 基本交互操作</h3><p>首先每个节点都要有一个默认的 <code>coinbase</code> 账户，而刚启动的时候除非你在启动的时候导入一个账户的 private key，否则就可以在命令行里输入</p>
+<figure class="highlight haxe"><table><tr><td class="code"><pre><span class="line">personal.<span class="keyword">new</span><span class="type">Account</span>(<span class="string">"xxx"</span>)</span><br></pre></td></tr></table></figure>
+<p>创建一个新的地址。挖矿挖到的 ETH 也会存入这个账户里。</p>
+<h4 id="u67E5_u770B_u4F59_u989D"><a href="#u67E5_u770B_u4F59_u989D" class="headerlink" title="查看余额"></a>查看余额</h4><figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">eth</span><span class="selector-class">.getBalance</span>(<span class="string">'xxxx'</span>)</span><br></pre></td></tr></table></figure>
+<p>是获取指定地址（包括合约）上的 ETH 数量，单位为 wei。</p>
+<p>ETH 最小的单位是 wei，也是命令行默认的单位, 然后每 1000  进一个单位，依次是</p>
+<ul>
+<li>kwei (1000 wei)</li>
+<li>mwei (1000 kwei)</li>
+<li>gwei (1000 mwei)</li>
+<li>szabo (1000 gwei)</li>
+<li>finney (1000 szabo)</li>
+<li>ether (1000 finney)</li>
+</ul>
+<p>在命令行里，可以输入</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">web3</span><span class="selector-class">.fromWei</span>(<span class="selector-tag">eth</span><span class="selector-class">.getBalance</span>(<span class="selector-tag">eth</span><span class="selector-class">.coinbase</span>))</span><br></pre></td></tr></table></figure>
+<p>来简便的查看当前矿工账户的 ether 余额。</p>
+<h4 id="u5F00_u59CB_u6316_u77FF__26amp_3B__u505C_u6B62_u6316_u77FF"><a href="#u5F00_u59CB_u6316_u77FF__26amp_3B__u505C_u6B62_u6316_u77FF" class="headerlink" title="开始挖矿 &amp; 停止挖矿"></a>开始挖矿 &amp; 停止挖矿</h4><p>这个就比较简单了。</p>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">miner.<span class="literal">start</span>()</span><br><span class="line">miner.<span class="literal">stop</span>()</span><br></pre></td></tr></table></figure>
+<p>在挖矿的过程中，矿工不停地确认和打包新的区块，其他同步的节点上应该显示</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Importer new chain segment               <span class="attribute">blocks</span>=1 <span class="attribute">txs</span>=0 <span class="attribute">mgas</span>=0.000 <span class="attribute">elapsed</span>=17.040ms mgasp</span><br></pre></td></tr></table></figure>
+<p>表示区块同步是正常进行的。</p>
+<h4 id="u8FDE_u63A5_u5176_u4ED6_u7684_u8282_u70B9"><a href="#u8FDE_u63A5_u5176_u4ED6_u7684_u8282_u70B9" class="headerlink" title="连接其他的节点"></a>连接其他的节点</h4><p>在启动的时候输出的一些信息中能够找到 <code>enode</code> 信息，如果错过了也可以通过</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">admin<span class="selector-class">.nodeinfo</span><span class="selector-class">.enode</span></span><br></pre></td></tr></table></figure>
+<p>拿到当前节点的连接地址，将其中的 <code>@[::]:30303</code>中间括号间的两个冒号改为你希望另一个节点访问到的 ip 地址，例如内网访问就填内网地址，外网访问就填公网 ip，然后在另一个节点的控制台里输入</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"xxx@xx:xx:xx:xx:xxxx"</span>)</span><br><span class="line">admin<span class="selector-class">.peers</span> <span class="comment">// 查看是否连接成功</span></span><br></pre></td></tr></table></figure>
+<p>即可使两个节点 P2P 连接。同时，如果一个节点是长期节点，即作为基础的节点在运转的话，在其他连接节点启动的时候，可以在命令行里设置 <code>—bootnodes</code> 来使新的节点启动的时候就去尝试连接这个已经在线的节点。</p>
+<h4 id="u4EA4_u6613"><a href="#u4EA4_u6613" class="headerlink" title="交易"></a>交易</h4><p>挖矿产生了 ETH，就可以进行交易了。交易（调用智能合约也是）需要有至少一个矿工在挖矿，才能够完成，否则就没人处理了。在交易前，所有涉及产生事务，即 sendTransaction 的操作（调用智能合约也是），都需要 unlock 账户地址。</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">personal.unlockAccount(eth<span class="selector-class">.coinbase</span>,<span class="string">"&#123;your password&#125;"</span>,<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+<p>最后的 3000 单位为秒，即接下来的多少秒内保持账户可以提交事务的状态，可以自行调节。接下来就是具体的转账操作：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">eth</span><span class="selector-class">.sendTransaction</span>(&#123;<span class="attribute">from</span>:<span class="string">'xxx'</span>,to:<span class="string">'xxx'</span>,value:web3.<span class="built_in">toWei</span>(1)&#125;)</span><br></pre></td></tr></table></figure>
+<p>这里的 value 单位仍然是 <code>wei</code>，因此输入的是 ether 为单位的话需要转换。操作成功后等待矿工确认和打包完成，就可以查看地址对应的余额了。</p>
+<h4 id="u67E5_u770B_u4E8B_u52A1_u7684_u72B6_u6001"><a href="#u67E5_u770B_u4E8B_u52A1_u7684_u72B6_u6001" class="headerlink" title="查看事务的状态"></a>查看事务的状态</h4><p>由于矿工有些时候不是正好就能处理到刚提交的事务并打包，因此你也可以通过</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">txpool</span><span class="selector-class">.content</span></span><br></pre></td></tr></table></figure>
+<p>来查看当前事务池子里处于等待状态的事务，可以确认你的调用是否成功。</p>
+<h3 id="u5B9E_u73B0_u4E00_u4E2A_u9F99_u5934_u667A_u80FD_u5408_u7EA6"><a href="#u5B9E_u73B0_u4E00_u4E2A_u9F99_u5934_u667A_u80FD_u5408_u7EA6" class="headerlink" title="实现一个龙头智能合约"></a>实现一个龙头智能合约</h3><p>在 Ethereum 的测试网络上，都有龙头这样一个地址，你可以请求这个地址，他会发放一定量的测试 ETH 给开发者以供使用。并且用户用完后可以继续捐赠给它，例如 <code>Ropsten Network</code>。因此我也在这里很简单的实现一个龙头合约。</p>
+<p>为了开发方便，目前已经有 Solidity 的 IDE 可以使用了，我使用的是 <a href="http://remix.ethereum.org/" target="_blank" rel="external">Remix</a>，只要在 environment 里设置为 <code>web3 provider</code> 并填上自己的 rpc 地址，就可以连上你刚刚新建的私有链进行测试了。</p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4.</span><span class="number">20</span>;</span><br><span class="line">contract faucet &#123;</span><br><span class="line">    uint <span class="keyword">public</span> totalEther;</span><br><span class="line">    address <span class="keyword">public</span> _owner;</span><br><span class="line">    </span><br><span class="line">   constructor () <span class="keyword">public</span> &#123;</span><br><span class="line">        totalEther = <span class="number">0</span>;</span><br><span class="line">        _owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span></span> donate() <span class="keyword">public</span> payable &#123;</span><br><span class="line">         totalEther += msg.<span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span></span> requestSomeEther(uint amount) <span class="keyword">public</span> &#123;</span><br><span class="line">         totalEther -= amount;</span><br><span class="line">         <span class="keyword">if</span> (totalEther &lt; <span class="number">0</span>) &#123;</span><br><span class="line">  			totalEther = <span class="number">0</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			msg.sender.<span class="built_in">transfer</span>(amount);</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>deploy 以上合约，拷贝地址并加载。通过大的挖矿节点调用合约的 <code>donate</code> 方法将 ether 转到合约的地址上，其他新的测试账户可以直接调用 <code>requestSomeEther</code>来获取指定数量的 ether，当然这个单位是 wei。</p>
+
+  </section>
+
+</article>
+
+
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://sergiochan.github.io/2018/07/25/如何创建自己的以太坊私有链（1）CentOS-Geth/" data-title="如何创建自己的以太坊私有链（1）CentOS + Geth" data-url="http://sergiochan.github.io/2018/07/25/如何创建自己的以太坊私有链（1）CentOS-Geth/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"sergiochan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        &copy; 2014 - 2018 本站由 <a href="/">@Sergio Chan</a> 创建,
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+
+     
+</body>
+</html>
