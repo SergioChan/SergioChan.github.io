@@ -201,12 +201,12 @@
 <p>为了在本地启动两个节点并相互连接，我们需要初始化两次创世节点到两份不同的数据目录下。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./geth --datadir ~/chain2/ init init.json</span><br><span class="line">./geth --datadir ~/chain/ init init.json</span><br></pre></td></tr></table></figure>
 <h3 id="Command_Line__u8FD0_u884C_u53C2_u6570_u89E3_u6790"><a href="#Command_Line__u8FD0_u884C_u53C2_u6570_u89E3_u6790" class="headerlink" title="Command Line 运行参数解析"></a>Command Line 运行参数解析</h3><p>官方的完整参数说明<a href="https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options" target="_blank" rel="external">在这</a>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./geth --port "30303" --rpc --rpccorsdomain "*" --datadir "~/chain" --rpcaddr "0.0.0.0" --rpcport "8545" --rpcapi "db,eth,net,web3,admin,personal,txpool" --networkid 10 --verbosity 3 --syncmode full --gasprice 0 -gcmode archive console</span><br><span class="line">./geth --port "30304" --rpc --rpccorsdomain "*" --datadir "~/chain2" --rpcaddr "0.0.0.0" --rpcport "8546" --rpcapi "db,eth,net,web3,admin,personal,txpool" --networkid 10 --verbosity 3 --syncmode full --gasprice 0 -gcmode archive console</span><br></pre></td></tr></table></figure>
-<p>分别在不同的 terminal 窗口下运行这两条命令。注意最后的 console 参数可以替换为 &amp;，即不进入交互式的命令界面。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./geth --port "30303" --rpc --rpccorsdomain "*" --datadir "~/chain" --rpcaddr "0.0.0.0" --rpcport "8545" --rpcapi "db,eth,net,web3,admin,personal,txpool" --networkid 10 --verbosity 3 --syncmode fast --gasprice 0 -gcmode archive console</span><br><span class="line">./geth --port "30304" --rpc --rpccorsdomain "*" --datadir "~/chain2" --rpcaddr "0.0.0.0" --rpcport "8546" --rpcapi "db,eth,net,web3,admin,personal,txpool" --networkid 10 --verbosity 3 --syncmode fast --gasprice 0 -gcmode archive console</span><br></pre></td></tr></table></figure>
+<p>分别在不同的 terminal 窗口下运行这两条命令。注意最后的 console 参数可以不需要或用 <code>&gt;&gt;</code>将日志输出到文件 ，即不进入交互式的命令界面，然后在另外的命令行里通过 <code>geth attach xxx</code>回到交互式界面。</p>
 <p><code>--rpc</code> 钱包和应用与链的交互都是通过 JSON RPC 来完成的，因此在这里需要明确 rpc 服务器的地址、端口以及开放调用的 api 命名空间。这里如果希望 rpc 服务器可以被外网访问的话，需要指定 ip 为 <code>0.0.0.0</code>，内网访问的话就指定内网 ip，本地访问的话实际上指定 <code>127.0.0.1</code>即可，这样可以避免被不知名的其他节点不停地尝试连接。rpc 的 api 可以参考<a href="https://github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank" rel="external">这里</a>，如果是开发网页或 native 的应用的话可以直接使用包装好的 web3 库来调用。</p>
 <p><code>—networkid</code>这里需要和创世区块里定义的 chainID 一致。</p>
 <p><code>—verbosity</code>这是日志输出的等级，3 是到 INFO，4 是到 DEBUG，一般情况 3 就足够了，DEBUG 模式下日志刷新的太快，命令行交互基本没法使用。</p>
-<p><code>—syncmode</code>节点之间同步区块和事务的模式，在节点数少的情况下，尽量选择完整同步，避免因为不同步而产生冲突从而导致一些已经被认为发生的事务给丢弃了。</p>
+<p><code>—syncmode</code>节点之间同步区块和事务的模式，在节点数少的情况下，尽量选择完整同步，避免因为不同步而产生冲突从而导致一些已经被认为发生的事务给丢弃了。但是这里最好选择 <code>fast</code>，在实际运行中，如果选择完整同步，对 CPU 的消耗非常大，因此如果配置不够的话，经常出现被系统杀死进程的情况，在这里最好选择默认的。</p>
 <blockquote>
 <p>P.S 中间我还另外尝试了一下 iOS 上的 Geth 库，如果你的节点希望能被 iOS 或 Android 上的客户端（不是钱包或应用，是客户端）连接，这里需要将同步模式去掉，加上 —lightserver xxx 的参数，因为目前实现在移动平台上的节点客户端都是 light 版本的，因此连接的链节点也需要相应的配置这个参数。</p>
 </blockquote>
